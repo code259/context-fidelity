@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h12-runningmax",
+  "split": "heldout",
+  "description": "Fix running_max(values) to return the maximum of each nonempty prefix of the numeric input list, in order. Empty input yields an empty list; negative numbers must work.",
+  "source_file": "solution.py",
+  "initial_source": "def running_max(values):\n    best = 0\n    result = []\n    for value in values:\n        best = max(best, value)\n        result.append(best)\n    return result\n",
+  "reference_source": "def running_max(values):\n    result = []\n    for value in values:\n        result.append(value if not result else max(result[-1], value))\n    return result\n",
+  "tests": [
+    {
+      "test_id": "negative",
+      "expression": "solution.running_max([-5,-8,-2,-4]) == [-5,-5,-2,-2]"
+    },
+    {
+      "test_id": "mixed",
+      "expression": "solution.running_max([2,1,4,3]) == [2,2,4,4]"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.running_max([]) == []"
+    },
+    {
+      "test_id": "single",
+      "expression": "solution.running_max([-3]) == [-3]"
+    }
+  ],
+  "challenge": "recoverable_note"
+}

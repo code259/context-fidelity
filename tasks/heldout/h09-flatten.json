@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h09-flatten",
+  "split": "heldout",
+  "description": "Fix flatten(values) to recursively flatten nested Python lists into a single list. Non-list objects remain atomic. Preserve order and do not mutate the input.",
+  "source_file": "solution.py",
+  "initial_source": "def flatten(values):\n    return [item for group in values for item in group]\n",
+  "reference_source": "def flatten(values):\n    result = []\n    for value in values:\n        if isinstance(value, list):\n            result.extend(flatten(value))\n        else:\n            result.append(value)\n    return result\n",
+  "tests": [
+    {
+      "test_id": "nested",
+      "expression": "solution.flatten([1,[2,[3]],4]) == [1,2,3,4]"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.flatten([[],[[]]]) == []"
+    },
+    {
+      "test_id": "atomic",
+      "expression": "solution.flatten(['ab',(1,2)]) == ['ab',(1,2)]"
+    },
+    {
+      "test_id": "mixed",
+      "expression": "solution.flatten([[1],2,[],[3,4]]) == [1,2,3,4]"
+    }
+  ],
+  "challenge": "recoverable_note"
+}

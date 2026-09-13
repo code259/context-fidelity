@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h06-csvrow",
+  "split": "heldout",
+  "description": "Fix parse_row(text) to parse one CSV record with comma separators and standard double-quote escaping. Return the fields as a list, preserving commas inside quoted fields and empty fields.",
+  "source_file": "solution.py",
+  "initial_source": "def parse_row(text):\n    return text.split(\",\")\n",
+  "reference_source": "import csv\ndef parse_row(text):\n    return next(csv.reader([text]))\n",
+  "tests": [
+    {
+      "test_id": "quoted",
+      "expression": "solution.parse_row('a,\"b,c\",d') == ['a','b,c','d']"
+    },
+    {
+      "test_id": "emptyfield",
+      "expression": "solution.parse_row('a,,c') == ['a','','c']"
+    },
+    {
+      "test_id": "quotes",
+      "expression": "solution.parse_row('\"say \"\"hi\"\"\",end') == ['say \"hi\"','end']"
+    },
+    {
+      "test_id": "plain",
+      "expression": "solution.parse_row('a,b') == ['a','b']"
+    }
+  ],
+  "challenge": "recoverable_note"
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h11-slug",
+  "split": "heldout",
+  "description": "Fix slug(text): lowercase ASCII letters, replace each run of characters other than ASCII letters/digits with one hyphen, then remove leading and trailing hyphens.",
+  "source_file": "solution.py",
+  "initial_source": "def slug(text):\n    return text.lower().replace(\" \", \"-\")\n",
+  "reference_source": "import re\ndef slug(text):\n    return re.sub(r\"[^a-z0-9]+\", \"-\", text.lower()).strip(\"-\")\n",
+  "tests": [
+    {
+      "test_id": "spaces",
+      "expression": "solution.slug('  Hello   World  ') == 'hello-world'"
+    },
+    {
+      "test_id": "punctuation",
+      "expression": "solution.slug('A/B_C!') == 'a-b-c'"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.slug('!!!') == ''"
+    },
+    {
+      "test_id": "digits",
+      "expression": "solution.slug('Version 2') == 'version-2'"
+    }
+  ],
+  "challenge": "partial_tests"
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h08-interleave",
+  "split": "heldout",
+  "description": "Fix interleave(groups) to take one element from each list in order repeatedly until all lists are exhausted; skip exhausted or empty lists. Preserve all values.",
+  "source_file": "solution.py",
+  "initial_source": "def interleave(groups):\n    return [item for row in zip(*groups) for item in row]\n",
+  "reference_source": "def interleave(groups):\n    result = []\n    for index in range(max((len(group) for group in groups), default=0)):\n        for group in groups:\n            if index < len(group):\n                result.append(group[index])\n    return result\n",
+  "tests": [
+    {
+      "test_id": "unequal",
+      "expression": "solution.interleave([[1,2,3],[4]]) == [1,4,2,3]"
+    },
+    {
+      "test_id": "emptygroups",
+      "expression": "solution.interleave([[],[1,2],[]]) == [1,2]"
+    },
+    {
+      "test_id": "none",
+      "expression": "solution.interleave([]) == []"
+    },
+    {
+      "test_id": "equal",
+      "expression": "solution.interleave([[1,2],[3,4]]) == [1,3,2,4]"
+    }
+  ],
+  "challenge": "partial_tests"
+}

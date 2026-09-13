@@ -11,6 +11,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 IGNORED = {
+    ".superpowers",
     ".git",
     ".venv",
     ".cache",

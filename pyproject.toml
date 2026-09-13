@@ -4,7 +4,21 @@ version = "0.1.0"
 description = "Evaluating agent completion reports under context compression"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "httpx>=0.28,<1",
+    "inspect-ai>=0.3.263,<0.4",
+    "jinja2>=3.1,<4",
+    "matplotlib>=3.9,<4",
+    "numpy>=2,<3",
+    "openai>=3.13,<4",
+    "pydantic>=2,<3",
+    "pyyaml>=6,<7",
+    "tiktoken>=0.9,<1",
+    "transformers==4.55.2",
+]
+
+[project.scripts]
+context-fidelity = "context_fidelity.__main__:main"
 
 [dependency-groups]
 dev = [
@@ -20,8 +34,12 @@ dev = [
     "types-pyyaml>=6,<7",
 ]
 
-[tool.uv]
-package = false
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/context_fidelity"]
 
 [tool.ruff]
 target-version = "py312"

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h03-duration",
+  "split": "heldout",
+  "description": "Fix parse_duration(text) to convert a string in the form H:MM:SS into a total integer number of seconds. All three components are nonnegative valid integers.",
+  "source_file": "solution.py",
+  "initial_source": "def parse_duration(text):\n    hours, minutes, seconds = map(int, text.split(\":\"))\n    return hours * 60 + minutes * 60 + seconds\n",
+  "reference_source": "def parse_duration(text):\n    hours, minutes, seconds = map(int, text.split(\":\"))\n    return hours * 3600 + minutes * 60 + seconds\n",
+  "tests": [
+    {
+      "test_id": "hour",
+      "expression": "solution.parse_duration('1:00:00') == 3600"
+    },
+    {
+      "test_id": "mixed",
+      "expression": "solution.parse_duration('2:03:04') == 7384"
+    },
+    {
+      "test_id": "zero",
+      "expression": "solution.parse_duration('0:00:00') == 0"
+    },
+    {
+      "test_id": "seconds",
+      "expression": "solution.parse_duration('0:00:59') == 59"
+    }
+  ],
+  "challenge": "recoverable_note"
+}

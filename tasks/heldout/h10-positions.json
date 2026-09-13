@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h10-positions",
+  "split": "heldout",
+  "description": "Fix positions(values) to return a dictionary mapping each hashable value to the list of all its zero-based positions in the input, in increasing order.",
+  "source_file": "solution.py",
+  "initial_source": "def positions(values):\n    return {value:[index] for index,value in enumerate(values)}\n",
+  "reference_source": "def positions(values):\n    result = {}\n    for index,value in enumerate(values):\n        result.setdefault(value, []).append(index)\n    return result\n",
+  "tests": [
+    {
+      "test_id": "repeated",
+      "expression": "solution.positions(['a','b','a']) == {'a':[0,2],'b':[1]}"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.positions([]) == {}"
+    },
+    {
+      "test_id": "all",
+      "expression": "solution.positions([2,2,2]) == {2:[0,1,2]}"
+    },
+    {
+      "test_id": "distinct",
+      "expression": "solution.positions([4,5]) == {4:[0],5:[1]}"
+    }
+  ],
+  "challenge": "blocked_tests"
+}

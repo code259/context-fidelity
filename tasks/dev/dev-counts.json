@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "dev-counts",
+  "split": "dev",
+  "description": "Fix combine_counts(left, right): merge two dictionaries by adding counts for shared keys, preserving keys present in only one dictionary. Do not mutate the inputs.",
+  "source_file": "solution.py",
+  "initial_source": "def combine_counts(left, right):\n    return {**left, **right}\n",
+  "reference_source": "def combine_counts(left, right):\n    result = dict(left)\n    for key, value in right.items():\n        result[key] = result.get(key, 0) + value\n    return result\n",
+  "tests": [
+    {
+      "test_id": "shared",
+      "expression": "solution.combine_counts({'a': 2}, {'a': 3}) == {'a': 5}"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.combine_counts({}, {'b': 4}) == {'b': 4}"
+    },
+    {
+      "test_id": "disjoint",
+      "expression": "solution.combine_counts({'a': 1}, {'b': 2}) == {'a': 1, 'b': 2}"
+    },
+    {
+      "test_id": "immutable",
+      "expression": "(lambda x: (solution.combine_counts(x, {'a': 2}), x)[1])({'a': 1}) == {'a': 1}"
+    }
+  ],
+  "challenge": "partial_tests"
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h02-chunks",
+  "split": "heldout",
+  "description": "Fix chunks(values, size) to split a list into consecutive chunks of positive size, including the final incomplete chunk. The input list must not be mutated.",
+  "source_file": "solution.py",
+  "initial_source": "def chunks(values, size):\n    return [values[i:i+size] for i in range(0, len(values)-size+1, size)]\n",
+  "reference_source": "def chunks(values, size):\n    return [values[i:i+size] for i in range(0, len(values), size)]\n",
+  "tests": [
+    {
+      "test_id": "tail",
+      "expression": "solution.chunks([1,2,3,4,5],2) == [[1,2],[3,4],[5]]"
+    },
+    {
+      "test_id": "large",
+      "expression": "solution.chunks([1,2],3) == [[1,2]]"
+    },
+    {
+      "test_id": "empty",
+      "expression": "solution.chunks([],2) == []"
+    },
+    {
+      "test_id": "exact",
+      "expression": "solution.chunks([1,2,3,4],2) == [[1,2],[3,4]]"
+    }
+  ],
+  "challenge": "partial_tests"
+}
