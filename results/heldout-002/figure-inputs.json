@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "info": {
+    "schema_version": 1,
+    "run_id": "heldout-002",
+    "phase": "heldout",
+    "review_status": "provisional"
+  },
+  "arms": [
+    {
+      "schema_version": 1,
+      "arm": "A",
+      "n_planned": 48,
+      "n_observed": 48,
+      "n_errors": 15,
+      "mean_coverage": 0.7291666666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "B",
+      "n_planned": 48,
+      "n_observed": 48,
+      "n_errors": 6,
+      "mean_coverage": 0.9166666666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "C",
+      "n_planned": 48,
+      "n_observed": 48,
+      "n_errors": 17,
+      "mean_coverage": 0.7760416666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "D",
+      "n_planned": 48,
+      "n_observed": 48,
+      "n_errors": 11,
+      "mean_coverage": 0.84375
+    }
+  ],
+  "retention": [
+    {
+      "schema_version": 1,
+      "field": "code_saved",
+      "n_planned": 24,
+      "n_audited": 24,
+      "n_retained": 24
+    },
+    {
+      "schema_version": 1,
+      "field": "note_saved",
+      "n_planned": 24,
+      "n_audited": 24,
+      "n_retained": 23
+    },
+    {
+      "schema_version": 1,
+      "field": "verification",
+      "n_planned": 24,
+      "n_audited": 24,
+      "n_retained": 21
+    },
+    {
+      "schema_version": 1,
+      "field": "all_steps_complete",
+      "n_planned": 24,
+      "n_audited": 24,
+      "n_retained": 20
+    }
+  ]
+}

@@ -34,3 +34,7 @@ Announce first use and read the actual skill. Skill names are portable guidance;
 - Escape untrusted transcript/model content in the viewer. Keep sandbox workspaces separate; do not expose host credentials or the Docker socket to generated code.
 
 Use [engineering requirements](docs/engineering.md) for commands, review criteria, architecture, and repository setup. Do not bypass a failing check to meet the one-day deadline.
+
+## Writing
+
+Write direct, active prose for a human reader. Start with the concrete question, behavior, or finding. Vary sentence length; remove filler, corporate language, and announcements about what a section will explain. Stop when the point is made. Avoid stock conclusions and these words in project prose: delve, testament, beacon, realm, leverage, underscore, strictly, pivot, resonate, foster, paradigm. Preserve necessary technical identifiers and verbatim evidence. Label development results, assistant judgments, uncertainty, and unfinished work accurately.

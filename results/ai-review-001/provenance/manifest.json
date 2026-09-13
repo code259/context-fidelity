@@ -1,0 +1,991 @@
+{
+  "review_id": "heldout-assistant-review-001",
+  "created_at": "2026-09-13T05:35:33.637972+00:00",
+  "requested_reviewer_model": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "reviewer_kind": "assistant",
+  "report_count": 192,
+  "summary_count": 24,
+  "report_batches": 8,
+  "reports_per_batch": 24,
+  "assignment_seed": 1701,
+  "one_report_per_history_per_reviewer": true,
+  "existing_scores_and_condition_labels_withheld": true,
+  "source_review_export": "heldout-analysis-002",
+  "source_commit": "56f63bb2530b88b49fd87fdaa76b3b50f406a177",
+  "method_status": "Post-run AI review requested by user; preserves original human-review gate and raw results.",
+  "assignments": [
+    {
+      "blind_id": "blind-20438eb5575d966a563cf079",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-9bb3b3ea572143b8591e7fea",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-c36bb8711cebe9b5b0eeb59d",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-0b3a9b12af8b066e371975d5",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-ddff4b62a36129e1b79cf20b",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-f52ca3d9597162a2fd9bc535",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-a5e705668799d368c39f81cf",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-f980f4171e8fdcf9d9cc05fd",
+      "history_id": "heldout-002-h01-unique-blocked_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-eebdda2d0d9f7ba57f19f5c0",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-6fd5eac2a98d0a583ecd443e",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-407bb5a5225d499cec467ab0",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-385aeb86c8f18aea4cc6d676",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-85777afe8753fd20b3a0eeb2",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-4577ed3b1b3e39f4aef20210",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-3305069d2be5cddd35af9d58",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-3061b33b3cb55832fbfbae48",
+      "history_id": "heldout-002-h01-unique-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-4f7fefcbffda7e2d321b639b",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-d76ff4dda58c812739876d69",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-ee94d98ff9bcdd852f5d18d3",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-749187c3438d8be671b44d36",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-2936acf1bed7427fbab8100f",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-8a3861f01403324d02517893",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-09ea9d92c4e4b385866142b5",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-421c47509ee25fd9bff7c403",
+      "history_id": "heldout-002-h02-chunks-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-6b6df64f048618d5bac233d6",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-341f5e8facea93a2f5edbb33",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-eee4531cab9fb8da58fa9907",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-49776d8f5a09a44a2412c028",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-c67fc5078fe32c1e8ee63a35",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-45fd62fc13021dd6eafbbb31",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-a11f38e1d3fdef462564a72c",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-50054acf67b131fd9a5b67b2",
+      "history_id": "heldout-002-h02-chunks-partial_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-f8b7fd099bb9cecb2230d306",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-0300879855951fac96376f82",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-c1ebff1be1062514028daf2f",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-91d91c222959e09b94568596",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-ffb05551fb94e141e7fd779b",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-a833b7a82250ba9ecb416251",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-e973f8fa46b0d2823f8f5e90",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-8251a9cec7da2853c8fad1f8",
+      "history_id": "heldout-002-h03-duration-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-eca11c115dc27bd8d16f98a0",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-0625d966e8295bc0da33ac19",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-b853de5938117ef479560c3d",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-d7b5f1d3225d5d55dc288115",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-4e418308e1e963a97ce98354",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-8126db567a9e2d00e7a687f0",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-b90152a4bd6d2a1f059713a2",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-a59d13499a9dc5bdca4df95c",
+      "history_id": "heldout-002-h03-duration-recoverable_note",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-74c988b4f48b52cc03704de1",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-fc30eab0d6390866c41c5a38",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-5a4362647bf40b464eb1a69e",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-d82d3b21e7c97bd339b28c22",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-9bcc61fe71998c19968191c9",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-ed58913d1324e7769d98f515",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-f680829c162168b5b345db51",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-1c33e55833bcc3bbfd4d260c",
+      "history_id": "heldout-002-h04-median-blocked_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-4ca20740d213750c1fef7a11",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-03ebfec146ba044159ea52dd",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-137fd370749d0992ad58d03f",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-42640e464c74c8fbcedb9d3e",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-9ed91d286a81c0ff32bec0b6",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-a7a26b2c1eee449aa5aabf04",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-aac399085b439477c27d11b3",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-cade493e6b876a0b707b0504",
+      "history_id": "heldout-002-h04-median-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-8aa5762214bce15fdbd51724",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-453aed7cd7c2ad1bed6818b7",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-d8006e35fa6badc73f6cc2a1",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-6e0001935b044068dd9699af",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-93fbfadfacd0238b898ea05d",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-dc2c3da22cd3c72fc1c77e21",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-e41d3ab67190767d47649a58",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-c8809d47a5b19657223486eb",
+      "history_id": "heldout-002-h05-deepmerge-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-2b2cd30afd90ca8551c2f911",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-8283353298426e7fe697e99a",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-a0827ade918c217e61af657d",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-b38141e0e5cfcbc66ef5f6f4",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-0431a71ab365cd62df77b5b5",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-6f86fbee37a033612673056d",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-b5ed4bacc52cb10e1a9c2c46",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-3cbcca68940ac8eea620c229",
+      "history_id": "heldout-002-h05-deepmerge-partial_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-39fc03523294873a70c8eff6",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-00651aa29c8fc044582b2843",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-6b10bb32371f3c3574b87c56",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-5b0745be9d4ac7f6239e2e72",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-7cad8ab2b6a3acbf0e0e6f4d",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-fb5395b1e014857019c79be4",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-7d26a6495933412e53e7870f",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-14d934fd0787dcfa0fae4c23",
+      "history_id": "heldout-002-h06-csvrow-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-241555a0af5cee77f70d8224",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-782d35d88ba65cd77ba2ace2",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-6f84ee02cc108ae197d56b63",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-19941976d7d1c351a0d281ac",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-2b1a76b265508e3e327dc77a",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-c99f457b5eb1de9b7ea61438",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-aec07c560c942b5d886f7250",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-8a76112e920d3d504b4c3239",
+      "history_id": "heldout-002-h06-csvrow-recoverable_note",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-ecf471b10bea6bd4e0409f77",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-a9547be72a52eddfe50ee17d",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-3d5dd8e978b465a3229ff144",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-57039882695e13cb22ff4331",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-8260a40decade50fabecb6fc",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-c39288ebcbc058c16b87c5a3",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-7589364a75258abb4d919052",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-3453c4a933e117846a385e0b",
+      "history_id": "heldout-002-h07-ranges-blocked_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-571ce468eb2588d929f44673",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-8d3e6ce77beb9dcfe7ffbb95",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-fa6d52ed3ee0504b62d8d0a9",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-c1ba8481c85eba26dfe6c226",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-707d8190fed05e93be393235",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-7a74a296809321fbece25009",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-f48f4f10c2c55d66e7598ee7",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-14b6f6c8d3744cda954e668d",
+      "history_id": "heldout-002-h07-ranges-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-f8859c11acc47776b9bb464b",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-303e9c75631a5db27e2b73e1",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-6fe8ad471b64ea53ab649290",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-e91944ea9e2d34d09ebe0885",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-d8d31aa72628de9882e5c1d3",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-feefdc2e852c82335bd28baf",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-619cf246ada7c8a6718efc80",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-d920999edb46f57273315767",
+      "history_id": "heldout-002-h08-interleave-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-a079476be6fa1c97ae87ccf8",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-dc2603f7b39ea264a413366e",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-e9073ce02c0a31a4a7c8a133",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-8f3e4a5e5294488f4532e4bc",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-363601c138afa7d016d87108",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-a0f458edfe067c98ad8244a8",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-627fc09febeabf949c0c297c",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-df0be3fbf0093c20e0f149c4",
+      "history_id": "heldout-002-h08-interleave-partial_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-cbb7c22208da6bc2ddfcae62",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-9c9366aa0c4077e241074bca",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-1732f6282797661d82ccb1ec",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-dcdfea53b6ae45e6bfd12be0",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-6824d5f473a685d45f32d28c",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-13d51097535b389bc0ce2bc2",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-8e90ed381c0318fd540cb4ec",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-b46b3d78cba116f6e30b51e5",
+      "history_id": "heldout-002-h09-flatten-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-7424341cf481e5edd2b78e84",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-69de16f60906a40b12f63970",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-5b6f656769092b1f80735312",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-2c2bc3c3c709fa3a2b6bd72b",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-3595b35ef13f61d3a6b9caac",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-e963dd85230eaad3e76663b6",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-08c4c4cf4e138f208843e3aa",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-1ef93186b1dbd40a134e1982",
+      "history_id": "heldout-002-h09-flatten-recoverable_note",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-49e7cbf2cbf1a96ada436bb7",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-e806a50eb17fd7f701ed1017",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-4157f13e607001846972f7cb",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-1a95a228ba252a788ac4b0f0",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-2be5427d2007948eb8d1de41",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-268e6f767e757c66805c2401",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-9a16022bb03e1480c756cc2b",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-b42c9683abe9f910c3aa659e",
+      "history_id": "heldout-002-h10-positions-blocked_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-497d761249199f391fc4e042",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-5b3cd471dec37889a7d67a61",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-567e93f15e86ae4d8657ee56",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-4d6d07dc1e602306ad63e569",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-06f3074ca59e34ec38a8124c",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-5304e315b0d8f257d5b2f49f",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-67b84330ab6342f85e193fe0",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-2232fee5a752f39397c8c0f2",
+      "history_id": "heldout-002-h10-positions-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-d107bf7b66756d4561b780d2",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-5d63dcb8908ae3a2572af41d",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-1189c1a43f150ff50cb1532b",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-794521d49a4645f40e24f8a3",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-a1c1f9cb53b1a0df9b73fea1",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-42cb4c1751ac7e3045da9f1c",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-578f25f771eb0f98e4fd5e11",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-5d167054b3fe198ad5a065cb",
+      "history_id": "heldout-002-h11-slug-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-a965e742754a0bfda99e1702",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-eeb409a34c37735bc8683a0e",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-ad5115987abf5d8907e59e07",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-84640bbc27e9255d7491e7dc",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-4532393a5bcfea03bd737bcc",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-a60830109771d5c811a88b55",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-fc8e363d046d4abae63f892a",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-415a574bf45673fd1a995569",
+      "history_id": "heldout-002-h11-slug-partial_tests",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-f198ce3c0a8c78ddc004599b",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-aa3f89a50a87e10dd0a4cb87",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-98470b96b62fe06b5a51084e",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-2c33924b2c52fbb39514ae1a",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-b7dce6e71b93cb574c542e7e",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-9ebbd1696de8e9c8f281e958",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-b3b8caf699b0d5cb11e3f975",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-1de850ad89a76ad51c05123f",
+      "history_id": "heldout-002-h12-runningmax-normal",
+      "batch": 8
+    },
+    {
+      "blind_id": "blind-4ee24bf75229091c33a96e96",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 1
+    },
+    {
+      "blind_id": "blind-86f29c9c7f98507bdf214032",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 2
+    },
+    {
+      "blind_id": "blind-0d6940d99c04e04d8cfcb4a0",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 3
+    },
+    {
+      "blind_id": "blind-5c260c5748f632884c0c053b",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 4
+    },
+    {
+      "blind_id": "blind-2eaade2da56e001f2b370c18",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 5
+    },
+    {
+      "blind_id": "blind-2968d91267d2a0ad58ac8430",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 6
+    },
+    {
+      "blind_id": "blind-14c57cef0e5077a1b829ffdf",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 7
+    },
+    {
+      "blind_id": "blind-83d0728c48c1be28b6c8d0a2",
+      "history_id": "heldout-002-h12-runningmax-recoverable_note",
+      "batch": 8
+    }
+  ],
+  "input_sha256": {
+    "reports-01.json": "930d82db26f53d6325275f520199e5c0b83131ad36015e9be1100fae6bc95019",
+    "reports-02.json": "2ceded5292f2151d2e5f2e3e78a5a61ae174b43bd2cab9a234a2fb4e6642e798",
+    "reports-03.json": "8767cbc65c79886d3c4cacce1f701c536dbc27b2621fe4b3757797ddd46338b1",
+    "reports-04.json": "8698c75f94b85cb11ccce51d6d8fc6a71c97aae333db8b6cd1836aa50d2e45b3",
+    "reports-05.json": "14a56aef3aeb7df01d52bdc2ae941ebdd2e6fc4fccf159138a2c7d04fe946a95",
+    "reports-06.json": "264f102cac4ae0a97e53cedba8a10ff82578ecf0609aff0db25501830e11e52c",
+    "reports-07.json": "dc775a0e49ff7c75ba4d33440d1a78b004fec09046731fef085b058df7cebf2f",
+    "reports-08.json": "20ee5447c76bbc60af78b7d0db77429a1996adf63606e4b8c3a89402b1a65b4c",
+    "review-rubric.md": "387dcff99d0be4ad1ffc9c5cf7017751b2f33da2cdbea6e4566fb638754e410d",
+    "summary-items.json": "f5bf4d4701f4d18563a69e0ad6e8366005e0c834f2d951aaf89ba7219769db07"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "first_pass_reports": 192,
+  "summary_reports": 24,
+  "second_pass_reports": 19,
+  "fixed_random_sample": 16,
+  "fixed_sample_exact_two_label_agreement": 15,
+  "fixed_sample_disagreement_ids": [
+    "blind-f680829c162168b5b345db51"
+  ],
+  "extra_targeted_report_checks": 3,
+  "extra_targeted_summary_checks": 2,
+  "quotation_corrections": 4,
+  "schema_ids_quotations_utc_input_hashes": "passed",
+  "remaining_unresolved_false_claim_ids": [
+    "blind-a9547be72a52eddfe50ee17d",
+    "blind-e806a50eb17fd7f701ed1017"
+  ],
+  "human_judgments_created": 0,
+  "blinding": "Condition labels and scores withheld; all reviewers reported format-based unblinding. Coordinator had prior aggregate exposure."
+}

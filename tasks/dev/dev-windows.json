@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "dev-windows",
+  "split": "dev",
+  "description": "Fix window_sums(values, width) to return sums of every contiguous full window of the given positive width. Return an empty list when the width exceeds the input length.",
+  "source_file": "solution.py",
+  "initial_source": "def window_sums(values, width):\n    return [sum(values[i:i+width]) for i in range(len(values)-width)]\n",
+  "reference_source": "def window_sums(values, width):\n    return [sum(values[i:i+width]) for i in range(len(values)-width+1)]\n",
+  "tests": [
+    {
+      "test_id": "last",
+      "expression": "solution.window_sums([1,2,3,4], 2) == [3,5,7]"
+    },
+    {
+      "test_id": "entire",
+      "expression": "solution.window_sums([1,2,3], 3) == [6]"
+    },
+    {
+      "test_id": "wide",
+      "expression": "solution.window_sums([1], 2) == []"
+    },
+    {
+      "test_id": "single",
+      "expression": "solution.window_sums([2,-1], 1) == [2,-1]"
+    }
+  ],
+  "challenge": "recoverable_note"
+}

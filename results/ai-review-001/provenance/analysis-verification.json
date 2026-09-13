@@ -1,0 +1,12 @@
+{
+  "report_cells": 192,
+  "ai_errors": 63,
+  "ai_no_error_identified": 128,
+  "ai_unresolved": 1,
+  "structured_errors": 49,
+  "additional_errors_from_prose": 14,
+  "independent_fraction_arithmetic": "Counts, complete-task point estimates, and all-task ambiguity bounds passed. Bootstrap intervals use the existing tested analysis function.",
+  "native_offline_analysis": "192/192 exported; original 143 unresolved human-primary verdicts preserved",
+  "original_release": "unchanged",
+  "application_code_changes": false
+}

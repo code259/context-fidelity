@@ -73,3 +73,11 @@ def test_nonstandard_python_location_fails(tmp_path):
     root = fixture(tmp_path)
     (root / "experiment.py").write_text("print('bypasses source coverage')\n")
     assert invoke(root).returncode == 1
+
+
+def test_agent_scratch_records_do_not_become_repository_documents(tmp_path):
+    root = fixture(tmp_path)
+    scratch = root / ".superpowers" / "sdd"
+    scratch.mkdir(parents=True)
+    (scratch / "review.md").write_text("[Transient reviewer artifact](missing-local-file.md)")
+    assert invoke(root).returncode == 0

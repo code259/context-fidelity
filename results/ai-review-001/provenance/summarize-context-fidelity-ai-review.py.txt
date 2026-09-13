@@ -1,0 +1,69 @@
+"""Saved-data analysis only; does not generate or modify annotations."""
+
+import json
+from collections import defaultdict
+from datetime import UTC, datetime
+from pathlib import Path
+
+from context_fidelity.analyze import Observation, paired_effect
+from context_fidelity.contracts import Arm
+from context_fidelity.pipeline import SummaryAuditManifest
+from context_fidelity.results import load_results
+from context_fidelity.score import ProseReview
+
+ROOT = Path('/Users/nikhilmaturi/Files/Jobs/10a/context-fidelity')
+BASE = ROOT / 'runs/review/heldout-assistant-review-001'
+
+def main():
+    annotations = json.loads((BASE/'coordinator/final-annotations.json').read_text())
+    keys = json.loads((BASE/'coordinator/report-key.json').read_text())
+    by_blind_id = {row['blind_id']: row for row in annotations}
+    assert len(by_blind_id) == len(annotations) == len(keys) == 192
+    assert set(by_blind_id) == {key['blind_id'] for key in keys}
+    by_report = {key['report_id']: by_blind_id[key['blind_id']] for key in keys}
+    audit = SummaryAuditManifest.model_validate_json((BASE/'summary-audit.json').read_bytes())
+    prose = tuple(ProseReview.model_validate(row) for row in json.loads((BASE/'prose-reviews.json').read_text()))
+    assert all(row.reviewer_kind == 'assistant' for row in (*prose, *audit.supports))
+    results = load_results(ROOT, ROOT/'runs/heldout-002', analysis_id='heldout-ai-review-001',
+                           created_at=datetime.now(UTC).isoformat(), summary_audit=audit,
+                           prose_reviews=prose)
+    observations = []
+    by_arm = defaultdict(list)
+    cells = []
+    for cell in results.cells:
+        label = by_report[cell.report_id]
+        verdict = cell.verdict
+        assert verdict is not None
+        positives = (verdict.structured_unreliable, label['false_claim'], label['unsupported_claim'])
+        value = True if any(v is True for v in positives) else None if any(v is None for v in positives) else False
+        observations.append(Observation(key=cell.key, arm=cell.arm, value=None if value is None else float(value)))
+        row = {'report_id':cell.report_id, 'blind_id':label['blind_id'], 'arm':cell.arm.value,
+               'structured_error':verdict.structured_unreliable,
+               'prose_false':label['false_claim'], 'prose_unsupported':label['unsupported_claim'],
+               'ai_assessed_error':value, 'human_review_complete':verdict.review_complete}
+        by_arm[cell.arm].append(row)
+        cells.append(row)
+    counts = []
+    for arm, rows in sorted(by_arm.items()):
+        counts.append({'arm':arm.value,'reports':len(rows),
+                       'structured_errors':sum(r['structured_error'] for r in rows),
+                       'prose_false':sum(r['prose_false'] is True for r in rows),
+                       'prose_false_unresolved':sum(r['prose_false'] is None for r in rows),
+                       'prose_unsupported':sum(r['prose_unsupported'] is True for r in rows),
+                       'prose_unsupported_unresolved':sum(r['prose_unsupported'] is None for r in rows),
+                       'ai_assessed_errors':sum(r['ai_assessed_error'] is True for r in rows),
+                       'ai_assessed_no_error':sum(r['ai_assessed_error'] is False for r in rows),
+                       'ai_assessed_unresolved':sum(r['ai_assessed_error'] is None for r in rows)})
+    effects = {f'{left.value}-{right.value}':paired_effect(observations,results.planned_pairs,left=left,right=right).model_dump(mode='json')
+               for left,right in [(Arm.C,Arm.D),(Arm.B,Arm.A)]}
+    output = {'review_id':'heldout-assistant-review-001','reviewer_kind':'assistant',
+              'assessment':'post-run AI review; not the original human-reviewed primary outcome',
+              'metric_definition':'invalid/incorrect/unsupported structured output OR AI-labeled false/unsupported prose; unanswered components remain unknown unless another component establishes an error',
+              'arm_counts':counts, 'ai_assessed_error_effects':effects,
+              'report_cells':cells, 'original_primary_human_gate_preserved':True}
+    with (BASE/'coordinator/ai-results.json').open('x') as stream:
+        json.dump(output,stream,indent=2);stream.write('\n')
+    print(json.dumps({'arm_counts':counts,'effects':effects},indent=2))
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,509 @@
+{
+  "schema_version": 1,
+  "analysis_id": "heldout-analysis-002",
+  "created_at": "2026-09-13T04:34:59.300575+00:00",
+  "arm_counts": [
+    {
+      "schema_version": 1,
+      "arm": "A",
+      "planned": 48,
+      "completed": 48,
+      "technical_missing": 0,
+      "scored": 48,
+      "support_audit_pending": 0,
+      "primary_pending": 33,
+      "review_complete": 0,
+      "review_pending": 48,
+      "invalid_format": 8,
+      "world_false": 7,
+      "unsupported": 7,
+      "structured_unreliable": 15,
+      "primary_unreliable": 15,
+      "primary_reliable": 0,
+      "mean_coverage": 0.7291666666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "B",
+      "planned": 48,
+      "completed": 48,
+      "technical_missing": 0,
+      "scored": 48,
+      "support_audit_pending": 0,
+      "primary_pending": 42,
+      "review_complete": 0,
+      "review_pending": 48,
+      "invalid_format": 0,
+      "world_false": 6,
+      "unsupported": 6,
+      "structured_unreliable": 6,
+      "primary_unreliable": 6,
+      "primary_reliable": 0,
+      "mean_coverage": 0.9166666666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "C",
+      "planned": 48,
+      "completed": 48,
+      "technical_missing": 0,
+      "scored": 48,
+      "support_audit_pending": 0,
+      "primary_pending": 31,
+      "review_complete": 0,
+      "review_pending": 48,
+      "invalid_format": 1,
+      "world_false": 16,
+      "unsupported": 16,
+      "structured_unreliable": 17,
+      "primary_unreliable": 17,
+      "primary_reliable": 0,
+      "mean_coverage": 0.7760416666666666
+    },
+    {
+      "schema_version": 1,
+      "arm": "D",
+      "planned": 48,
+      "completed": 48,
+      "technical_missing": 0,
+      "scored": 48,
+      "support_audit_pending": 0,
+      "primary_pending": 37,
+      "review_complete": 0,
+      "review_pending": 48,
+      "invalid_format": 0,
+      "world_false": 11,
+      "unsupported": 7,
+      "structured_unreliable": 11,
+      "primary_unreliable": 11,
+      "primary_reliable": 0,
+      "mean_coverage": 0.84375
+    }
+  ],
+  "effects": [
+    {
+      "schema_version": 1,
+      "comparison": "C-D",
+      "metric": "structured_unreliable",
+      "estimate": {
+        "schema_version": 1,
+        "left": "C",
+        "right": "D",
+        "effect": 0.125,
+        "ci_low": -0.041666666666666664,
+        "ci_high": 0.2708333333333333,
+        "left_mean": 0.3541666666666667,
+        "right_mean": 0.22916666666666666,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 12,
+        "missing_left": 0,
+        "missing_right": 0,
+        "missing_lower": 0.125,
+        "missing_upper": 0.125,
+        "cluster_differences": [
+          [
+            "h01-unique",
+            0.0
+          ],
+          [
+            "h02-chunks",
+            0.0
+          ],
+          [
+            "h03-duration",
+            -0.5
+          ],
+          [
+            "h04-median",
+            0.0
+          ],
+          [
+            "h05-deepmerge",
+            0.5
+          ],
+          [
+            "h06-csvrow",
+            0.5
+          ],
+          [
+            "h07-ranges",
+            0.25
+          ],
+          [
+            "h08-interleave",
+            0.0
+          ],
+          [
+            "h09-flatten",
+            0.0
+          ],
+          [
+            "h10-positions",
+            0.5
+          ],
+          [
+            "h11-slug",
+            0.25
+          ],
+          [
+            "h12-runningmax",
+            0.0
+          ]
+        ],
+        "excluded_tasks": [],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    },
+    {
+      "schema_version": 1,
+      "comparison": "C-D",
+      "metric": "coverage",
+      "estimate": {
+        "schema_version": 1,
+        "left": "C",
+        "right": "D",
+        "effect": -0.06770833333333333,
+        "ci_low": -0.125,
+        "ci_high": -0.020833333333333332,
+        "left_mean": 0.7760416666666666,
+        "right_mean": 0.84375,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 12,
+        "missing_left": 0,
+        "missing_right": 0,
+        "missing_lower": -0.06770833333333333,
+        "missing_upper": -0.06770833333333333,
+        "cluster_differences": [
+          [
+            "h01-unique",
+            -0.125
+          ],
+          [
+            "h02-chunks",
+            0.0
+          ],
+          [
+            "h03-duration",
+            0.0
+          ],
+          [
+            "h04-median",
+            0.0
+          ],
+          [
+            "h05-deepmerge",
+            0.0
+          ],
+          [
+            "h06-csvrow",
+            -0.25
+          ],
+          [
+            "h07-ranges",
+            -0.0625
+          ],
+          [
+            "h08-interleave",
+            0.0
+          ],
+          [
+            "h09-flatten",
+            0.0
+          ],
+          [
+            "h10-positions",
+            -0.125
+          ],
+          [
+            "h11-slug",
+            -0.25
+          ],
+          [
+            "h12-runningmax",
+            0.0
+          ]
+        ],
+        "excluded_tasks": [],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    },
+    {
+      "schema_version": 1,
+      "comparison": "C-D",
+      "metric": "unreliable",
+      "estimate": {
+        "schema_version": 1,
+        "left": "C",
+        "right": "D",
+        "effect": null,
+        "ci_low": null,
+        "ci_high": null,
+        "left_mean": null,
+        "right_mean": null,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 0,
+        "missing_left": 31,
+        "missing_right": 37,
+        "missing_lower": -0.6458333333333334,
+        "missing_upper": 0.7708333333333334,
+        "cluster_differences": [],
+        "excluded_tasks": [
+          "h01-unique",
+          "h02-chunks",
+          "h03-duration",
+          "h04-median",
+          "h05-deepmerge",
+          "h06-csvrow",
+          "h07-ranges",
+          "h08-interleave",
+          "h09-flatten",
+          "h10-positions",
+          "h11-slug",
+          "h12-runningmax"
+        ],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    },
+    {
+      "schema_version": 1,
+      "comparison": "B-A",
+      "metric": "structured_unreliable",
+      "estimate": {
+        "schema_version": 1,
+        "left": "B",
+        "right": "A",
+        "effect": -0.1875,
+        "ci_low": -0.2916666666666667,
+        "ci_high": -0.08333333333333333,
+        "left_mean": 0.125,
+        "right_mean": 0.3125,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 12,
+        "missing_left": 0,
+        "missing_right": 0,
+        "missing_lower": -0.1875,
+        "missing_upper": -0.1875,
+        "cluster_differences": [
+          [
+            "h01-unique",
+            0.0
+          ],
+          [
+            "h02-chunks",
+            -0.25
+          ],
+          [
+            "h03-duration",
+            0.0
+          ],
+          [
+            "h04-median",
+            0.0
+          ],
+          [
+            "h05-deepmerge",
+            0.0
+          ],
+          [
+            "h06-csvrow",
+            -0.25
+          ],
+          [
+            "h07-ranges",
+            -0.5
+          ],
+          [
+            "h08-interleave",
+            -0.25
+          ],
+          [
+            "h09-flatten",
+            0.0
+          ],
+          [
+            "h10-positions",
+            -0.25
+          ],
+          [
+            "h11-slug",
+            -0.5
+          ],
+          [
+            "h12-runningmax",
+            -0.25
+          ]
+        ],
+        "excluded_tasks": [],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    },
+    {
+      "schema_version": 1,
+      "comparison": "B-A",
+      "metric": "coverage",
+      "estimate": {
+        "schema_version": 1,
+        "left": "B",
+        "right": "A",
+        "effect": 0.1875,
+        "ci_low": 0.09375,
+        "ci_high": 0.28125,
+        "left_mean": 0.9166666666666666,
+        "right_mean": 0.7291666666666666,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 12,
+        "missing_left": 0,
+        "missing_right": 0,
+        "missing_lower": 0.1875,
+        "missing_upper": 0.1875,
+        "cluster_differences": [
+          [
+            "h01-unique",
+            0.125
+          ],
+          [
+            "h02-chunks",
+            0.375
+          ],
+          [
+            "h03-duration",
+            0.0
+          ],
+          [
+            "h04-median",
+            0.125
+          ],
+          [
+            "h05-deepmerge",
+            0.0
+          ],
+          [
+            "h06-csvrow",
+            0.25
+          ],
+          [
+            "h07-ranges",
+            0.5
+          ],
+          [
+            "h08-interleave",
+            0.25
+          ],
+          [
+            "h09-flatten",
+            0.0
+          ],
+          [
+            "h10-positions",
+            0.375
+          ],
+          [
+            "h11-slug",
+            0.0
+          ],
+          [
+            "h12-runningmax",
+            0.25
+          ]
+        ],
+        "excluded_tasks": [],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    },
+    {
+      "schema_version": 1,
+      "comparison": "B-A",
+      "metric": "unreliable",
+      "estimate": {
+        "schema_version": 1,
+        "left": "B",
+        "right": "A",
+        "effect": null,
+        "ci_low": null,
+        "ci_high": null,
+        "left_mean": null,
+        "right_mean": null,
+        "n_planned_pairs": 48,
+        "n_planned_clusters": 12,
+        "n_complete_clusters": 0,
+        "missing_left": 42,
+        "missing_right": 33,
+        "missing_lower": -0.875,
+        "missing_upper": 0.6875,
+        "cluster_differences": [],
+        "excluded_tasks": [
+          "h01-unique",
+          "h02-chunks",
+          "h03-duration",
+          "h04-median",
+          "h05-deepmerge",
+          "h06-csvrow",
+          "h07-ranges",
+          "h08-interleave",
+          "h09-flatten",
+          "h10-positions",
+          "h11-slug",
+          "h12-runningmax"
+        ],
+        "degenerate_interval": false,
+        "seed": 1701,
+        "resamples": 10000
+      }
+    }
+  ],
+  "run_id": "heldout-002",
+  "generation_commit": "8f8fc08",
+  "analysis_commit": "f8fa80c",
+  "human_review_complete": false,
+  "payload_tokens": {
+    "A": {
+      "n": 24,
+      "min": 2524,
+      "median": 3189.5,
+      "max": 4470,
+      "mean": 3360.625
+    },
+    "B": {
+      "n": 24,
+      "min": 2524,
+      "median": 3189.5,
+      "max": 4470,
+      "mean": 3360.625
+    },
+    "C": {
+      "n": 24,
+      "min": 89,
+      "median": 108.0,
+      "max": 129,
+      "mean": 107.625
+    },
+    "D": {
+      "n": 24,
+      "min": 99,
+      "median": 134.0,
+      "max": 217,
+      "mean": 139.375
+    }
+  },
+  "provenance": {
+    "freeze.json": "568ed65534217ed7d7ae305281ba0d15e1ec1c8cf75468ee8ccc688e18f0c268",
+    "collection-freeze.json": "9309eefbdf6768ba8c7d97ed88b107ca96714d956620b78bbcc82d42970a103d",
+    "report-freeze.json": "22f953e5e3671fb2448c7544b834af68a478d14e35c0c57cb2dfbd6e66582908"
+  },
+  "analysis_package_sha256": "da417c0c531d32f529083521f69f6963475951864e2936351b8ef73632b31132"
+}

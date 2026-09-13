@@ -1,0 +1,76 @@
+"""Bind completed assistant annotations to the existing review contracts."""
+
+import json
+from collections import defaultdict
+from datetime import UTC, datetime
+from pathlib import Path
+
+from pydantic import TypeAdapter
+
+from context_fidelity.pipeline import SummaryAuditManifest
+from context_fidelity.score import ContextSupport, ProseReview
+
+BASE = Path('/Users/nikhilmaturi/Files/Jobs/10a/context-fidelity/runs/review/heldout-assistant-review-001')
+
+def save(path, data):
+    with path.open('x') as stream:
+        json.dump(data, stream, indent=2, ensure_ascii=False)
+        stream.write('\n')
+
+def main():
+    keys=json.loads((BASE/'coordinator/report-key.json').read_text())
+    annotations=json.loads((BASE/'coordinator/final-annotations.json').read_text())
+    byid={row['blind_id']:row for row in annotations}
+    assert len(byid)==len(annotations)==len(keys)==192
+    assert set(byid)=={key['blind_id'] for key in keys}
+    grouped=defaultdict(list)
+    for key in keys:
+        grouped[(key['history_id'],key['context_digest'],key['report_digest'])].append(byid[key['blind_id']])
+    imported=[]
+    unresolved=[]
+    duplicates=[]
+    for binding, rows in sorted(grouped.items()):
+        labels={(r['false_claim'],r['unsupported_claim']) for r in rows}
+        assert len(labels)==1, f'Unadjudicated identical-content disagreement: {[r["blind_id"] for r in rows]}'
+        false_claim, unsupported_claim=next(iter(labels))
+        if len(rows)>1:
+            duplicates.append({'blind_ids':[r['blind_id'] for r in rows],
+                               'reviewer_ids':[r['reviewer_id'] for r in rows],
+                               'labels_agree':True,'report_cells_retained':len(rows)})
+        if false_claim is None or unsupported_claim is None:
+            unresolved.extend(r['blind_id'] for r in rows)
+            continue
+        assert all(r['reviewer_kind']=='assistant' for r in rows)
+        blinded=all(r['blinded'] for r in rows)
+        review=ProseReview(history_id=binding[0],context_digest=binding[1],report_digest=binding[2],
+                           false_claim=false_claim,unsupported_claim=unsupported_claim,
+                           reviewer_id='+'.join(sorted({r['reviewer_id'] for r in rows})),
+                           reviewer_kind='assistant',blinded=blinded,
+                           unblinding_note='; '.join(dict.fromkeys(r['unblinding_note'] for r in rows if r['unblinding_note'])))
+        imported.append(review)
+    summary_keys={r['summary_id']:r for r in json.loads((BASE/'coordinator/summary-key.json').read_text())}
+    summary_rows=json.loads((BASE/'coordinator/final-summary-annotations.json').read_text())
+    assert len(summary_rows)==len(summary_keys)==24
+    assert {r['summary_id'] for r in summary_rows}==set(summary_keys)
+    supports=[]
+    for row in summary_rows:
+        assert row['reviewer_kind']=='assistant'
+        key=summary_keys[row['summary_id']]
+        supports.append(ContextSupport(
+            history_id=key['history_id'],context_digest=key['context_digest'],
+            **{f:row[f] for f in ('code_saved','note_saved','verification','all_steps_complete')},
+            reviewer_id=row['reviewer_id'],reviewer_kind='assistant',
+            notes=f"Post-run AI review at {row['reviewed_at']}. {row['notes']} Evidence: {' | '.join(row['quotes'])}"))
+    audit=SummaryAuditManifest(created_at=datetime.now(UTC).isoformat(),supports=tuple(supports))
+    TypeAdapter(tuple[ProseReview,...]).validate_python(tuple(imported))
+    save(BASE/'prose-reviews.json',[r.model_dump(mode='json') for r in imported])
+    save(BASE/'summary-audit.json',audit.model_dump(mode='json'))
+    metadata={'annotated_report_items':192,'unique_content_bindings':len(grouped),
+              'imported_prose_bindings':len(imported),'unresolved_prose_items':unresolved,
+              'summary_audits':len(supports),'reviewer_kind':'assistant',
+              'duplicate_bindings':duplicates,'human_judgments_created':0}
+    save(BASE/'coordinator/import-validation.json',metadata)
+    print(json.dumps(metadata,indent=2))
+
+if __name__=='__main__':
+    main()

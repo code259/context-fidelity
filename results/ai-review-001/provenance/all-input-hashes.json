@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-09-13T06:11:01.716339+00:00",
+  "input_sha256": {
+    "additional-checks.json": "9be3824d09bd30747cbc385a49bce158768ccf18d20616bca381ad585679d4d4",
+    "quality-review.json": "cc0c5e778239d8b5f48139562e9bb7bbe7150b9cdf29151e9e3fba2b0d21765c",
+    "quality-sample.json": "c017a865f16924711ebe6256ff4065d4b4c6beffd9dcc4972bb4a68bab0eb1fb",
+    "reports-01.json": "930d82db26f53d6325275f520199e5c0b83131ad36015e9be1100fae6bc95019",
+    "reports-02.json": "2ceded5292f2151d2e5f2e3e78a5a61ae174b43bd2cab9a234a2fb4e6642e798",
+    "reports-03.json": "8767cbc65c79886d3c4cacce1f701c536dbc27b2621fe4b3757797ddd46338b1",
+    "reports-04.json": "8698c75f94b85cb11ccce51d6d8fc6a71c97aae333db8b6cd1836aa50d2e45b3",
+    "reports-05.json": "14a56aef3aeb7df01d52bdc2ae941ebdd2e6fc4fccf159138a2c7d04fe946a95",
+    "reports-06.json": "264f102cac4ae0a97e53cedba8a10ff82578ecf0609aff0db25501830e11e52c",
+    "reports-07.json": "dc775a0e49ff7c75ba4d33440d1a78b004fec09046731fef085b058df7cebf2f",
+    "reports-08.json": "20ee5447c76bbc60af78b7d0db77429a1996adf63606e4b8c3a89402b1a65b4c",
+    "review-rubric.md": "387dcff99d0be4ad1ffc9c5cf7017751b2f33da2cdbea6e4566fb638754e410d",
+    "reviewer-instructions.md": "d2a349653a54279203bbc660202946b2d7ceb9c397b56a340a5ce9259fd5dab6",
+    "summary-items.json": "f5bf4d4701f4d18563a69e0ad6e8366005e0c834f2d951aaf89ba7219769db07",
+    "summary-quality.json": "aa4c68f46eaaf35ed69f9fc2f010c77bd8e1db8f05eb639fb3affbed6161c975"
+  }
+}

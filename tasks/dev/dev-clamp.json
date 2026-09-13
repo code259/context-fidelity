@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "dev-clamp",
+  "split": "dev",
+  "description": "Fix clamp(x, low, high) to return x bounded to the inclusive interval [low, high]. Inputs always satisfy low <= high.",
+  "source_file": "solution.py",
+  "initial_source": "def clamp(x, low, high):\n    return min(low, max(x, high))\n",
+  "reference_source": "def clamp(x, low, high):\n    return max(low, min(x, high))\n",
+  "tests": [
+    {
+      "test_id": "inside",
+      "expression": "solution.clamp(4, 1, 8) == 4"
+    },
+    {
+      "test_id": "below",
+      "expression": "solution.clamp(-3, 1, 8) == 1"
+    },
+    {
+      "test_id": "above",
+      "expression": "solution.clamp(12, 1, 8) == 8"
+    },
+    {
+      "test_id": "equal",
+      "expression": "solution.clamp(2, 2, 2) == 2"
+    }
+  ],
+  "challenge": "blocked_tests"
+}

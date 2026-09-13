@@ -1,0 +1,14 @@
+{
+  "batch": "batch-06",
+  "records": 24,
+  "schema_and_ids": "passed",
+  "unmatched_quotes": [
+    {
+      "blind_id": "blind-a833b7a82250ba9ecb416251",
+      "quote": "final_files\":[{\"schema_version\": 1, \"path\": \"solution.py\""
+    }
+  ],
+  "needs_adjudication": [],
+  "false_claims": 8,
+  "unsupported_claims": 6
+}

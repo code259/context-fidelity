@@ -1,0 +1,24 @@
+"""Preserve review evidence separately from the original release."""
+import hashlib
+import json
+import shutil
+from datetime import UTC, datetime
+from pathlib import Path
+ROOT=Path('/Users/nikhilmaturi/Files/Jobs/10a/context-fidelity')
+BASE=ROOT/'runs/review/heldout-assistant-review-001'
+OUT=ROOT/'results/ai-review-001'
+OUT.mkdir(exist_ok=False)
+for relative in ['prose-reviews.json','summary-audit.json']:
+ shutil.copy2(BASE/relative,OUT/relative)
+for p in sorted((BASE/'annotations').rglob('*.jsonl')):
+ target=OUT/'annotations'/p.relative_to(BASE/'annotations');target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
+for p in sorted((BASE/'coordinator').glob('*.json')):
+ target=OUT/'provenance'/p.name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
+for name in ['reviewer-instructions.md','review-rubric.md']:
+ # Preserve exact input bytes as text: relative links belong to the original rubric location.
+ target=OUT/'provenance'/(name+'.txt');shutil.copy2(BASE/'inputs'/name,target)
+for name in ['import-context-fidelity-ai-review','summarize-context-fidelity-ai-review','validate-context-fidelity-ai-reviews']:
+ shutil.copy2(Path('/private/tmp')/(name+'.py'),OUT/'provenance'/(name+'.py.txt'))
+manifest={'review_id':'heldout-assistant-review-001','packaged_at':datetime.now(UTC).isoformat(),'reviewer_kind':'assistant','source_commit':'56f63bb2530b88b49fd87fdaa76b3b50f406a177','raw_evaluation_release':'https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional','files':{str(p.relative_to(OUT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(OUT.rglob('*')) if p.is_file()}}
+(OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+print(json.dumps({'files':len(manifest['files']),'bytes':sum(p.stat().st_size for p in OUT.rglob('*') if p.is_file()),'output':str(OUT)},indent=2))

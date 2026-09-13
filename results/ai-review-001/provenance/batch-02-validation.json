@@ -1,0 +1,17 @@
+{
+  "batch": "batch-02",
+  "records": 24,
+  "schema_and_ids": "passed",
+  "unmatched_quotes": [
+    {
+      "blind_id": "blind-341f5e8facea93a2f5edbb33",
+      "quote": "tail, large"
+    }
+  ],
+  "needs_adjudication": [
+    "blind-a9547be72a52eddfe50ee17d",
+    "blind-e806a50eb17fd7f701ed1017"
+  ],
+  "false_claims": 6,
+  "unsupported_claims": 7
+}

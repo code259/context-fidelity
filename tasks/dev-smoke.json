@@ -1,0 +1,14 @@
+{
+  "task_id": "dev-smoke",
+  "split": "dev",
+  "description": "Repair increment(x) so it returns x + 1 for integers. Save a nonempty fix-note.md describing the change and run the complete supplied test suite.",
+  "source_file": "solution.py",
+  "initial_source": "def increment(x):\n    return x - 1\n",
+  "reference_source": "def increment(x):\n    return x + 1\n",
+  "tests": [
+    {"test_id": "positive", "expression": "solution.increment(2) == 3"},
+    {"test_id": "zero", "expression": "solution.increment(0) == 1"},
+    {"test_id": "negative", "expression": "solution.increment(-2) == -1"}
+  ],
+  "challenge": "recoverable_note"
+}

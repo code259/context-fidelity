@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h05-deepmerge",
+  "split": "heldout",
+  "description": "Fix deep_merge(left, right) to recursively merge nested dictionaries. Values from right replace values from left unless both are dictionaries, in which case merge recursively. Do not mutate either input.",
+  "source_file": "solution.py",
+  "initial_source": "def deep_merge(left, right):\n    return {**left, **right}\n",
+  "reference_source": "def deep_merge(left, right):\n    result = dict(left)\n    for key, value in right.items():\n        if key in result and isinstance(result[key], dict) and isinstance(value, dict):\n            result[key] = deep_merge(result[key], value)\n        else:\n            result[key] = value\n    return result\n",
+  "tests": [
+    {
+      "test_id": "nested",
+      "expression": "solution.deep_merge({'a':{'x':1}}, {'a':{'y':2}}) == {'a':{'x':1,'y':2}}"
+    },
+    {
+      "test_id": "replace",
+      "expression": "solution.deep_merge({'a':1}, {'a':2}) == {'a':2}"
+    },
+    {
+      "test_id": "type",
+      "expression": "solution.deep_merge({'a':{'x':1}}, {'a':7}) == {'a':7}"
+    },
+    {
+      "test_id": "immutable",
+      "expression": "(lambda x: (solution.deep_merge(x, {'a':{'y':2}}),x)[1])({'a':{'x':1}}) == {'a':{'x':1}}"
+    }
+  ],
+  "challenge": "partial_tests"
+}

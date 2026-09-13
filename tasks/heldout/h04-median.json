@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "h04-median",
+  "split": "heldout",
+  "description": "Fix median(values) for nonempty numeric lists: sort a copy; return the middle value for odd lengths or the mean of the two middle values for even lengths. Do not mutate the input.",
+  "source_file": "solution.py",
+  "initial_source": "def median(values):\n    items = sorted(values)\n    return items[len(items)//2]\n",
+  "reference_source": "def median(values):\n    items = sorted(values)\n    mid = len(items)//2\n    return items[mid] if len(items)%2 else (items[mid-1]+items[mid])/2\n",
+  "tests": [
+    {
+      "test_id": "even",
+      "expression": "solution.median([1,9,3,5]) == 4"
+    },
+    {
+      "test_id": "odd",
+      "expression": "solution.median([9,1,4]) == 4"
+    },
+    {
+      "test_id": "negative",
+      "expression": "solution.median([-5,-1]) == -3"
+    },
+    {
+      "test_id": "immutable",
+      "expression": "(lambda x: (solution.median(x),x)[1])([3,1,2]) == [3,1,2]"
+    }
+  ],
+  "challenge": "blocked_tests"
+}

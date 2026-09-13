@@ -1,0 +1,9 @@
+{
+  "batch": "batch-05",
+  "records": 24,
+  "schema_and_ids": "passed",
+  "unmatched_quotes": [],
+  "needs_adjudication": [],
+  "false_claims": 6,
+  "unsupported_claims": 5
+}
