@@ -1,6 +1,6 @@
 # ED-002: Does restoring omitted evidence repair reporting?
 
-**Status:** Frozen. Eligibility will be audited before held-out reporting; the diagnostic has not run.
+**Status:** Frozen method; pre-report audit complete. No held-out history qualified, so the diagnostic did not run. Results below were appended after selection.
 **Parent:** [ED-001](ED-001-context-comparison.md). **Shared definitions:** [project spec](../project-spec.md).
 
 ## Motivation
@@ -29,7 +29,7 @@ September 12, 2026, before held-out evaluation: only 2/44 development events and
 
 An independent assistant read all eight development summaries and histories without seeing reporting outcomes. It found **zero eligible decisive omissions**. Normal summaries retained the final statuses. The partial-suite summary invented a full-pass claim, while blocked-suite summaries kept the blocking fact but contradicted it in their completion prose. The recovered note-write failure no longer determined the final status.
 
-The larger cap does not make these cases eligible. These are development judgments by an assistant; human adjudication and the held-out diagnostic remain pending.
+The larger cap does not make these cases eligible. These are development judgments by an assistant; human adjudication remains pending. Held-out eligibility results appear below.
 
 ## Positive result and implications
 
@@ -47,8 +47,14 @@ The result would locate a problem in the evidence available to the reporter. It 
 
 ## Results
 
-**Not run.** Record eligible and selected cases, event lengths, both error rates, the paired effect and interval, factual coverage, failures, and the restoration plot in the [results record](results.md).
+**Not run: 0/24 eligible histories, 0/12 eligible base tasks, 0 selected cases.** The assistant audit was saved at `2026-09-13T04:22:33.174695+00:00`, before main reporting began at `04:23:40.244526+00:00`. It records every case, raw-event lengths, exclusions, and the exact tokenizer. No restoration reports or effect estimates exist.
+
+One possible scope omission in `h11-slug-partial_tests` had a length-matched pair: a 150-token test event and a 145-token read event. It failed the semantic rule. One subset-only test event could not rule out an earlier applicable full run, and the summary's explicit completion claim would require correction. A feasible token match did not make the case decisive.
+
+See the [results record](results.md) for the audit artifacts. These are assistant judgments; human adjudication remains open.
 
 ## Analysis and interpretation
 
-**Pending results.** Compare decisive restoration with its matched control. Distinguish an incomplete summary from a false one, and link each claim to raw event and report IDs. Explain whether salience or wording could still account for the result, then state what a follow-up would test.
+The restoration hypothesis remains untested. Zero eligible cases does not show that restoration fails or that summaries never omit useful evidence. This small task set often retained the decisive status, invented its opposite, or left uncertainty that one event could not resolve.
+
+A correction experiment for fabricated claims would ask a different question. It would need its own hypotheses, controls, and selection rule before collecting new outcomes. The present data do not justify changing ED-002 to include those cases after the fact.

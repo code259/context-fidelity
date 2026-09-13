@@ -1,39 +1,25 @@
-# Implementation progress
+# Implementation status
 
-Plan: [one-day execution](plans/one-day.md). Began September 12, 2026.
+Updated September 12, 2026, in America/Los_Angeles. The [one-day plan](plans/one-day.md) defines the work; the [results record](experiments/results.md) separates findings from unfinished review.
 
-## Current state
+## Built and verified
 
-- Engineering foundation validated: tests, Ruff, strict mypy, local links, lockfile, pre-commit. Baseline commit: `caf7082`; implementation branch: `feat/context-compression-eval`.
-- Dedicated Vast SSH key generated outside the repository; public key supplied to the user.
-- A5000 connected and verified: 24,564 MiB, compute capability 8.6; private vLLM endpoint passed an Inspect smoke call.
-- Dedicated Colima Docker VM installed with host mounts disabled. Pinned Python image downloaded; first real integration tests pass. Vast cannot run nested Docker, so model serving and sandbox execution use separate hosts.
-- Local OpenAI credential source exists outside the repository. Reuse is explicitly authorized. No secret value is recorded here.
+Context Fidelity now runs small coding tasks in Docker, freezes their histories, constructs four reporting contexts, and collects model reports through Inspect. Typed records connect every verdict to its task, context, source version, and tool evidence. Offline analysis preserves raw responses and exports scored copies to Inspect View.
 
-## Execution queue
+The final source at `f8fa80c` passed **526 offline tests**. The **11 real Docker integration tests** also passed; sandbox code has not changed since that check. Application coverage is 2,370/2,378 statements (99.66%) and 685/694 branches (98.70%). Evidence extraction, context construction, scoring, and paired analysis each have 100% statement and branch coverage. Ruff, mypy, locked dependencies, local documentation links, package builds, and pre-commit checks passed. Hosted CI has not run.
 
-1. Complete: package/contracts, real Docker sandbox, Inspect model integration.
-2. Complete: evidence/context/scoring controls, development and held-out fixtures; all 16 initial/reference pairs validated through real Docker.
-3. In progress: development calibration, offline results export, figures; held-out freeze pending.
-4. Pending: main run and evidence-restoration diagnostic.
-5. Pending: blind review, paired analysis, figures, viewer and reproduction.
-6. Pending: final verification, PR/CI and demo recording.
+The architecture review removed the custom HTML renderer. Inspect View handles traces and scores; Matplotlib produces research figures. Runtime preflight, atomic phase records, and separate provisional/reviewed verdicts address the material engineering findings. See the [engineering review](engineering-review.md) for the changes and their evidence.
 
-## Decisions and review
+## Experiments
 
-- Work in the user-specified checkout on feature branches. Preserve the engineering foundation as a baseline commit before iteration; a separate worktree is unnecessary for sequential writes in this new repository.
-- Reuse the authorized key from its local file only in process memory if API access is needed. Never persist it in source, prompts, logs, or remote sandboxes.
-- No held-out model outcomes exist yet. Resolve integration and scoring ambiguities during development, recording protocol amendments before freezing.
-- Task 1A independently reviewed: 81 tests, 100% statement/branch coverage for contracts and evidence. Review caught inconsistent full-suite metadata; fixed with a regression. Failed invalid-path attempts are preserved while successful traversal remains forbidden.
-- Compact contexts preserve every write/test event, use content-equality version aliases, and raise on overflow. No oracle labels or final-file facts enter them. Fifteen focused tests, 100% statement/branch coverage.
-- Local VM image had a dangling systemd-resolved link although the resolver service was absent. Repointed the dedicated VM resolver to its DHCP-provided DNS; image pull then succeeded.
-- Verification uses source-content identity: a completed full run applies to identical final bytes, including edit-away/restore. Tests and environment remain fixed. An ordinary later change with different bytes is stale.
-- Independent sandbox review caught valid dataclass failures from missing module registration and unreaped command processes on cancellation. Both reproduced before fixes and independently rechecked afterward.
-- First real development actor completed a repair in nine seconds: five tool events, code/note saved, complete supplied suite passed. The actor terminated in prose rather than calling `finish_work`; that premature terminal message remains in its history as required. This used the initial `vllm/` Inspect provider and is only a connectivity/execution smoke, not a held-out result.
-- Independent provider review exposed hidden OpenAI SDK retries beneath Inspect's retry setting. The replacement public `openai-api/local` adapter explicitly controls SDK retries/timeouts while serving the same pinned model through vLLM. Exact message normalization, cancellation failure sidecars, public report schema, and explicit top-k forwarding are fixed and independently reviewed.
-- Implementation commit `5ec4a9f` passed 359 offline tests and 11 actual Docker integration tests. Statement coverage was 1649/1650 and branch coverage 489/492; all four critical modules reached 100% of each. Ruff, strict mypy, lock validation, package build, local links, and pre-commit passed. Hosted CI has not run.
-- `dev-pilot-001` failed all eight actors because the SSH tunnel timed out. Server health remained good. Keep-alives restored transport; `connection-smoke-002` then completed five real tool events through the current Inspect adapter. The failed pilot is retained and will not be overwritten.
-- Independent pipeline/scoring review caught acceptance of files added after collection freeze and an off-by-one review-export repetition constraint. Both are fixed with regression tests and independently rechecked. Reporting now also freezes its outputs, raw logs, audits, and explicit failure cells before analysis.
-- The initial custom replay passed a browser smoke check, then was retired after an architecture review. Inspect View now owns trace and score display. Typed review records and Matplotlib figures remain; no second dashboard is maintained.
-- `dev-pilot-002` completed eight histories, eight summaries, and 32 reports without a technical failure. These are development results. Human review remains pending.
-- The production-readiness review identified three useful fixes: native Inspect lineage and scored exports, atomic phase artifacts, and runtime checks before collection or reporting starts. It did not find a need for Grafana, a database, or Kubernetes in this fixed local experiment.
+- All 16 development and held-out fixtures passed real Docker validation: each initial implementation fails and each reference solution passes its full supplied suite.
+- `dev-pilot-001` failed because its SSH tunnel timed out. Its eight failed attempts remain available. Keep-alives fixed the transport; the replacement has a separate run ID.
+- `dev-pilot-002` completed eight histories, eight summaries, and 32 reports without a technical failure. Its native scored exports and figures are complete. Human review remains pending.
+- `heldout-001` was prepared but never generated data. A CLI startup fix changed the frozen source, so a recorded amendment replaced it with `heldout-002` before any held-out model calls.
+- `heldout-002` was frozen against `8f8fc08`. All 24 histories, 24 summaries, and 192 reports completed without a technical failure. The pre-report audit found zero eligible restoration cases. Native scored exports, paired estimates, and figures are complete in `heldout-analysis-002`.
+
+## Remaining work
+
+The results and both EDs now record the measured interpretation. A short [Inspect walkthrough](demo.md) identifies the actual demonstration cases. Human prose and summary-support review remain necessary for the complete primary outcome: 143 verdicts are unresolved, and all 192 reports lack complete human review. Assistant judgments cannot satisfy that requirement. Video recording remains open.
+
+Development is on `feat/context-compression-eval`; the foundation remains at `caf7082` on `chore/engineering-foundation`. Public publication, hosted CI, and the main-branch ruleset are pending. Local verification does not establish that those remote controls are active.

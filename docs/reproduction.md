@@ -76,14 +76,14 @@ Offline reanalysis must use immutable original run inputs and create a separatel
 
 ```sh
 uv run context-fidelity analyze --run-dir runs/dev-example --analysis-id dev-analysis-001 --output runs/analysis/dev-analysis-001
-uv run inspect view --log-dir runs/analysis/dev-analysis-001/inspect --port 18575
+uv run inspect view --log-dir runs/analysis/dev-analysis-001/inspect --host 127.0.0.1 --port 18575
 ```
 
 Analysis runs offline. It verifies the original artifact hashes, computes paired estimates, writes plots, and adds scores to separate Inspect logs. No model endpoint, tokenizer, or Docker daemon is needed. `package-freeze.json` marks a complete export; a directory without it is incomplete. Choose a new analysis ID and destination after a failed export.
 
 To add completed review records, pass `--summary-audit PATH` and `--prose-reviews PATH`. The first file contains a `SummaryAuditManifest`; the second contains an array of `ProseReview` records. Each review binds to the exact context and report. Changing review labels produces a new analysis, never a rewrite of the original.
 
-Inspect shows structured errors, factual coverage, and primary unreliability as separate scores. `pending` means required review is missing. In Tasks, filter the tags by task, environment, arm, or repetition. Switch to Samples for cross-log score columns, or open a report and its score explanation for evidence. Keep the blinded review items separate from their answer key and scored views until review is complete.
+Inspect shows structured errors, factual coverage, and primary unreliability as separate scores. `pending` means required review is missing. Use Samples for cross-log score columns; filter `logFile` with `contains` and `-C-`, for example, to select arm C. Tasks also exposes experiment tags after log headers load. Open a report and its score explanation to inspect evidence. Keep the blinded review items separate from their answer key and scored views until review is complete.
 
 The export contains measured figure inputs, PNG/PDF figures, paired effects, review JSON, and a native-log index. Build a portable viewer through Inspect's own command:
 
@@ -92,3 +92,18 @@ uv run inspect view bundle --log-dir runs/analysis/dev-analysis-001/inspect --ou
 ```
 
 Use Inspect's local server for development. A separately hosted bundle requires HTTP Range support; Python's basic `http.server` does not provide it. [Inspect View documentation](https://inspect.aisi.org.uk/log-viewer.html)
+
+## Reproduce the saved held-out results
+
+The local release candidates are `dist/context-fidelity-evidence-2026-09-12.zip` and `dist/context-fidelity-inspect-heldout-2026-09-12.zip`. The [artifact catalog](../results/heldout-002/artifact-catalog.json) records their sizes, SHA256 checksums, and reproduction check. They have not been published.
+
+The evidence archive contains the completed development and held-out runs, exact frozen held-out inputs, pre-report audits, native scored logs, figures, and analysis records. Extract it at the root of a fresh checkout with the locked environment installed, then run:
+
+```sh
+uv run context-fidelity analyze --run-dir runs/heldout-002 --analysis-id independent-analysis-001 --output runs/analysis/independent-analysis-001
+uv run inspect view --log-dir runs/analysis/independent-analysis-001/inspect --host 127.0.0.1 --port 18575
+```
+
+A fresh-directory check using archived source `f8fa80c` and the evidence archive reproduced all 192 cells, arm counts, summary audits, planned pairs, effects, and intervals exactly. It used the existing locked Python environment and made no model calls. This verifies artifact portability and offline reanalysis; it does not constitute a fresh dependency installation or human review.
+
+The smaller Inspect archive contains a portable viewer and 192 scored logs. Serve it through a host with HTTP Range support. Its records are unblinded. For human review, provide the evidence archive's `blinded-items.json` separately and withhold `blinded-key.json`, scored views, and comparison plots until judgments are saved.

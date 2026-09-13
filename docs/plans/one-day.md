@@ -10,7 +10,7 @@
 
 **Spec:** [Protocol v0.3](../project-spec.md), [ED-001](../experiments/ED-001-context-comparison.md), and [ED-002](../experiments/ED-002-evidence-restoration.md).
 
-**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. Calibration, human review, native Inspect presentation, hosted CI, and the held-out study still need to be finished.
+**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. The held-out study now has 24 histories and 192 reports, all complete. Analysis and native Inspect exports are ready; human review, hosted CI, and video recording remain open.
 
 ## Constraints and files
 
@@ -38,7 +38,7 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 - [x] Check Docker and model access. Smoke-test local tool use, memory, latency, and context limits; switch to an available API during development if necessary.
 - [x] Implement one small repair fixture and the five tools.
 - [x] Run the actor through saved code, tests, and note; capture an Inspect log and versioned events. The smoke-test actor ended in prose instead of calling `finish_work`. Keep and label that permitted early termination.
-- [ ] Record throughput and estimate the full-run duration and any API cost.
+- [x] Record throughput and estimate the full-run duration and any API cost.
 
 **Done when:** Final files agree with independently recorded events, a saved trace can be opened, and the applicable CI checks pass locally. Hosted CI remains a separate check.
 
@@ -54,11 +54,11 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 ## Hours 3–4: Pilot and freeze
 
 - [x] Collect eight development histories and one report per context: 32 pilot reports.
-- [ ] Finish calibration checks for obstacle visibility, report formatting, summary retention, actual compression, and runtime.
-- [ ] If 384 tokens does not meaningfully compress histories, test 256 during development only, provided C still preserves the required evidence. Choose a cap for compression and evidence retention, not for the largest reporting effect.
-- [ ] If reporting saturates, record that limitation. Do not manufacture errors or select only failing trajectories.
+- [x] Finish calibration checks for obstacle visibility, report formatting, summary retention, actual compression, and runtime.
+- [x] Calibration confirmed substantial compression at the 384-token cap. No lower-cap comparison was needed.
+- [x] Reporting did not saturate in development or held-out results. Every planned history and report was retained.
 - [x] Prepare 12 distinct held-out fixtures; assign four each to blocked tests, partial tests, and recoverable note writes.
-- [ ] Freeze and hash the protocol/configuration, tasks, prompts, extractor, rubric, sample size, diagnostic-selection rule, and analysis.
+- [x] Freeze and hash the protocol/configuration, tasks, prompts, extractor, rubric, sample size, diagnostic-selection rule, and analysis.
 
 **Fallback:** If measured throughput or review time cannot fit the day, amend the protocol before held-out evaluation to eight tasks: three blocked-test, three partial-test, and two recovery tasks. That yields 16 histories, 16 summaries, and 128 main reports. Label it a smaller pilot. Held-out effect sizes must never determine this choice.
 
@@ -66,28 +66,29 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 
 ## Hours 4–6: Run the fixed experiment
 
-- [ ] Generate the 24 held-out histories, derive their four contexts, and freeze the 24 ordinary summaries.
-- [ ] Audit summary omissions before viewing report outcomes; lock eligible restoration cases using the predeclared selection rule.
-- [ ] Collect 192 reports in a reproducibly randomized order. Record timeouts, context overflow, cancellations, and other technical failures. Each generation gets one attempt; automatic retries are disabled.
-- [ ] Use development data to verify Inspect View metadata, scored exports, and trace navigation while inference runs.
+- [x] Generate the 24 held-out histories, derive their four contexts, and freeze the 24 ordinary summaries.
+- [x] Audit summary omissions before viewing report outcomes; lock eligible restoration cases using the predeclared selection rule.
+- [x] Collect 192 reports in a reproducibly randomized order. Record timeouts, context overflow, cancellations, and other technical failures. Each generation gets one attempt; automatic retries are disabled.
+- [x] Use development data to verify Inspect View metadata, scored exports, and trace navigation while inference runs.
 
 **Done when:** Every planned report has a result or a documented technical failure. Inspect View can display histories, contexts, reports, and scored evidence.
 
 ## Hours 6–8: Review and analyze
 
 - [ ] Review shuffled reports with arm labels hidden; inspect underlying evidence as needed and record any unavoidable unblinding.
-- [ ] Run the diagnostic on qualifying cases: decisive-event versus matched-control additions, two repetitions each, at most 32 reports. Keep each raw addition within 256 tokens, the pair within eight tokens of each other, and each combined payload within 656 tokens.
-- [ ] Compute the paired C–D effect, task-cluster intervals, factual coverage, error components, retention, and raw counts. Keep B–A exploratory.
-- [ ] Generate three figures: unreliability/coverage by context; decisive-fact retention; restoration effect if run. Save plotting code, vector PDFs, and 300-dpi PNGs.
+- [x] Resolve diagnostic eligibility before reporting. Zero histories qualified; no restoration reports were generated. ED-002 remains untested.
+- [x] Compute the paired C–D effect, task-cluster intervals, factual coverage, error components, retention, and raw counts. Keep B–A exploratory.
+- [x] Generate structured-error/coverage, fact-retention, and paired-effect figures as vector PDFs and 300-dpi PNGs. Primary-outcome figures await review; no restoration figure exists because no case qualified.
 
 **Done when:** The analysis separates summary errors from reporting errors and makes its uncertainty visible. Complete primary outcomes require human review; assistant labels remain provisional.
 
 ## Hours 8–10: Package the work
 
-- [ ] Complete the [results record](../experiments/results.md): findings, interpretation, alternatives, limitations, and deviations.
-- [ ] Open scored held-out records in Inspect View. Choose demo cases by the disclosed rule: first task-ID C/D correctness difference, first persistent error if present, and first supported normal success.
-- [ ] Verify commands for one-case execution, the configured experiment, and offline analysis. Document the environment and expected outputs.
-- [ ] Update both EDs with results and interpretation, complete scientific/engineering review, and verify the final branch through CI before PR integration.
+- [x] Complete the [results record](../experiments/results.md): findings, interpretation, alternatives, limitations, and deviations.
+- [x] Open all 192 scored held-out records in Inspect View. Verify the filtered eight-report comparison and source evidence. Demo cases follow the disclosed task/environment/repetition ordering.
+- [x] Verify commands for one-case execution, the configured experiment, and offline analysis. Document the environment and expected outputs.
+- [x] Update both EDs with results and interpretation; complete independent assistant reviews of scientific calculations and engineering findings.
+- [ ] Run hosted CI and review the PR before integration. Local checks passed; publication is pending.
 - [ ] Record a two-minute video: question → actual trace/context comparison → aggregate results → what the evidence supports.
 
 **Done when:** A reader can trace a claim to its execution evidence and reproduce the analysis from saved logs.

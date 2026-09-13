@@ -1,6 +1,6 @@
 # Runtime record
 
-Development setup, September 12, 2026. No held-out run is frozen yet.
+Verified September 12, 2026, in America/Los_Angeles. Artifact timestamps use UTC. Held-out run `heldout-002` was frozen at `2026-09-13T04:08:37.688635+00:00` against generation commit `8f8fc08`.
 
 The model runs on the user's rented RTX A5000. Tasks execute in a separate local Docker VM because the Vast instance is itself an unprivileged container and does not support nested Docker. The serving endpoint binds to remote localhost; an SSH tunnel exposes it on local localhost only. No provider credential is sent to the GPU.
 
@@ -30,6 +30,12 @@ Local Docker commands must select the dedicated context or set `DOCKER_HOST`. CI
 
 Development smoke: Inspect requested the single word `READY`; the model returned `READY` using 15 input and 2 output tokens. This verifies connectivity only, not task performance.
 
-The first complete development pilot, `dev-pilot-001`, preserved eight failed actor attempts and produced no histories or reports. Diagnosis: the SSH client timed out while the supervised model server stayed healthy. A new localhost-only tunnel uses 20-second server keep-alives, three missed replies as its failure limit, and an explicit control socket. A subsequent direct health check and two-token `READY` response succeeded. The failed pilot is retained; the next development run has a new ID.
+The first development attempt, `dev-pilot-001`, preserved eight failed actor attempts and produced no histories or reports. The SSH client timed out while the supervised model server stayed healthy. A new localhost-only tunnel uses 20-second server keep-alives, three missed replies as its failure limit, and an explicit control socket. A subsequent health check and two-token `READY` response succeeded. The failed run remains intact.
+
+The replacement, `dev-pilot-002`, completed eight histories and summaries in 170.6 seconds, then 32 reports in 79.6 seconds. It had no technical failures. These timings include orchestration and sandbox work; they are not a model throughput benchmark. No paid OpenAI calls were used.
+
+`heldout-001` was prepared but never collected. A CLI fix deferred Matplotlib initialization until offline analysis, avoiding unnecessary font-cache work during preparation. That changed the frozen source, so the active run uses a new ID, `heldout-002`. The amendment records that no held-out generation preceded this fix.
+
+`heldout-002` completed 24 histories and summaries in 486.4 seconds, followed by 192 reports in 475.4 seconds. These durations run from each phase's start record to its final freeze and exclude the intervening audit. Every planned generation completed without a technical failure. No paid OpenAI calls were used. See the [results record](experiments/results.md) for analysis and human-review status.
 
 All experiment calls use Inspect's OpenAI-compatible chat adapter with `max_retries=0` and a 90-second client timeout. The client sends a nonsecret placeholder to the private endpoint. A cancellation sidecar is authoritative even when the upstream Inspect log reports overall success. Inspect logs, serialized requests/responses, and run manifests remain local.

@@ -4,11 +4,17 @@
 
 Context Fidelity tests this with small coding tasks. An agent edits a file, writes a note, and runs tests. We freeze that work, give the same model four versions of its history, and check its final report against what actually happened.
 
-The main comparison is a compact record of tool evidence versus an ordinary model-written summary. Native history and a complete external transcript provide controls. A second experiment tests whether restoring an omitted fact repairs a reporting error.
+The main comparison is a compact record of tool evidence versus an ordinary model-written summary. Native history and a complete external transcript provide controls. A planned diagnostic asks whether restoring an omitted fact repairs reporting.
 
-**Development status:** Eight histories and 32 reports completed with no technical failures in `dev-pilot-002`. The held-out study has not run. Full primary results require human review of prose and summary support; assistant judgments remain provisional.
+**Measured result:** All 24 held-out histories and 192 reports completed without a technical failure. Compact evidence produced 17/48 structured errors; ordinary summaries produced 11/48. The difference was +12.5 percentage points, with a 95% task-cluster interval of [−4.17, 27.08]. Factual coverage was lower with compact evidence. This does not demonstrate the predicted benefit.
+
+The complete primary comparison still needs human review: 49 reports have definite errors and 143 verdicts remain unresolved. The restoration diagnostic had no eligible cases and did not run. Read the [results and interpretation](docs/experiments/results.md) for the evidence and limits.
+
+![Held-out structured results, with human review pending](results/heldout-002/figures/arms.png)
 
 Inspect View is the main interface for traces and scored comparisons. Matplotlib figures and blinded review records accompany the logs. The project uses Inspect’s evaluation tools rather than maintaining a separate dashboard.
+
+The [two-minute walkthrough](docs/demo.md) follows actual reports from the run. It includes a useful distinction: the same false full-pass claim can arise when a reporter ignores correct evidence or when its summary already contains the error.
 
 ## Research
 
@@ -30,7 +36,7 @@ uv run pre-commit run --all-files
 uv run pytest tests/engineering
 ```
 
-GitHub Actions checks typing, tests, coverage, real Docker execution, and packaging. The checks have run locally; hosted CI is pending publication. Coverage must reach 90% of statements and branches overall, and 95% of each in the evidence, context, scoring, and analysis modules.
+GitHub Actions checks typing, tests, coverage, real Docker execution, and packaging. Local verification passed 526 offline tests and 11 Docker integration tests; hosted CI is pending publication. Statement coverage is 99.66% and branch coverage 98.70%. Gates require 90% of each overall, and 95% of each in evidence, contexts, scoring, and analysis.
 
 ## Run an experiment
 
@@ -43,7 +49,7 @@ uv run context-fidelity prepare --split dev --run-id dev-example --run-dir runs/
 uv run context-fidelity collect --run-dir runs/dev-example
 uv run context-fidelity report --run-dir runs/dev-example
 uv run context-fidelity analyze --run-dir runs/dev-example --analysis-id dev-analysis-001 --output runs/analysis/dev-analysis-001
-uv run inspect view --log-dir runs/analysis/dev-analysis-001/inspect --port 18575
+uv run inspect view --log-dir runs/analysis/dev-analysis-001/inspect --host 127.0.0.1 --port 18575
 ```
 
 Preparation hashes the plan and implementation. Collection saves the Inspect logs, exact requests and responses, histories, contexts, and independent final-state records. Reporting then uses those frozen inputs. Each phase runs once per run ID and preserves failures; existing artifacts cannot be overwritten.
