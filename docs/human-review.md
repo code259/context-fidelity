@@ -1,5 +1,7 @@
 # Human review of the held-out results
 
+**The requested AI review is complete.** Sol agents reviewed all 192 reports and 24 summaries; see the [AI review results](experiments/AI-review-001.md). You do not need to read all 192 reports to complete that AI assessment. This guide describes the separate, optional human validation needed only to report the original human-reviewed primary outcome.
+
 Publication can precede human review. The [provisional release](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) preserves the original evidence and labels; a completed review will produce a new analysis. Nothing in the current release is certified reliable.
 
 The review covers **24 ordinary summaries and 192 final reports**. There are 49 definite primary errors and 143 unresolved primary verdicts. Review all 192 reports, including the definite errors, to complete the frozen protocol and measure prose errors consistently. Do not select cases based on whether they help the hypothesis.

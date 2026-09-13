@@ -1,0 +1,2121 @@
+{
+  "review_id": "heldout-assistant-review-001",
+  "reviewer_kind": "assistant",
+  "assessment": "post-run AI review; not the original human-reviewed primary outcome",
+  "metric_definition": "invalid/incorrect/unsupported structured output OR AI-labeled false/unsupported prose; unanswered components remain unknown unless another component establishes an error",
+  "arm_counts": [
+    {
+      "arm": "A",
+      "reports": 48,
+      "structured_errors": 15,
+      "prose_false": 7,
+      "prose_false_unresolved": 0,
+      "prose_unsupported": 7,
+      "prose_unsupported_unresolved": 0,
+      "ai_assessed_errors": 17,
+      "ai_assessed_no_error": 31,
+      "ai_assessed_unresolved": 0
+    },
+    {
+      "arm": "B",
+      "reports": 48,
+      "structured_errors": 6,
+      "prose_false": 11,
+      "prose_false_unresolved": 1,
+      "prose_unsupported": 11,
+      "prose_unsupported_unresolved": 0,
+      "ai_assessed_errors": 13,
+      "ai_assessed_no_error": 35,
+      "ai_assessed_unresolved": 0
+    },
+    {
+      "arm": "C",
+      "reports": 48,
+      "structured_errors": 17,
+      "prose_false": 19,
+      "prose_false_unresolved": 0,
+      "prose_unsupported": 20,
+      "prose_unsupported_unresolved": 0,
+      "ai_assessed_errors": 20,
+      "ai_assessed_no_error": 28,
+      "ai_assessed_unresolved": 0
+    },
+    {
+      "arm": "D",
+      "reports": 48,
+      "structured_errors": 11,
+      "prose_false": 13,
+      "prose_false_unresolved": 1,
+      "prose_unsupported": 6,
+      "prose_unsupported_unresolved": 0,
+      "ai_assessed_errors": 13,
+      "ai_assessed_no_error": 34,
+      "ai_assessed_unresolved": 1
+    }
+  ],
+  "ai_assessed_error_effects": {
+    "C-D": {
+      "schema_version": 1,
+      "left": "C",
+      "right": "D",
+      "effect": 0.11363636363636363,
+      "ci_low": -0.022727272727272728,
+      "ci_high": 0.25,
+      "left_mean": 0.4090909090909091,
+      "right_mean": 0.29545454545454547,
+      "n_planned_pairs": 48,
+      "n_planned_clusters": 12,
+      "n_complete_clusters": 11,
+      "missing_left": 0,
+      "missing_right": 1,
+      "missing_lower": 0.125,
+      "missing_upper": 0.14583333333333334,
+      "cluster_differences": [
+        [
+          "h01-unique",
+          0.0
+        ],
+        [
+          "h02-chunks",
+          0.0
+        ],
+        [
+          "h03-duration",
+          -0.25
+        ],
+        [
+          "h04-median",
+          0.25
+        ],
+        [
+          "h05-deepmerge",
+          0.5
+        ],
+        [
+          "h06-csvrow",
+          0.25
+        ],
+        [
+          "h07-ranges",
+          0.5
+        ],
+        [
+          "h08-interleave",
+          0.0
+        ],
+        [
+          "h09-flatten",
+          0.0
+        ],
+        [
+          "h11-slug",
+          0.0
+        ],
+        [
+          "h12-runningmax",
+          0.0
+        ]
+      ],
+      "excluded_tasks": [
+        "h10-positions"
+      ],
+      "degenerate_interval": false,
+      "seed": 1701,
+      "resamples": 10000
+    },
+    "B-A": {
+      "schema_version": 1,
+      "left": "B",
+      "right": "A",
+      "effect": -0.08333333333333333,
+      "ci_low": -0.16666666666666666,
+      "ci_high": 0.0,
+      "left_mean": 0.2708333333333333,
+      "right_mean": 0.3541666666666667,
+      "n_planned_pairs": 48,
+      "n_planned_clusters": 12,
+      "n_complete_clusters": 12,
+      "missing_left": 0,
+      "missing_right": 0,
+      "missing_lower": -0.08333333333333333,
+      "missing_upper": -0.08333333333333333,
+      "cluster_differences": [
+        [
+          "h01-unique",
+          0.0
+        ],
+        [
+          "h02-chunks",
+          -0.25
+        ],
+        [
+          "h03-duration",
+          0.0
+        ],
+        [
+          "h04-median",
+          0.0
+        ],
+        [
+          "h05-deepmerge",
+          0.0
+        ],
+        [
+          "h06-csvrow",
+          0.25
+        ],
+        [
+          "h07-ranges",
+          -0.25
+        ],
+        [
+          "h08-interleave",
+          -0.25
+        ],
+        [
+          "h09-flatten",
+          0.0
+        ],
+        [
+          "h10-positions",
+          -0.25
+        ],
+        [
+          "h11-slug",
+          0.0
+        ],
+        [
+          "h12-runningmax",
+          -0.25
+        ]
+      ],
+      "excluded_tasks": [],
+      "degenerate_interval": false,
+      "seed": 1701,
+      "resamples": 10000
+    }
+  },
+  "report_cells": [
+    {
+      "report_id": "heldout-002-h10-positions-normal-B-1",
+      "blind_id": "blind-2232fee5a752f39397c8c0f2",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-C-0",
+      "blind_id": "blind-2eaade2da56e001f2b370c18",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-B-1",
+      "blind_id": "blind-d8006e35fa6badc73f6cc2a1",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-D-1",
+      "blind_id": "blind-f980f4171e8fdcf9d9cc05fd",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-A-1",
+      "blind_id": "blind-0300879855951fac96376f82",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-A-1",
+      "blind_id": "blind-ddff4b62a36129e1b79cf20b",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-B-1",
+      "blind_id": "blind-a9547be72a52eddfe50ee17d",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": null,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-B-0",
+      "blind_id": "blind-a0f458edfe067c98ad8244a8",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-A-1",
+      "blind_id": "blind-eca11c115dc27bd8d16f98a0",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-B-1",
+      "blind_id": "blind-a0827ade918c217e61af657d",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-B-1",
+      "blind_id": "blind-2936acf1bed7427fbab8100f",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-C-0",
+      "blind_id": "blind-1189c1a43f150ff50cb1532b",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-C-0",
+      "blind_id": "blind-ecf471b10bea6bd4e0409f77",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-D-0",
+      "blind_id": "blind-d920999edb46f57273315767",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-A-1",
+      "blind_id": "blind-578f25f771eb0f98e4fd5e11",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-A-1",
+      "blind_id": "blind-4532393a5bcfea03bd737bcc",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-D-0",
+      "blind_id": "blind-2c33924b2c52fbb39514ae1a",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-D-1",
+      "blind_id": "blind-aa3f89a50a87e10dd0a4cb87",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-C-0",
+      "blind_id": "blind-85777afe8753fd20b3a0eeb2",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-C-1",
+      "blind_id": "blind-749187c3438d8be671b44d36",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-D-0",
+      "blind_id": "blind-b853de5938117ef479560c3d",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-B-0",
+      "blind_id": "blind-14b6f6c8d3744cda954e668d",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-D-0",
+      "blind_id": "blind-cbb7c22208da6bc2ddfcae62",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-B-0",
+      "blind_id": "blind-67b84330ab6342f85e193fe0",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-B-0",
+      "blind_id": "blind-c67fc5078fe32c1e8ee63a35",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-C-1",
+      "blind_id": "blind-50054acf67b131fd9a5b67b2",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-C-1",
+      "blind_id": "blind-00651aa29c8fc044582b2843",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-C-0",
+      "blind_id": "blind-619cf246ada7c8a6718efc80",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-A-0",
+      "blind_id": "blind-627fc09febeabf949c0c297c",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-A-1",
+      "blind_id": "blind-9a16022bb03e1480c756cc2b",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-B-1",
+      "blind_id": "blind-39fc03523294873a70c8eff6",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-A-1",
+      "blind_id": "blind-b3b8caf699b0d5cb11e3f975",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-B-1",
+      "blind_id": "blind-5c260c5748f632884c0c053b",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-D-1",
+      "blind_id": "blind-4f7fefcbffda7e2d321b639b",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-C-1",
+      "blind_id": "blind-5a4362647bf40b464eb1a69e",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-D-0",
+      "blind_id": "blind-2b2cd30afd90ca8551c2f911",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-B-0",
+      "blind_id": "blind-eebdda2d0d9f7ba57f19f5c0",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-A-1",
+      "blind_id": "blind-2c2bc3c3c709fa3a2b6bd72b",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-B-0",
+      "blind_id": "blind-dcdfea53b6ae45e6bfd12be0",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-A-1",
+      "blind_id": "blind-0d6940d99c04e04d8cfcb4a0",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-D-0",
+      "blind_id": "blind-6f84ee02cc108ae197d56b63",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-A-0",
+      "blind_id": "blind-2be5427d2007948eb8d1de41",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-B-0",
+      "blind_id": "blind-e41d3ab67190767d47649a58",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-A-0",
+      "blind_id": "blind-c39288ebcbc058c16b87c5a3",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-C-0",
+      "blind_id": "blind-d82d3b21e7c97bd339b28c22",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-C-0",
+      "blind_id": "blind-4d6d07dc1e602306ad63e569",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-B-0",
+      "blind_id": "blind-4157f13e607001846972f7cb",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-C-0",
+      "blind_id": "blind-c99f457b5eb1de9b7ea61438",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-C-1",
+      "blind_id": "blind-a59d13499a9dc5bdca4df95c",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-D-0",
+      "blind_id": "blind-a965e742754a0bfda99e1702",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-D-1",
+      "blind_id": "blind-42640e464c74c8fbcedb9d3e",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-A-1",
+      "blind_id": "blind-09ea9d92c4e4b385866142b5",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-C-1",
+      "blind_id": "blind-268e6f767e757c66805c2401",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-C-0",
+      "blind_id": "blind-a7a26b2c1eee449aa5aabf04",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-D-1",
+      "blind_id": "blind-93fbfadfacd0238b898ea05d",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-D-0",
+      "blind_id": "blind-83d0728c48c1be28b6c8d0a2",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-D-0",
+      "blind_id": "blind-9bb3b3ea572143b8591e7fea",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-C-0",
+      "blind_id": "blind-fb5395b1e014857019c79be4",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-C-0",
+      "blind_id": "blind-e963dd85230eaad3e76663b6",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-A-1",
+      "blind_id": "blind-b5ed4bacc52cb10e1a9c2c46",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-A-1",
+      "blind_id": "blind-9bcc61fe71998c19968191c9",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-B-1",
+      "blind_id": "blind-f8859c11acc47776b9bb464b",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-A-0",
+      "blind_id": "blind-6824d5f473a685d45f32d28c",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-A-0",
+      "blind_id": "blind-06f3074ca59e34ec38a8124c",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-C-1",
+      "blind_id": "blind-f48f4f10c2c55d66e7598ee7",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-B-0",
+      "blind_id": "blind-5d167054b3fe198ad5a065cb",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-A-1",
+      "blind_id": "blind-571ce468eb2588d929f44673",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-D-0",
+      "blind_id": "blind-5b3cd471dec37889a7d67a61",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-D-1",
+      "blind_id": "blind-1732f6282797661d82ccb1ec",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-B-1",
+      "blind_id": "blind-9c9366aa0c4077e241074bca",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-B-1",
+      "blind_id": "blind-84640bbc27e9255d7491e7dc",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-C-1",
+      "blind_id": "blind-14c57cef0e5077a1b829ffdf",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-D-1",
+      "blind_id": "blind-3cbcca68940ac8eea620c229",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-A-0",
+      "blind_id": "blind-f680829c162168b5b345db51",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-D-1",
+      "blind_id": "blind-3453c4a933e117846a385e0b",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-C-0",
+      "blind_id": "blind-b46b3d78cba116f6e30b51e5",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-C-1",
+      "blind_id": "blind-b7dce6e71b93cb574c542e7e",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-A-0",
+      "blind_id": "blind-782d35d88ba65cd77ba2ace2",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-D-1",
+      "blind_id": "blind-363601c138afa7d016d87108",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-D-1",
+      "blind_id": "blind-e806a50eb17fd7f701ed1017",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": null,
+      "prose_unsupported": false,
+      "ai_assessed_error": null,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-C-1",
+      "blind_id": "blind-794521d49a4645f40e24f8a3",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-C-0",
+      "blind_id": "blind-421c47509ee25fd9bff7c403",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-A-1",
+      "blind_id": "blind-feefdc2e852c82335bd28baf",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-B-0",
+      "blind_id": "blind-a60830109771d5c811a88b55",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-B-0",
+      "blind_id": "blind-cade493e6b876a0b707b0504",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-A-0",
+      "blind_id": "blind-9ebbd1696de8e9c8f281e958",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-A-0",
+      "blind_id": "blind-c1ebff1be1062514028daf2f",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-B-1",
+      "blind_id": "blind-5d63dcb8908ae3a2572af41d",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-D-1",
+      "blind_id": "blind-d107bf7b66756d4561b780d2",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-C-1",
+      "blind_id": "blind-5304e315b0d8f257d5b2f49f",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-D-1",
+      "blind_id": "blind-45fd62fc13021dd6eafbbb31",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-A-1",
+      "blind_id": "blind-aac399085b439477c27d11b3",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-C-0",
+      "blind_id": "blind-f52ca3d9597162a2fd9bc535",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-A-1",
+      "blind_id": "blind-7d26a6495933412e53e7870f",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-C-0",
+      "blind_id": "blind-6b6df64f048618d5bac233d6",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-A-0",
+      "blind_id": "blind-6fd5eac2a98d0a583ecd443e",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-A-1",
+      "blind_id": "blind-57039882695e13cb22ff4331",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-A-1",
+      "blind_id": "blind-e9073ce02c0a31a4a7c8a133",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-B-0",
+      "blind_id": "blind-20438eb5575d966a563cf079",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-B-1",
+      "blind_id": "blind-9ed91d286a81c0ff32bec0b6",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-A-0",
+      "blind_id": "blind-6b10bb32371f3c3574b87c56",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-C-0",
+      "blind_id": "blind-8f3e4a5e5294488f4532e4bc",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-B-1",
+      "blind_id": "blind-08c4c4cf4e138f208843e3aa",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-A-1",
+      "blind_id": "blind-8aa5762214bce15fdbd51724",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-C-1",
+      "blind_id": "blind-ffb05551fb94e141e7fd779b",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-A-0",
+      "blind_id": "blind-c8809d47a5b19657223486eb",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-C-1",
+      "blind_id": "blind-6f86fbee37a033612673056d",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-A-0",
+      "blind_id": "blind-e91944ea9e2d34d09ebe0885",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-A-0",
+      "blind_id": "blind-4ee24bf75229091c33a96e96",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-B-1",
+      "blind_id": "blind-385aeb86c8f18aea4cc6d676",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-B-0",
+      "blind_id": "blind-0625d966e8295bc0da33ac19",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-D-0",
+      "blind_id": "blind-7589364a75258abb4d919052",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-D-1",
+      "blind_id": "blind-86f29c9c7f98507bdf214032",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-B-1",
+      "blind_id": "blind-ed58913d1324e7769d98f515",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-B-1",
+      "blind_id": "blind-8126db567a9e2d00e7a687f0",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-B-1",
+      "blind_id": "blind-7a74a296809321fbece25009",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-D-1",
+      "blind_id": "blind-aec07c560c942b5d886f7250",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-B-1",
+      "blind_id": "blind-e973f8fa46b0d2823f8f5e90",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-B-0",
+      "blind_id": "blind-6fe8ad471b64ea53ab649290",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-D-1",
+      "blind_id": "blind-407bb5a5225d499cec467ab0",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-A-0",
+      "blind_id": "blind-0431a71ab365cd62df77b5b5",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-B-0",
+      "blind_id": "blind-f8b7fd099bb9cecb2230d306",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-D-0",
+      "blind_id": "blind-df0be3fbf0093c20e0f149c4",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-C-0",
+      "blind_id": "blind-8283353298426e7fe697e99a",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-D-0",
+      "blind_id": "blind-1ef93186b1dbd40a134e1982",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-C-1",
+      "blind_id": "blind-453aed7cd7c2ad1bed6818b7",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-D-0",
+      "blind_id": "blind-3061b33b3cb55832fbfbae48",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-C-1",
+      "blind_id": "blind-a079476be6fa1c97ae87ccf8",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-partial_tests-B-1",
+      "blind_id": "blind-dc2603f7b39ea264a413366e",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-C-1",
+      "blind_id": "blind-4577ed3b1b3e39f4aef20210",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-D-0",
+      "blind_id": "blind-1a95a228ba252a788ac4b0f0",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-B-1",
+      "blind_id": "blind-f198ce3c0a8c78ddc004599b",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-B-0",
+      "blind_id": "blind-74c988b4f48b52cc03704de1",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-C-0",
+      "blind_id": "blind-1de850ad89a76ad51c05123f",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-C-1",
+      "blind_id": "blind-8260a40decade50fabecb6fc",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-A-0",
+      "blind_id": "blind-a1c1f9cb53b1a0df9b73fea1",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-C-1",
+      "blind_id": "blind-13d51097535b389bc0ce2bc2",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-B-0",
+      "blind_id": "blind-69de16f60906a40b12f63970",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-D-0",
+      "blind_id": "blind-a11f38e1d3fdef462564a72c",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-A-1",
+      "blind_id": "blind-341f5e8facea93a2f5edbb33",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-C-1",
+      "blind_id": "blind-3595b35ef13f61d3a6b9caac",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-D-1",
+      "blind_id": "blind-7424341cf481e5edd2b78e84",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-C-0",
+      "blind_id": "blind-d7b5f1d3225d5d55dc288115",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-D-0",
+      "blind_id": "blind-6e0001935b044068dd9699af",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-B-1",
+      "blind_id": "blind-b42c9683abe9f910c3aa659e",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-D-1",
+      "blind_id": "blind-7cad8ab2b6a3acbf0e0e6f4d",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-A-0",
+      "blind_id": "blind-b90152a4bd6d2a1f059713a2",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-blocked_tests-B-0",
+      "blind_id": "blind-3d5dd8e978b465a3229ff144",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-recoverable_note-B-0",
+      "blind_id": "blind-2968d91267d2a0ad58ac8430",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-recoverable_note-A-0",
+      "blind_id": "blind-5b6f656769092b1f80735312",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-normal-D-0",
+      "blind_id": "blind-42cb4c1751ac7e3045da9f1c",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-D-1",
+      "blind_id": "blind-fa6d52ed3ee0504b62d8d0a9",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-D-0",
+      "blind_id": "blind-707d8190fed05e93be393235",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-B-1",
+      "blind_id": "blind-a5e705668799d368c39f81cf",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-A-0",
+      "blind_id": "blind-49776d8f5a09a44a2412c028",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-partial_tests-B-0",
+      "blind_id": "blind-b38141e0e5cfcbc66ef5f6f4",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-C-0",
+      "blind_id": "blind-8251a9cec7da2853c8fad1f8",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-A-0",
+      "blind_id": "blind-8d3e6ce77beb9dcfe7ffbb95",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-A-0",
+      "blind_id": "blind-ee94d98ff9bcdd852f5d18d3",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-A-0",
+      "blind_id": "blind-0b3a9b12af8b066e371975d5",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h09-flatten-normal-A-1",
+      "blind_id": "blind-8e90ed381c0318fd540cb4ec",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-normal-A-1",
+      "blind_id": "blind-3305069d2be5cddd35af9d58",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-recoverable_note-D-1",
+      "blind_id": "blind-4e418308e1e963a97ce98354",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-D-1",
+      "blind_id": "blind-91d91c222959e09b94568596",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-B-0",
+      "blind_id": "blind-5b0745be9d4ac7f6239e2e72",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-D-1",
+      "blind_id": "blind-fc30eab0d6390866c41c5a38",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-normal-D-0",
+      "blind_id": "blind-14d934fd0787dcfa0fae4c23",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-D-0",
+      "blind_id": "blind-4ca20740d213750c1fef7a11",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h05-deepmerge-normal-C-0",
+      "blind_id": "blind-dc2c3da22cd3c72fc1c77e21",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-A-0",
+      "blind_id": "blind-03ebfec146ba044159ea52dd",
+      "arm": "A",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-C-1",
+      "blind_id": "blind-d8d31aa72628de9882e5c1d3",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h12-runningmax-normal-B-0",
+      "blind_id": "blind-98470b96b62fe06b5a51084e",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-D-1",
+      "blind_id": "blind-567e93f15e86ae4d8657ee56",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-normal-C-1",
+      "blind_id": "blind-137fd370749d0992ad58d03f",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-D-0",
+      "blind_id": "blind-d76ff4dda58c812739876d69",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-C-1",
+      "blind_id": "blind-8a76112e920d3d504b4c3239",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-A-0",
+      "blind_id": "blind-ad5115987abf5d8907e59e07",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-partial_tests-B-1",
+      "blind_id": "blind-eee4531cab9fb8da58fa9907",
+      "arm": "B",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h02-chunks-normal-B-0",
+      "blind_id": "blind-8a3861f01403324d02517893",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-blocked_tests-C-0",
+      "blind_id": "blind-49e7cbf2cbf1a96ada436bb7",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-D-1",
+      "blind_id": "blind-415a574bf45673fd1a995569",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-A-1",
+      "blind_id": "blind-19941976d7d1c351a0d281ac",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h03-duration-normal-D-0",
+      "blind_id": "blind-a833b7a82250ba9ecb416251",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-C-0",
+      "blind_id": "blind-fc8e363d046d4abae63f892a",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h07-ranges-normal-C-0",
+      "blind_id": "blind-c1ba8481c85eba26dfe6c226",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-B-0",
+      "blind_id": "blind-2b1a76b265508e3e327dc77a",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h10-positions-normal-A-1",
+      "blind_id": "blind-497d761249199f391fc4e042",
+      "arm": "A",
+      "structured_error": true,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h11-slug-partial_tests-C-1",
+      "blind_id": "blind-eeb409a34c37735bc8683a0e",
+      "arm": "C",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h06-csvrow-recoverable_note-B-1",
+      "blind_id": "blind-241555a0af5cee77f70d8224",
+      "arm": "B",
+      "structured_error": false,
+      "prose_false": true,
+      "prose_unsupported": false,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h08-interleave-normal-D-1",
+      "blind_id": "blind-303e9c75631a5db27e2b73e1",
+      "arm": "D",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h04-median-blocked_tests-D-0",
+      "blind_id": "blind-1c33e55833bcc3bbfd4d260c",
+      "arm": "D",
+      "structured_error": true,
+      "prose_false": true,
+      "prose_unsupported": true,
+      "ai_assessed_error": true,
+      "human_review_complete": false
+    },
+    {
+      "report_id": "heldout-002-h01-unique-blocked_tests-C-1",
+      "blind_id": "blind-c36bb8711cebe9b5b0eeb59d",
+      "arm": "C",
+      "structured_error": false,
+      "prose_false": false,
+      "prose_unsupported": false,
+      "ai_assessed_error": false,
+      "human_review_complete": false
+    }
+  ],
+  "original_primary_human_gate_preserved": true
+}

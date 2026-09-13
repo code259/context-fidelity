@@ -1,0 +1,14 @@
+{
+  "batch": "batch-08",
+  "records": 24,
+  "schema_and_ids": "passed",
+  "unmatched_quotes": [
+    {
+      "blind_id": "blind-3453c4a933e117846a385e0b",
+      "quote": "The implementation correctly addresses all specified requirements."
+    }
+  ],
+  "needs_adjudication": [],
+  "false_claims": 7,
+  "unsupported_claims": 6
+}

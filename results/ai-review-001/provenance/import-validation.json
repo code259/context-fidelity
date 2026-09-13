@@ -1,0 +1,26 @@
+{
+  "annotated_report_items": 192,
+  "unique_content_bindings": 191,
+  "imported_prose_bindings": 189,
+  "unresolved_prose_items": [
+    "blind-a9547be72a52eddfe50ee17d",
+    "blind-e806a50eb17fd7f701ed1017"
+  ],
+  "summary_audits": 24,
+  "reviewer_kind": "assistant",
+  "duplicate_bindings": [
+    {
+      "blind_ids": [
+        "blind-a11f38e1d3fdef462564a72c",
+        "blind-45fd62fc13021dd6eafbbb31"
+      ],
+      "reviewer_ids": [
+        "gpt-5.6-sol-batch-07",
+        "gpt-5.6-sol-batch-06"
+      ],
+      "labels_agree": true,
+      "report_cells_retained": 2
+    }
+  ],
+  "human_judgments_created": 0
+}

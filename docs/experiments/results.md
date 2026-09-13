@@ -1,5 +1,7 @@
 # Context Fidelity: results
 
+**Later assessment:** [AI review](AI-review-001.md) now covers all 192 reports and 24 summaries. It adds prose judgments in a separate analysis. The structured results and original publication record below are preserved.
+
 **Held-out generation complete; human review pending.** Run `heldout-002` contains 24 histories, 24 ordinary summaries, and all 192 planned reports. There were no technical failures or retries.
 
 The compact evidence record did not show the predicted benefit. It produced **17 structured errors in 48 reports**, compared with **11 in 48** for ordinary summaries, and its factual coverage was lower. These are structured components of the outcome. The complete primary comparison remains unresolved because required human review is unfinished.

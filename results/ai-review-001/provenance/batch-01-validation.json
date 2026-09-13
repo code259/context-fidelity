@@ -1,0 +1,14 @@
+{
+  "batch": "batch-01",
+  "records": 24,
+  "schema_and_ids": "passed",
+  "unmatched_quotes": [
+    {
+      "blind_id": "blind-cbb7c22208da6bc2ddfcae62",
+      "quote": "the complete test suite (4 tests) was executed"
+    }
+  ],
+  "needs_adjudication": [],
+  "false_claims": 7,
+  "unsupported_claims": 5
+}

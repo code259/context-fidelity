@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-09-13T05:51:19.380008+00:00",
+  "additional_cases": [
+    {
+      "blind_id": "blind-a9547be72a52eddfe50ee17d",
+      "reason": "First reviewer could not determine truth of a tentative environmental-cause claim."
+    },
+    {
+      "blind_id": "blind-e806a50eb17fd7f701ed1017",
+      "reason": "First reviewer could not determine truth of a tentative environmental-cause claim."
+    },
+    {
+      "blind_id": "blind-341f5e8facea93a2f5edbb33",
+      "reason": "Coordinator quotation check identified a possible distinction between code capability and an assertion that tests were executed."
+    }
+  ],
+  "first_pass_labels_withheld_from_second_reviewer": true
+}

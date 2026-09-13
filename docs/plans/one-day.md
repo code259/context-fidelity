@@ -10,7 +10,7 @@
 
 **Spec:** [Protocol v0.3](../project-spec.md), [ED-001](../experiments/ED-001-context-comparison.md), and [ED-002](../experiments/ED-002-evidence-restoration.md).
 
-**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. The held-out study now has 24 histories and 192 reports, all complete. Analysis and native Inspect exports are published, and hosted CI passed. Human review and video recording remain open.
+**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. The held-out study now has 24 histories and 192 reports, all complete. Analysis and native Inspect exports are published, and hosted CI passed. The requested [AI review](../experiments/AI-review-001.md) is complete. Human validation of the original primary outcome and video recording remain open.
 
 ## Constraints and files
 
@@ -76,6 +76,7 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 ## Hours 6–8: Review and analyze
 
 - [ ] Review shuffled reports with arm labels hidden; inspect underlying evidence as needed and record any unavoidable unblinding.
+- [x] Complete the subsequently requested AI review of all 192 reports and 24 summaries, with separate provenance, second checks, and combined AI-assessed results.
 - [x] Resolve diagnostic eligibility before reporting. Zero histories qualified; no restoration reports were generated. ED-002 remains untested.
 - [x] Compute the paired C–D effect, task-cluster intervals, factual coverage, error components, retention, and raw counts. Keep B–A exploratory.
 - [x] Generate structured-error/coverage, fact-retention, and paired-effect figures as vector PDFs and 300-dpi PNGs. Primary-outcome figures await review; no restoration figure exists because no case qualified.

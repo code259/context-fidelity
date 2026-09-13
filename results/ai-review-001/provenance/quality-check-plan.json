@@ -1,0 +1,76 @@
+{
+  "created_at": "2026-09-13T05:38:02.168003+00:00",
+  "seed": 1702,
+  "random_spot_checks": [
+    {
+      "batch": 1,
+      "blind_id": "blind-39fc03523294873a70c8eff6"
+    },
+    {
+      "batch": 1,
+      "blind_id": "blind-d107bf7b66756d4561b780d2"
+    },
+    {
+      "batch": 2,
+      "blind_id": "blind-fc30eab0d6390866c41c5a38"
+    },
+    {
+      "batch": 2,
+      "blind_id": "blind-aa3f89a50a87e10dd0a4cb87"
+    },
+    {
+      "batch": 3,
+      "blind_id": "blind-b853de5938117ef479560c3d"
+    },
+    {
+      "batch": 3,
+      "blind_id": "blind-6fe8ad471b64ea53ab649290"
+    },
+    {
+      "batch": 4,
+      "blind_id": "blind-6e0001935b044068dd9699af"
+    },
+    {
+      "batch": 4,
+      "blind_id": "blind-84640bbc27e9255d7491e7dc"
+    },
+    {
+      "batch": 5,
+      "blind_id": "blind-6824d5f473a685d45f32d28c"
+    },
+    {
+      "batch": 5,
+      "blind_id": "blind-4e418308e1e963a97ce98354"
+    },
+    {
+      "batch": 6,
+      "blind_id": "blind-7a74a296809321fbece25009"
+    },
+    {
+      "batch": 6,
+      "blind_id": "blind-2968d91267d2a0ad58ac8430"
+    },
+    {
+      "batch": 7,
+      "blind_id": "blind-f680829c162168b5b345db51"
+    },
+    {
+      "batch": 7,
+      "blind_id": "blind-f48f4f10c2c55d66e7598ee7"
+    },
+    {
+      "batch": 8,
+      "blind_id": "blind-415a574bf45673fd1a995569"
+    },
+    {
+      "batch": 8,
+      "blind_id": "blind-c8809d47a5b19657223486eb"
+    }
+  ],
+  "additional_checks": [
+    "every unresolved judgment",
+    "every duplicate-binding disagreement",
+    "quotation provenance and schema validation for every annotation"
+  ],
+  "original_primary_human_review_gate": "unchanged"
+}

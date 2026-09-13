@@ -8,9 +8,9 @@ The main comparison is a compact record of tool evidence versus an ordinary mode
 
 **Measured result:** All 24 held-out histories and 192 reports completed without a technical failure. Compact evidence produced 17/48 structured errors; ordinary summaries produced 11/48. The difference was +12.5 percentage points, with a 95% task-cluster interval of [−4.17, 27.08]. Factual coverage was lower with compact evidence. This does not demonstrate the predicted benefit.
 
-The complete primary comparison still needs human review: 49 reports have definite errors and 143 verdicts remain unresolved. The restoration diagnostic had no eligible cases and did not run. Read the [results and interpretation](docs/experiments/results.md) for the evidence and limits.
+A subsequent [AI review of all 192 reports](docs/experiments/AI-review-001.md) identifies 63 reports with errors, 128 with no error identified, and one unresolved report. Including prose, compact evidence has 20/48 errors versus 13/48 for ordinary summaries, with one summary report unresolved. This remains an AI assessment; the original human-reviewed primary outcome is unfinished. The restoration diagnostic had no eligible cases and did not run. Read the [original results](docs/experiments/results.md) for the structured measurements and provenance.
 
-[Download the evidence and Inspect bundles](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) · [Implementation PR](https://github.com/code259/context-fidelity/pull/3) · [Human-review guide](docs/human-review.md)
+[Download the evidence and Inspect bundles](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) · [Implementation PR](https://github.com/code259/context-fidelity/pull/3) · [AI review](docs/experiments/AI-review-001.md) · [Optional human review](docs/human-review.md)
 
 ![Held-out structured results, with human review pending](results/heldout-002/figures/arms.png)
 
@@ -58,4 +58,4 @@ Preparation hashes the plan and implementation. Collection saves the Inspect log
 
 Before held-out reporting, audit the ordinary summaries without viewing report outcomes. The [review rubric](docs/review-rubric.md) separates three questions: what happened, what the model could establish from its context, and whether its prose makes an error.
 
-Development is on `feat/context-compression-eval`, with [PR #3](https://github.com/code259/context-fidelity/pull/3) open against `main`. The [main-branch rules](https://github.com/code259/context-fidelity/rules/23134668) require a PR, successful `quality` CI, and resolved conversations; force pushes and deletion are blocked. Human review and video recording remain open.
+Development is on `feat/context-compression-eval`, with [PR #3](https://github.com/code259/context-fidelity/pull/3) open against `main`. The [main-branch rules](https://github.com/code259/context-fidelity/rules/23134668) require a PR, successful `quality` CI, and resolved conversations; force pushes and deletion are blocked. The AI review is complete. Human validation of the original primary outcome and video recording remain open.
