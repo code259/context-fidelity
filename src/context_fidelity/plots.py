@@ -161,21 +161,21 @@ def plot_arm_metrics(
         errors, coverage = figure.subplots(1, 2)
         figure.suptitle(info.caption("Structured status results"), fontsize=13)
         for index, row in enumerate(ordered):
-            denominator = f"observed {row.n_observed}/{row.n_planned}\nerrors {row.n_errors}"
+            denominator = f"n={row.n_observed}/{row.n_planned}\nerrors {row.n_errors}"
             _rate_bar(errors, index, row.error_rate, _COLORS[index], denominator)
             _rate_bar(
                 coverage,
                 index,
                 row.mean_coverage,
                 _COLORS[index],
-                f"observed {row.n_observed}/{row.n_planned}",
+                f"n={row.n_observed}/{row.n_planned}",
             )
         _rate_axis(errors, _ARM_LABELS, "Reports with structured error (%)")
         _rate_axis(coverage, _ARM_LABELS, "Correct, supported status fields (%)")
         figure.text(
             0.5,
             0.025,
-            "Observed-report summaries; missing reports excluded, not scored as zero. "
+            "n = observed/planned reports; missing reports excluded, not scored as zero. "
             "Prose errors are not included.",
             ha="center",
             fontsize=9,
