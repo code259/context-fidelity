@@ -24,7 +24,6 @@ from context_fidelity.pipeline import (
     report_study,
     validate_tasks,
 )
-from context_fidelity.presentation import publish_analysis
 from context_fidelity.results import load_results
 from context_fidelity.score import ProseReview
 
@@ -78,6 +77,7 @@ def _runtime(directory: Path) -> None:
     os.environ["XDG_CACHE_HOME"] = str(directory / "cache")
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     os.environ["INSPECT_DISPLAY"] = "none"
+    os.environ["MPLCONFIGDIR"] = str(directory / "matplotlib")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -87,6 +87,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         _runtime(runtime)
         if args.command == "analyze":
+            from context_fidelity.presentation import publish_analysis
+
             run_dir = _path(root, args.run_dir)
             output = _path(root, args.output)
             audit = (

@@ -36,6 +36,7 @@ def test_cli_prepare_never_connects_and_uses_explicit_runtime(
     assert os.environ["XDG_DATA_HOME"] == str(root / "runtime/data")
     assert os.environ["XDG_CACHE_HOME"] == str(root / "runtime/cache")
     assert os.environ["TOKENIZERS_PARALLELISM"] == "false"
+    assert os.environ["MPLCONFIGDIR"] == str(root / "runtime/matplotlib")
 
 
 def test_cli_collect_and_report_reuse_preflight_tokenizer_and_preserve_invalid_reports(
@@ -117,6 +118,20 @@ def test_module_help_is_runnable() -> None:
     )
     assert result.returncode == 0
     assert "validate-tasks" in result.stdout
+
+
+def test_importing_cli_does_not_initialize_plotting() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import sys; import context_fidelity.__main__; assert 'matplotlib' not in sys.modules",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
 
 
 @pytest.mark.parametrize("invalid", [False, True])
@@ -325,7 +340,7 @@ def test_cli_analysis_is_offline_and_uses_generation_freeze(
     async def publish(results, run_dir, output):
         calls.append((results, run_dir, output))
 
-    monkeypatch.setattr(cli, "publish_analysis", publish, raising=False)
+    monkeypatch.setattr("context_fidelity.presentation.publish_analysis", publish)
     assert (
         cli.main(
             args(
