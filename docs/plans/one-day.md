@@ -10,7 +10,7 @@
 
 **Spec:** [Protocol v0.3](../project-spec.md), [ED-001](../experiments/ED-001-context-comparison.md), and [ED-002](../experiments/ED-002-evidence-restoration.md).
 
-**Time:** 10 focused hours plus 2 hours of buffer. This is an implementation plan; no experiment has been run.
+**Time:** 10 focused hours plus 2 hours of buffer. Implementation and smoke validation are complete; calibration is in progress. Hosted CI and the held-out study remain pending.
 
 ## Constraints and files
 
@@ -35,21 +35,21 @@ Use task ID, environment, history ID, context arm, and repetition as join keys. 
 ## Hour 0–1: Connect the repository and make one case work
 
 - [ ] Connect the user-created remote, inspect Git state, and create a feature branch. Configure the main-branch ruleset and required `quality` CI check after the first hosted run exposes that check.
-- [ ] Run foundation checks. Add packaging metadata, the first acceptance test, and the real Docker integration test before completing this slice.
+- [x] Run foundation checks. Add packaging metadata, the first acceptance test, and the real Docker integration test before completing this slice.
 
-- [ ] Check Docker and model access. Smoke-test local tool use, memory, latency, and context limits; switch to an available API during development if necessary.
-- [ ] Implement one small repair fixture and the five tools.
-- [ ] Run the actor through saved code, tests, note, and `finish_work`; capture an Inspect log and versioned events.
+- [x] Check Docker and model access. Smoke-test local tool use, memory, latency, and context limits; switch to an available API during development if necessary.
+- [x] Implement one small repair fixture and the five tools.
+- [x] Run the actor through saved code, tests, and note; capture an Inspect log and versioned events. The live actor terminated in prose instead of calling `finish_work`; that allowed early termination is retained and labeled.
 - [ ] Record throughput and estimate the full-run duration and any API cost.
 
 **Exit:** Final artifacts and independently recorded events agree. One saved trace can be replayed. Application CI gates have activated and pass for this slice.
 
 ## Hours 1–3: Build the experimental controls
 
-- [ ] Implement A–D. Verify B preserves transcript contents; C uses only actor-visible evidence and fits its cap.
-- [ ] Implement the report schema, ground-truth labels, structured scorer, and blinded prose-review export.
-- [ ] Check current versus stale tests, partial suites, zero collected tests, failed/recovered writes, malformed reports, and prose contradicting structured fields.
-- [ ] Finish four development tasks and mechanically validate their reference solutions.
+- [x] Implement A–D. Verify B preserves transcript contents; C uses only actor-visible evidence and fits its cap.
+- [x] Implement the report schema, ground-truth labels, structured scorer, and blinded prose-review export.
+- [x] Check current versus stale tests, partial suites, zero collected tests, failed/recovered writes, malformed reports, and prose contradicting structured fields.
+- [x] Finish four development tasks and mechanically validate their reference solutions.
 
 **Exit:** Evidence/scoring fixtures pass. The compact extract neither loses required evidence nor imports hidden evaluator conclusions. Strict typing and the 90% overall / 95% per-critical-module statement and branch coverage gates pass.
 
@@ -58,7 +58,7 @@ Use task ID, environment, history ID, context arm, and repetition as join keys. 
 - [ ] Run eight development histories and one report per context: 32 pilot reports. Check obstacle visibility, report formatting, summary retention, actual compression, and runtime.
 - [ ] If 384 tokens does not meaningfully compress histories, test 256 during development only, provided C still preserves the required evidence. Choose a cap for compression and evidence retention, not for the largest reporting effect.
 - [ ] If reporting saturates, record that limitation. Do not manufacture errors or select only failing trajectories.
-- [ ] Prepare 12 distinct held-out fixtures; assign four each to blocked tests, partial tests, and recoverable note writes.
+- [x] Prepare 12 distinct held-out fixtures; assign four each to blocked tests, partial tests, and recoverable note writes.
 - [ ] Freeze and hash the protocol/configuration, tasks, prompts, extractor, rubric, sample size, diagnostic-selection rule, and analysis.
 
 **Feasibility fallback:** If measured throughput or review time cannot fit the day, amend the protocol before held-out evaluation to eight tasks: three blocked-test, three partial-test, two recovery tasks. This gives 16 histories, 16 summaries, and 128 main reports. Label it a smaller pilot. Never choose this fallback from held-out effect sizes.

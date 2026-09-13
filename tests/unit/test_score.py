@@ -13,6 +13,8 @@ from context_fidelity.contracts import (
     ToolEvent,
     source_version,
 )
+from context_fidelity.experiment import GenerationRecord
+from context_fidelity.pipeline import PlannedReport
 from context_fidelity.score import (
     BlindReviewInput,
     ContextSupport,
@@ -688,6 +690,54 @@ def test_blinded_export_is_stable_permutation_with_labels_only_in_separate_key()
         assert key.context_digest == context_digest(source.context)
 
 
+@pytest.mark.parametrize("arm", [Arm.A, Arm.B, Arm.C, Arm.D])
+def test_pipeline_zero_based_report_exports_without_renumbering(arm: Arm) -> None:
+    history = recorded((saved()[0],))
+    supplied = context(history, arm)
+    planned = PlannedReport(history_id=history.history_id, arm=arm, repetition=0, seed=17)
+    generated = GenerationRecord(
+        history_id=planned.history_id,
+        stage="report",
+        arm=planned.arm,
+        repetition=planned.repetition,
+        seed=planned.seed,
+        text=report(),
+        stop_reason="stop",
+        input_messages=history.messages,
+        output="{}",
+        usage=None,
+        config="{}",
+        prompt_tokens=100,
+        log_path=f"reports/{planned.history_id}/report-{planned.arm}-0/attempt-1/log.eval",
+    )
+    report_id = f"{planned.history_id}-{planned.arm}-{planned.repetition}"
+    source = BlindReviewInput.model_validate(
+        {
+            "report_id": report_id,
+            "history_id": generated.history_id,
+            "task_id": history.task.task_id,
+            "environment": history.environment,
+            "arm": generated.arm,
+            "repetition": generated.repetition,
+            "model_id": "offline-fixture",
+            "raw_report": generated.text,
+            "task_request": history.task.description,
+            "context": supplied,
+        }
+    )
+    batch = export_blinded_review((source,), seed=17)
+    key = batch.key[0]
+    assert (key.report_id, key.history_id, key.arm, key.repetition) == (
+        report_id,
+        history.history_id,
+        arm,
+        0,
+    )
+    assert batch.items[0].raw_report == generated.text
+    assert key.report_digest == source_version(generated.text)
+    assert key.context_digest == context_digest(supplied)
+
+
 def test_blinded_export_seed_changes_ids_without_losing_records() -> None:
     first = export_blinded_review(blind_inputs(), seed=17)
     second = export_blinded_review(blind_inputs(), seed=18)
@@ -712,7 +762,7 @@ def test_blinded_export_revalidates_inputs_and_preserves_untrusted_prose_verbati
     hostile = original.model_copy(update={"raw_report": '<script>alert("arm A")</script>'})
     assert export_blinded_review((hostile,), seed=1).items[0].raw_report == hostile.raw_report
     with pytest.raises(ValueError):
-        export_blinded_review((original.model_copy(update={"repetition": 0}),), seed=1)
+        export_blinded_review((original.model_copy(update={"repetition": -1}),), seed=1)
 
 
 def test_assistant_support_error_alone_cannot_become_a_human_primary_result() -> None:

@@ -29,3 +29,7 @@ The model's repository includes sampling defaults. Each experimental call explic
 Local Docker commands must select the dedicated context or set `DOCKER_HOST`. CI uses its own normal Docker daemon. Neither the user's Docker default context nor their SSH configuration needs to change.
 
 Development smoke: Inspect requested the single word `READY`; the model returned `READY` using 15 input and 2 output tokens. This verifies connectivity only, not task performance.
+
+The first complete development pilot, `dev-pilot-001`, preserved eight failed actor attempts and produced no histories or reports. Diagnosis: the SSH client timed out while the supervised model server stayed healthy. A new localhost-only tunnel uses 20-second server keep-alives, three missed replies as its failure limit, and an explicit control socket. A subsequent direct health check and two-token `READY` response succeeded. The failed pilot is retained; the next development run has a new ID.
+
+All experiment calls use Inspect's OpenAI-compatible chat adapter with `max_retries=0` and a 90-second client timeout. The client sends a nonsecret placeholder to the private endpoint. A cancellation sidecar is authoritative even when the upstream Inspect log reports overall success. Inspect logs, serialized requests/responses, and run manifests remain local.

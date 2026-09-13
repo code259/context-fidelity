@@ -351,7 +351,7 @@ class BlindReviewInput(Record):
     task_id: Identifier
     environment: Environment
     arm: Arm
-    repetition: Annotated[StrictInt, Field(ge=1)]
+    repetition: Annotated[StrictInt, Field(ge=0)]
     model_id: Nonblank
     raw_report: StrictStr
     task_request: StrictStr
@@ -381,7 +381,7 @@ class BlindedReviewKey(Record):
     task_id: Identifier
     environment: Environment
     arm: Arm
-    repetition: Annotated[StrictInt, Field(ge=1)]
+    repetition: Annotated[StrictInt, Field(ge=0)]
     model_id: Nonblank
     context_digest: Digest
     report_digest: Digest

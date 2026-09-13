@@ -605,3 +605,203 @@ def test_loading_a_relocated_run_rejects_the_unbound_plan(tmp_path: Path) -> Non
         shutil.copytree(original, destination)
         with pytest.raises(ValueError, match="inside repository|bind.*plan"):
             pipeline.load_study(root, destination)
+
+
+@pytest.mark.parametrize("failed_stage", ["summary", "actor"])
+@pytest.mark.parametrize("audit_present", [False, True])
+def test_reporting_rejects_unfrozen_input_added_after_collection(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failed_stage: str, audit_present: bool
+) -> None:
+    root = repo(tmp_path)
+    plan = prepare(root)
+    run = root / "runs/pilot"
+    asyncio.run(pipeline.collect_study(root, run, services(monkeypatch, fail_stage=failed_stage)))
+    planned = plan.histories[0]
+    directory = run / "histories" / planned.history_id
+    if failed_stage == "summary":
+        history = History.model_validate_json((directory / "history.json").read_bytes())
+        addition = pipeline.make_context(
+            history, Arm.D, WordTokenizer().count, summary="Added after collection freeze."
+        )
+        added_path = directory / "contexts/D.json"
+    else:
+        task = next(task for task in plan.tasks if task.task_id == planned.task_id)
+        addition = History(
+            history_id=planned.history_id,
+            task=task,
+            environment=planned.environment,
+            messages=(),
+            events=(),
+            final_files=(),
+            termination="terminal",
+        )
+        added_path = directory / "history.json"
+    pipeline.save_json(added_path, addition)
+    audit_path = root / "audit.json" if audit_present else None
+    if audit_path is not None:
+        supports = ()
+        if failed_stage == "summary":
+            supports = (
+                pipeline.ContextSupport(
+                    history_id=planned.history_id,
+                    context_digest=pipeline.context_digest(addition),
+                    code_saved="unknown",
+                    note_saved="unknown",
+                    verification="unknown",
+                    all_steps_complete="unknown",
+                    reviewer_id="reviewer",
+                    reviewer_kind="assistant",
+                    notes="This audit cannot make late data part of the collection freeze.",
+                ),
+            )
+        pipeline.save_json(
+            audit_path, pipeline.SummaryAuditManifest(created_at="now", supports=supports)
+        )
+    with pytest.raises(ValueError, match="not bound by collection freeze"):
+        asyncio.run(pipeline.report_study(root, run, services(monkeypatch), audit_path=audit_path))
+    assert not (run / "report-started.json").exists()
+    assert not (run / "reports").exists()
+
+
+def test_reporting_uses_frozen_missingness_if_context_appears_during_reporting(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = repo(tmp_path)
+    plan = prepare(root)
+    run = root / "runs/pilot"
+    asyncio.run(pipeline.collect_study(root, run, services(monkeypatch, fail_stage="summary")))
+    # Choose a D request after the first report call so the added context would
+    # otherwise repair one frozen missing cell midway through generation.
+    missing = next(report for report in reversed(plan.reports) if report.arm == Arm.D)
+    directory = run / "histories" / missing.history_id
+    history = History.model_validate_json((directory / "history.json").read_bytes())
+    svc = services(monkeypatch)
+    report_context = pipeline.report_context
+    added = False
+
+    async def add_late(*args: object, **kwargs: object):
+        nonlocal added
+        if not added:
+            added = True
+            pipeline.save_json(
+                directory / "contexts/D.json",
+                pipeline.make_context(
+                    history, Arm.D, WordTokenizer().count, summary="Added during reporting."
+                ),
+            )
+        return await report_context(*args, **kwargs)
+
+    monkeypatch.setattr(pipeline, "report_context", add_late)
+    result = asyncio.run(pipeline.report_study(root, run, svc))
+    assert result.completed == 24
+    assert len(result.failures) == 8
+    assert {failure.arm for failure in result.failures} == {Arm.D}
+    assert not (run / "reports" / f"{missing.history_id}-D-{missing.repetition}.json").exists()
+
+
+def test_reporting_rechecks_snapshot_bytes_after_manifest_verification(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = repo(tmp_path)
+    plan = prepare(root)
+    run = root / "runs/pilot"
+    svc = services(monkeypatch)
+    asyncio.run(pipeline.collect_study(root, run, svc))
+    target = run / "histories" / plan.histories[0].history_id / "contexts/D.json"
+    original_read = Path.read_bytes
+    replaced = False
+
+    def change_after_read(path: Path) -> bytes:
+        nonlocal replaced
+        content = original_read(path)
+        if path == target and not replaced:
+            replaced = True
+            path.write_bytes(
+                content.replace(b"Unable to continue.", b"Changed after verification.")
+            )
+        return content
+
+    # Keep real filesystem reads and manifest verification. Simulate a writer
+    # changing one context immediately after verification read its original bytes.
+    monkeypatch.setattr(Path, "read_bytes", change_after_read)
+    with pytest.raises(ValueError, match="frozen reporting input changed"):
+        asyncio.run(pipeline.report_study(root, run, svc))
+    assert not (run / "report-started.json").exists()
+    assert not (run / "reports").exists()
+
+
+@pytest.mark.parametrize("with_audit", [False, True])
+def test_report_freeze_binds_outputs_missingness_audit_and_raw_attempt_files(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, with_audit: bool
+) -> None:
+    root = repo(tmp_path)
+    plan = prepare(root)
+    run = root / "runs/pilot"
+    asyncio.run(pipeline.collect_study(root, run, services(monkeypatch, fail_stage="summary")))
+    # D is missing for all histories; one available report additionally fails
+    # technically, leaving both kinds of missingness in the final freeze.
+    failed = next(report for report in plan.reports if report.arm != Arm.D)
+    svc = services(monkeypatch)
+    generate = pipeline.report_context
+
+    async def logged_report(history: History, context: pipeline.ReportingContext, **kwargs):
+        log_dir = kwargs["log_dir"]
+        log_dir.mkdir(parents=True)
+        raw_log = log_dir / "raw.eval"
+        raw_log.write_bytes(b"offline provider log")
+        if (history.history_id, context.arm) == (failed.history_id, failed.arm):
+            pipeline.save_json(log_dir / "failure.json", {"error": "provider unavailable"})
+            pipeline.save_json(log_dir / "diagnostics/provider.json", {"attempt": 1})
+            raise GenerationFailure("provider unavailable", str(raw_log))
+        record = await generate(history, context, **kwargs)
+        pipeline.save_json(log_dir / "generation.json", record)
+        return record
+
+    monkeypatch.setattr(pipeline, "report_context", logged_report)
+    audit_path = root / "audit.json" if with_audit else None
+    if audit_path is not None:
+        pipeline.save_json(audit_path, pipeline.SummaryAuditManifest(created_at="now", supports=()))
+    result = asyncio.run(pipeline.report_study(root, run, svc, audit_path=audit_path))
+    assert result.completed == 23
+    assert len(result.failures) == 9
+    manifest_path = run / "report-freeze.json"
+    assert manifest_path.is_file(), "completed reporting must freeze its outputs and missing cells"
+    manifest = pipeline.FreezeManifest.model_validate_json(manifest_path.read_bytes())
+    pipeline.verify_freeze(run, manifest)
+    expected = {"report-started.json", "report.json"}
+    if with_audit:
+        expected.add("summary-audit.json")
+    for report in plan.reports:
+        failed_call = (report.history_id, report.arm) == (failed.history_id, failed.arm)
+        output_dir = "report-failures" if report.arm == Arm.D or failed_call else "reports"
+        expected.add(f"{output_dir}/{report.history_id}-{report.arm}-{report.repetition}.json")
+        if report.arm == Arm.D:
+            continue
+        attempt = f"histories/{report.history_id}/report-{report.arm}-{report.repetition}/attempt-1"
+        expected.add(f"{attempt}/raw.eval")
+        expected.add(f"{attempt}/{'failure' if failed_call else 'generation'}.json")
+        if failed_call:
+            expected.add(f"{attempt}/diagnostics/provider.json")
+    assert {item.path for item in manifest.files} == expected
+    failure_files = [
+        item.path for item in manifest.files if item.path.startswith("report-failures/")
+    ]
+    report_files = [item.path for item in manifest.files if item.path.startswith("reports/")]
+    assert len(failure_files) == 9 and len(report_files) == 23
+    assert json.loads((run / "report.json").read_text())["completed"] == 23
+    tamper_paths = [
+        "report.json",
+        report_files[0],
+        failure_files[0],
+        f"histories/{failed.history_id}/report-{failed.arm}-0/attempt-1/raw.eval",
+    ]
+    if with_audit:
+        tamper_paths.append("summary-audit.json")
+    for relative in tamper_paths:
+        path = run / relative
+        original = path.read_bytes()
+        path.write_bytes(original + b" ")
+        with pytest.raises(ValueError, match="frozen file changed"):
+            pipeline.verify_freeze(run, manifest)
+        path.write_bytes(original)
+    pipeline.verify_freeze(run, manifest)

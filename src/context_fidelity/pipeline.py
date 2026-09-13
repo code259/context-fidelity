@@ -5,11 +5,12 @@ single-use: interrupted runs remain inspectable and cannot overwrite valid
 outputs. Unclassified Inspect failures are recorded without automatic retries.
 """
 
+import hashlib
 import random
 import re
 import time
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from contextlib import AbstractContextManager
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -431,12 +432,32 @@ async def collect_study(root: Path, run_dir: Path, services: PipelineServices) -
     return result
 
 
-def _audit_before_reports(run_dir: Path, audit_path: Path) -> SummaryAuditManifest:
+def _reporting_inputs(run_dir: Path, collection: FreezeManifest) -> dict[str, bytes]:
+    """Snapshot only hash-bound data; late files cannot repair frozen missingness."""
+    frozen = {item.path: item.sha256 for item in collection.files}
+    inputs: dict[str, bytes] = {}
+    paths = [
+        *(run_dir / "histories").glob("*/history.json"),
+        *(run_dir / "histories").glob("*/contexts/*.json"),
+    ]
+    for path in sorted(paths):
+        relative = path.relative_to(run_dir).as_posix()
+        if relative not in frozen:
+            raise ValueError(f"reporting input is not bound by collection freeze: {relative}")
+        content = path.read_bytes()
+        if hashlib.sha256(content).hexdigest() != frozen[relative]:
+            raise ValueError(f"frozen reporting input changed: {relative}")
+        inputs[relative] = content
+    return inputs
+
+
+def _audit_before_reports(audit_path: Path, inputs: Mapping[str, bytes]) -> SummaryAuditManifest:
     audit = SummaryAuditManifest.model_validate_json(audit_path.read_bytes())
     available = {
         context.history_id: context_digest(context)
-        for path in (run_dir / "histories").glob("*/contexts/D.json")
-        for context in (ReportingContext.model_validate_json(path.read_bytes()),)
+        for path, content in inputs.items()
+        if path.endswith("/contexts/D.json")
+        for context in (ReportingContext.model_validate_json(content),)
     }
     audited = {support.history_id: support.context_digest for support in audit.supports}
     if len(audited) != len(audit.supports) or audited != available:
@@ -461,7 +482,8 @@ async def report_study(
         raise FileExistsError(f"report phase already started: {run_dir}")
     if plan.split == "heldout" and audit_path is None:
         raise ValueError("heldout reporting requires a frozen pre-report summary audit")
-    audit = _audit_before_reports(run_dir, audit_path) if audit_path is not None else None
+    inputs = _reporting_inputs(run_dir, collection)
+    audit = _audit_before_reports(audit_path, inputs) if audit_path is not None else None
     if audit is not None:
         save_json(run_dir / "summary-audit.json", audit)
     save_json(
@@ -478,11 +500,11 @@ async def report_study(
         services.progress(f"report {planned.history_id} {planned.arm} {planned.repetition}")
         directory = run_dir / "histories" / planned.history_id
         log_dir = directory / f"report-{planned.arm}-{planned.repetition}/attempt-1"
-        history_path = directory / "history.json"
-        context_path = directory / "contexts" / f"{planned.arm}.json"
+        history_path = f"histories/{planned.history_id}/history.json"
+        context_path = f"histories/{planned.history_id}/contexts/{planned.arm}.json"
         name = f"{planned.history_id}-{planned.arm}-{planned.repetition}"
         failure: StageFailure | None = None
-        if not history_path.is_file() or not context_path.is_file():
+        if history_path not in inputs or context_path not in inputs:
             failure = StageFailure(
                 history_id=planned.history_id,
                 stage="report",
@@ -493,8 +515,8 @@ async def report_study(
                 retry_policy="missing_input",
             )
         else:
-            history = History.model_validate_json(history_path.read_bytes())
-            context = ReportingContext.model_validate_json(context_path.read_bytes())
+            history = History.model_validate_json(inputs[history_path])
+            context = ReportingContext.model_validate_json(inputs[context_path])
             try:
                 record = await report_context(
                     history,
@@ -523,6 +545,20 @@ async def report_study(
             save_json(run_dir / "report-failures" / f"{name}.json", failure)
     result = PhaseResult(phase="report", completed=completed, failures=tuple(failures))
     save_json(run_dir / "report.json", result)
+    paths = [
+        run_dir / "report-started.json",
+        run_dir / "report.json",
+        *run_dir.glob("summary-audit.json"),
+        *(run_dir / "reports").glob("*.json"),
+        *(run_dir / "report-failures").glob("*.json"),
+        *(
+            path
+            for attempt in (run_dir / "histories").glob("*/report-*/attempt-1")
+            for path in attempt.rglob("*")
+            if path.is_file()
+        ),
+    ]
+    save_json(run_dir / "report-freeze.json", freeze_files(run_dir, paths, created_at=_now()))
     return result
 
 

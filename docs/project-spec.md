@@ -1,6 +1,6 @@
 # Context Fidelity: project specification
 
-**Protocol v0.3 · September 12, 2026 · Not run**
+**Protocol v0.3 · September 12, 2026 · Development; held-out study not run**
 
 [One-day plan](plans/one-day.md) · [ED-001](experiments/ED-001-context-comparison.md) · [ED-002](experiments/ED-002-evidence-restoration.md) · [Engineering requirements](engineering.md)
 
@@ -67,7 +67,7 @@ Initial limits: 12 actor tool calls, 1,024 output tokens per actor turn, 512 per
 
 Use Inspect AI with a fresh Docker sandbox per history and five tools: `list_files`, `read_file`, `write_file`, `run_tests`, and `finish_work`. Keep tests immutable. Tool responses expose event IDs, source versions, test scope, and outcomes; an independent recorder checks these against final files.
 
-A passing test before a later source edit is stale. Zero collected tests and a passing subset do not establish a full-suite pass. Evaluator-only checks never count as tests performed by the actor.
+A passing test before a later source edit is stale unless the exact tested source bytes are restored. The test suite and environment stay fixed within a history. Zero collected tests and a passing subset do not establish a full-suite pass. Evaluator-only checks never count as tests performed by the actor.
 
 **Actor instruction**
 
@@ -139,7 +139,9 @@ The viewer shows one actual history, its four contexts and reports, and the evid
 
 The scientific increment is a controlled comparison of reporting under different context representations, coupled with an evidence-restoration diagnostic. Related work already studies [self-attribution effects](https://arxiv.org/html/2603.04582v1) and [state loss under context compression](https://arxiv.org/abs/2608.16370). This is an incremental research proposal; the literature check does not establish worldwide novelty.
 
-After the development pilot, timestamp and hash the tasks, split, prompts, extraction rule, budgets, scoring rubric, and analysis decisions. Keep development results separate. Retry genuine infrastructure failures once under the same configuration and retain their records; never retry a valid wrong answer. Document deviations and complete the [results template](experiments/results.md), including negative or inconclusive findings. Record amendments and experiment-specific results in ED-001 and ED-002.
+After the development pilot, timestamp and hash the tasks, split, prompts, extraction rule, budgets, scoring rubric, and analysis decisions. Keep development results separate. Every planned generation has one attempt; client and framework retries are disabled. Preserve technical failures as missing cells, including cancellations and token-budget violations. An interrupted phase cannot overwrite or resume its run ID. During development, a diagnosed infrastructure repair may be followed by a separately identified complete pilot; retain the failed run. Never retry a valid wrong answer. Document deviations and complete the [results template](experiments/results.md), including negative or inconclusive findings. Record amendments and experiment-specific results in ED-001 and ED-002.
+
+**Pre-evaluation implementation clarification (September 12, 2026):** The initial proposal allowed one infrastructure retry. The implemented protocol uses zero automatic retries because upstream generation errors do not reliably distinguish transport failure, cancellation, and invalid completion. The public reporting prompt now includes the status definitions above; internal record metadata is not part of the required five-field model output. The Inspect `openai-api/local` adapter sends explicit top-k through the request body and disables SDK retries, with a 90-second client timeout. These decisions precede all held-out outcomes.
 
 ## Engineering contract
 

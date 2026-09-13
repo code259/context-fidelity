@@ -4,7 +4,7 @@ These are project requirements, enforced through [AGENTS.md](../AGENTS.md), test
 
 ## Version control and review
 
-The local origin is configured for `code259/context-fidelity`; the foundation is on `chore/engineering-foundation`, with no commits or pushes made in this setup. Before subsequent implementation, inspect the current base and work on a short-lived feature branch. Use focused commits with behavior and verification in the message; keep unrelated refactors separate. Inspect status before switching branches and preserve user changes.
+The local origin is configured for `code259/context-fidelity`; foundation commit `caf7082` is preserved on `chore/engineering-foundation`, and implementation is on `feat/context-compression-eval`. No public push has completed. Inspect the current base and work on a short-lived feature branch. Use focused commits with behavior and verification in the message; keep unrelated refactors separate. Inspect status before switching branches and preserve user changes.
 
 Integrate through a PR describing the problem, resulting behavior, relevant ED, tests, coverage, and limitations. Review scientific validity and implementation quality as separate passes. A fresh reviewer is preferable when available; if working alone, record a separate self-review rather than claiming independent approval. Resolve material findings before merging. Use worktrees only for changes that need isolation. Do not force-push shared history.
 
