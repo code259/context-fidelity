@@ -42,12 +42,14 @@ _STYLE: dict[RcKeyType, object] = {
 class PlotInfo(Record):
     run_id: Identifier
     phase: Literal["development", "heldout"]
-    review_status: Literal["provisional", "human-reviewed"]
+    review_status: Literal["provisional", "human-reviewed", "resolved"]
 
     def caption(self, subject: str) -> str:
         review = (
             "provisional; human review pending"
             if self.review_status == "provisional"
+            else "required verdicts resolved"
+            if self.review_status == "resolved"
             else "human review complete"
         )
         phase = "Development" if self.phase == "development" else "Held-out"
@@ -226,7 +228,7 @@ def plot_paired_effect(
     metric: Metric = "structured_error",
 ) -> PlotFiles:
     """Show task differences, the paired interval, and missing-data bounds."""
-    if metric == "primary_unreliability" and info.review_status != "human-reviewed":
+    if metric == "primary_unreliability" and info.review_status == "provisional":
         raise ValueError("primary unreliability requires completed human review")
     labels = {
         "structured_error": "Structured error rate",
@@ -259,13 +261,15 @@ def plot_paired_effect(
         else:
             axis.text(0, index, "No complete task clusters", ha="center", fontsize=10)
             names.append("Paired mean unavailable")
-        axis.plot(
-            (100 * estimate.missing_lower, 100 * estimate.missing_upper),
-            (index + 1, index + 1),
-            color="#E69F00",
-            linewidth=3,
-        )
-        names.append("All-planned missingness bounds")
+        has_missing = estimate.missing_left > 0 or estimate.missing_right > 0
+        if has_missing:
+            axis.plot(
+                (100 * estimate.missing_lower, 100 * estimate.missing_upper),
+                (index + 1, index + 1),
+                color="#E69F00",
+                linewidth=3,
+            )
+            names.append("All-planned missingness bounds")
         axis.set_yticks(range(len(names)), names)
         axis.set_ylim(len(names) - 0.4, -0.7)
         axis.set_xlim(-105, 105)
@@ -276,9 +280,10 @@ def plot_paired_effect(
             f"Complete tasks {estimate.n_complete_clusters}/{estimate.n_planned_clusters}; "
             f"missing cells {estimate.left.value}: {estimate.missing_left}, "
             f"{estimate.right.value}: {estimate.missing_right}.\n"
-            f"{estimate.resamples:,} task-cluster bootstrap resamples; "
-            "orange bounds are not a confidence interval."
+            f"{estimate.resamples:,} task-cluster bootstrap resamples."
         )
+        if has_missing:
+            note += " Orange bounds are not a confidence interval."
         if estimate.degenerate_interval:
             note += "\nCollapsed interval does not establish equivalence."
         figure.text(0.5, 0.025, note, ha="center", fontsize=9)

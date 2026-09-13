@@ -41,7 +41,10 @@ def repo(tmp_path: Path, *, split: str = "dev", count: int = 4) -> Path:
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("**Status:** Frozen.\n")
-    (tmp_path / "config.yaml").write_bytes((ROOT / "config.yaml").read_bytes())
+    development_config = yaml.safe_load((ROOT / "config.yaml").read_text())
+    development_config["protocol_status"] = "development"
+    development_config["amendment_note"] = ""
+    (tmp_path / "config.yaml").write_text(yaml.safe_dump(development_config))
     tasks = tmp_path / "tasks" / split
     tasks.mkdir(parents=True)
     for index in range(count):
@@ -148,8 +151,11 @@ class WordTokenizer:
         return 10
 
 
-def services(monkeypatch: pytest.MonkeyPatch, *, fail_stage: str = "") -> pipeline.PipelineServices:
+def services(
+    monkeypatch: pytest.MonkeyPatch, *, fail_stage: str = "", run_id: str = "pilot"
+) -> pipeline.PipelineServices:
     async def actor(task: TaskSpec, environment: Environment, **kwargs: object) -> History:
+        assert kwargs["run_id"] == run_id
         if fail_stage == "actor":
             raise GenerationFailure("unclassified infrastructure", "actor-failed.eval")
         return History(
@@ -165,6 +171,7 @@ def services(monkeypatch: pytest.MonkeyPatch, *, fail_stage: str = "") -> pipeli
     async def generate(
         history: History, context: object = None, **kwargs: object
     ) -> GenerationRecord:
+        assert kwargs["run_id"] == run_id
         stage = "summary" if context is None else "report"
         if fail_stage == stage:
             raise GenerationFailure(
@@ -324,7 +331,7 @@ def test_heldout_audit_binds_every_D_context_before_any_report(
         pipeline.prepare_study(root, **kwargs)
     plan = pipeline.prepare_study(root, **kwargs, validation_path=validation_path)
     run = root / "runs/main"
-    svc = services(monkeypatch)
+    svc = services(monkeypatch, run_id="main")
     asyncio.run(pipeline.collect_study(root, run, svc))
     with pytest.raises(ValueError, match="summary audit"):
         asyncio.run(pipeline.report_study(root, run, svc))

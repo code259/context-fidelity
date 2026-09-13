@@ -20,9 +20,14 @@ Use a small package under `src/context_fidelity/`:
 - `score.py`, `analyze.py`: pure scoring and paired statistical calculations.
 - `experiment.py`: orchestration through Inspect; explicit lifecycle transitions.
 - `adapters/`: model and sandbox I/O, injected behind narrow interfaces.
-- `viewer.py`, `__main__.py`: presentation and CLI.
+- `results.py`: offline analysis bound to the original run artifacts.
+- `inspect_export.py`: scored copies for Inspect View, with raw logs preserved.
+- `replay.py`, `plots.py`: typed review records and publication figures.
+- `doctor.py`, `__main__.py`: runtime checks and CLI.
 
 Apply a functional core with imperative I/O boundaries, adapter/strategy patterns for real alternatives, and explicit state transitions for execution → frozen history → reporting → scoring. Prefer functions and typed records over inheritance trees, global mutable state, or a custom plugin framework. Add an ADR only for a consequential choice with alternatives, such as changing the evidence contract.
+
+Use [Inspect View for experiment review](decisions/001-native-inspect-view.md). Keep research scoring in tested Python functions; let Inspect handle trace navigation, filtering, and score display. Do not build a second dashboard or add an operations stack without a concrete need.
 
 Validate external data at entry, version persisted schemas, fail clearly on incompatible records, and keep artifact paths local to their run. Bound concurrency, time, retries, and output size. Distinguish technical failure, invalid model output, and valid-but-wrong behavior.
 

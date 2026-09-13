@@ -45,6 +45,12 @@ PY
 
 Subsequent CLI runs require that cached revision and do not fetch tokenizer files. Exact generation budgets, seeds, and backend settings are recorded in each prepared plan and Inspect log.
 
+```sh
+uv run context-fidelity doctor
+```
+
+This command checks cached tokenization, the model's health and advertised ID, Docker, and the pinned sandbox image. It makes no generation calls and downloads nothing. Collection repeats the required checks before starting; reporting skips Docker because it uses frozen histories. The model listing cannot attest the server's checkpoint revision or precision. Verify those against the serving command and runtime record.
+
 ## Development run
 
 Choose a new run ID and output path for every attempt:
@@ -65,3 +71,24 @@ Finish development calibration, freeze both EDs and `config.yaml`, and validate 
 For the complete primary outcome, a person must review prose and summary support under [the rubric](review-rubric.md). Assistant labels remain provisional. Unknown review status must remain missing in primary analysis; it must never be treated as a reliable report.
 
 Offline reanalysis must use immutable original run inputs and create a separately identified output directory. Preserve the original generation freeze and fingerprint the analysis implementation. A later scoring correction must not rewrite raw model responses or the original analysis.
+
+## Analyze and inspect saved results
+
+```sh
+uv run context-fidelity analyze --run-dir runs/dev-example --analysis-id dev-analysis-001 --output runs/analysis/dev-analysis-001
+uv run inspect view --log-dir runs/analysis/dev-analysis-001/inspect --port 18575
+```
+
+Analysis runs offline. It verifies the original artifact hashes, computes paired estimates, writes plots, and adds scores to separate Inspect logs. No model endpoint, tokenizer, or Docker daemon is needed. `package-freeze.json` marks a complete export; a directory without it is incomplete. Choose a new analysis ID and destination after a failed export.
+
+To add completed review records, pass `--summary-audit PATH` and `--prose-reviews PATH`. The first file contains a `SummaryAuditManifest`; the second contains an array of `ProseReview` records. Each review binds to the exact context and report. Changing review labels produces a new analysis, never a rewrite of the original.
+
+Inspect shows structured errors, factual coverage, and primary unreliability as separate scores. `pending` means required review is missing. In Tasks, filter the tags by task, environment, arm, or repetition. Switch to Samples for cross-log score columns, or open a report and its score explanation for evidence. Keep the blinded review items separate from their answer key and scored views until review is complete.
+
+The export contains measured figure inputs, PNG/PDF figures, paired effects, review JSON, and a native-log index. Build a portable viewer through Inspect's own command:
+
+```sh
+uv run inspect view bundle --log-dir runs/analysis/dev-analysis-001/inspect --output-dir runs/analysis/dev-analysis-001-bundle
+```
+
+Use Inspect's local server for development. A separately hosted bundle requires HTTP Range support; Python's basic `http.server` does not provide it. [Inspect View documentation](https://inspect.aisi.org.uk/log-viewer.html)

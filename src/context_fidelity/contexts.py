@@ -134,14 +134,15 @@ def restoration_contexts(
     """Construct matched additions after the blinded omission audit selects them.
 
     This validates lengths and lineage; it cannot validate semantic eligibility.
-    The frozen audit must establish omission, decisiveness, and control validity.
+    The frozen audit must establish omission, decisiveness, and control validity,
+    and bind each addition to its exact raw ToolEvent.model_dump_json() record.
     """
     if ordinary.arm != Arm.D:
         raise ValueError("restoration must start from an ordinary summary")
     if not decisive.strip() or not control.strip():
         raise ValueError("additions must be nonempty")
-    decisive_tokens = _bounded(decisive, count, 128)
-    control_tokens = _bounded(control, count, 128)
+    decisive_tokens = _bounded(decisive, count, 256)
+    control_tokens = _bounded(control, count, 256)
     if abs(decisive_tokens - control_tokens) > 8:
         raise ValueError("addition lengths must be within eight tokens")
     records: list[ReportingContext] = []
@@ -155,7 +156,7 @@ def restoration_contexts(
                 history_id=ordinary.history_id,
                 arm=arm,
                 payload=payload,
-                token_count=_bounded(payload, count, 512),
+                token_count=_bounded(payload, count, 656),
                 event_ids=(event_id,),
             )
         )

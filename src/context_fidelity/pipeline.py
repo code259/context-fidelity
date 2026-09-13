@@ -364,6 +364,7 @@ async def collect_study(root: Path, run_dir: Path, services: PipelineServices) -
                 task,
                 planned.environment,
                 history_id=planned.history_id,
+                run_id=plan.run_id,
                 model=services.model,
                 tokenizer=services.tokenizer,
                 sandbox_factory=partial(services.sandbox_factory, task, planned.environment),
@@ -402,6 +403,7 @@ async def collect_study(root: Path, run_dir: Path, services: PipelineServices) -
         try:
             summary = await summarize_history(
                 history,
+                run_id=plan.run_id,
                 model=services.model,
                 tokenizer=services.tokenizer,
                 log_dir=log_dir,
@@ -521,6 +523,7 @@ async def report_study(
                 record = await report_context(
                     history,
                     context,
+                    run_id=plan.run_id,
                     repetition=planned.repetition,
                     model=services.model,
                     tokenizer=services.tokenizer,

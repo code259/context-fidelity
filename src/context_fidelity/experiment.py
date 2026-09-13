@@ -29,6 +29,7 @@ from inspect_ai.tool import ToolCallError, ToolDef, ToolInfo
 from pydantic import Field, TypeAdapter
 
 from context_fidelity.adapters.model import Tokenizer, ensure_context_fits
+from context_fidelity.artifacts import save_json
 from context_fidelity.contexts import ReportingContext, transcript
 from context_fidelity.contracts import (
     Arm,
@@ -36,6 +37,7 @@ from context_fidelity.contracts import (
     Environment,
     FileSnapshot,
     History,
+    Identifier,
     Record,
     TaskSpec,
     ToolEvent,
@@ -89,6 +91,7 @@ class EvaluationFailureRecord(Record):
 
 
 class GenerationRecord(Record):
+    run_id: Identifier | None = None
     history_id: str
     stage: Literal["summary", "report"]
     arm: Arm | None = None
@@ -105,12 +108,23 @@ class GenerationRecord(Record):
 
 
 class ActorRecord(Record):
+    run_id: Identifier | None = None
     history_id: str
     seed: int
     config: str
     outputs: tuple[str, ...]
     prompt_tokens: tuple[int, ...]
     log_path: str
+
+
+class PhaseLineage(Record):
+    run_id: Identifier | None = None
+    history_id: Identifier
+    task_id: Identifier
+    environment: Environment
+    stage: Literal["actor", "summary", "report"]
+    arm: Arm | None = None
+    repetition: int | None = Field(default=None, ge=0)
 
 
 def task_request(task: TaskSpec) -> str:
@@ -161,8 +175,7 @@ def _prepare_directory(path: Path) -> None:
 
 
 def _save(path: Path, record: Record) -> None:
-    with path.open("x", encoding="utf-8") as stream:
-        stream.write(record.model_dump_json(indent=2) + "\n")
+    save_json(path, record)
 
 
 def _failure(log_dir: Path, message: str, log_path: str) -> GenerationFailure:
@@ -179,6 +192,7 @@ async def _evaluate(
     log_dir: Path,
     name: str,
     result_ready: Callable[[], bool],
+    lineage: PhaseLineage,
 ) -> str:
     phase_completed = False
 
@@ -192,9 +206,11 @@ async def _evaluate(
 
         return observe
 
+    metadata = lineage.model_dump(mode="json", exclude={"schema_version"})
     logs = await eval_async(
         Task(
-            dataset=[Sample(input=messages, id=name)],
+            dataset=[Sample(input=messages, id=name, metadata=metadata)],
+            metadata=metadata,
             solver=observed_solver(),
             name=name,
             config=config,
@@ -284,6 +300,7 @@ async def execute_actor(
     seed: int,
     max_context_tokens: int = 16384,
     max_tool_calls: int = 12,
+    run_id: str | None = None,
 ) -> History:
     """Execute one fresh workspace, stop before reporting, and freeze its history."""
     if not 1 <= max_tool_calls <= 12:
@@ -378,12 +395,20 @@ async def execute_actor(
         log_dir=log_dir,
         name=f"actor-{history_id}",
         result_ready=lambda: len(completed) == 1,
+        lineage=PhaseLineage(
+            run_id=run_id,
+            history_id=history_id,
+            task_id=task.task_id,
+            environment=environment,
+            stage="actor",
+        ),
     )
     history = completed[0]
     _save(log_dir / "history.json", history)
     _save(
         log_dir / "actor.json",
         ActorRecord(
+            run_id=run_id,
             history_id=history_id,
             seed=seed,
             config=config.model_dump_json(),
@@ -407,6 +432,7 @@ async def _generation(
     log_dir: Path,
     seed: int,
     max_context_tokens: int,
+    run_id: str | None,
 ) -> GenerationRecord:
     _prepare_directory(log_dir)
     max_tokens = 384 if stage == "summary" else 512
@@ -452,11 +478,21 @@ async def _generation(
         model=model,
         config=config,
         log_dir=log_dir,
-        name=f"{stage}-{history.history_id}",
+        name=f"{stage}-{history.history_id}" + (f"-{arm}-{repetition}" if arm else ""),
         result_ready=lambda: len(captured) == 1,
+        lineage=PhaseLineage(
+            run_id=run_id,
+            history_id=history.history_id,
+            task_id=history.task.task_id,
+            environment=history.environment,
+            stage=stage,
+            arm=arm,
+            repetition=repetition,
+        ),
     )
     exact, output, tokens = captured[0]
     record = GenerationRecord(
+        run_id=run_id,
         history_id=history.history_id,
         stage=stage,
         arm=arm,
@@ -483,6 +519,7 @@ async def summarize_history(
     log_dir: Path,
     seed: int,
     max_context_tokens: int = 16384,
+    run_id: str | None = None,
 ) -> GenerationRecord:
     """Generate the ordinary summary once, failing explicitly on truncation."""
     return await _generation(
@@ -500,6 +537,7 @@ async def summarize_history(
         log_dir=log_dir,
         seed=seed,
         max_context_tokens=max_context_tokens,
+        run_id=run_id,
     )
 
 
@@ -538,20 +576,10 @@ def _public_report_schema() -> dict[str, object]:
     return schema
 
 
-async def report_context(
-    history: History,
-    context: ReportingContext,
-    *,
-    repetition: int,
-    model: Model,
-    tokenizer: Tokenizer,
-    log_dir: Path,
-    seed: int,
-    max_context_tokens: int = 16384,
-) -> GenerationRecord:
-    """Report without tools; malformed and truncated output remains scorable."""
-    if context.history_id != history.history_id or repetition < 0:
-        raise ValueError("report context must match history and repetition must be nonnegative")
+def report_messages(history: History, context: ReportingContext) -> list[ChatMessage]:
+    """Build the exact reporting presentation, shared by execution and export validation."""
+    if context.history_id != history.history_id:
+        raise ValueError("report context must match history")
     prompt = (
         f"Original task request:\n{task_request(history.task)}\n\n{REPORT_INSTRUCTION}\n\n"
         "Return one JSON object conforming to this schema; put the short factual summary in "
@@ -565,6 +593,25 @@ async def report_context(
     else:
         # A single fresh user turn is stable under the provider's role normalization.
         messages = [ChatMessageUser(content=f"Supplied work history:\n{context.payload}\n{prompt}")]
+    return messages
+
+
+async def report_context(
+    history: History,
+    context: ReportingContext,
+    *,
+    repetition: int,
+    model: Model,
+    tokenizer: Tokenizer,
+    log_dir: Path,
+    seed: int,
+    max_context_tokens: int = 16384,
+    run_id: str | None = None,
+) -> GenerationRecord:
+    """Report without tools; malformed and truncated output remains scorable."""
+    if context.history_id != history.history_id or repetition < 0:
+        raise ValueError("report context must match history and repetition must be nonnegative")
+    messages = report_messages(history, context)
     return await _generation(
         history,
         messages,
@@ -576,4 +623,5 @@ async def report_context(
         log_dir=log_dir,
         seed=seed,
         max_context_tokens=max_context_tokens,
+        run_id=run_id,
     )

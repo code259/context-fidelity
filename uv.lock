@@ -311,7 +311,6 @@ dependencies = [
     { name = "openai" },
     { name = "pydantic" },
     { name = "pyyaml" },
-    { name = "tiktoken" },
     { name = "transformers" },
 ]
 
@@ -339,7 +338,6 @@ requires-dist = [
     { name = "openai", specifier = ">=3.13,<4" },
     { name = "pydantic", specifier = ">=2,<3" },
     { name = "pyyaml", specifier = ">=6,<7" },
-    { name = "tiktoken", specifier = ">=0.9,<1" },
     { name = "transformers", specifier = "==4.55.2" },
 ]
 

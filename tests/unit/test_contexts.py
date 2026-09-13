@@ -194,7 +194,10 @@ def test_restoration_preserves_summary_and_enforces_matching() -> None:
         )
 
 
-@pytest.mark.parametrize("decisive,control", [("", "word"), ("word", ""), ("x " * 129, "x " * 129)])
+@pytest.mark.parametrize(
+    "decisive,control",
+    [("", "word"), ("word", ""), ("x " * 257, "x " * 257), ("x " * 256, "x " * 257)],
+)
 def test_invalid_additions_are_not_truncated(decisive: str, control: str) -> None:
     ordinary = make_context(history(), Arm.D, count, summary="Saved code.")
     with pytest.raises(ValueError):
@@ -239,7 +242,72 @@ def test_restoration_requires_summary_and_combined_payload_budget() -> None:
             control_id="e5",
         )
     ordinary = make_context(history(), Arm.D, count, summary="word " * 384)
+
+    def count_with_heading(text: str) -> int:
+        # This counter gives the complete heading 17 tokens: the three words
+        # counted below plus 14, making 384 + 256 + 17 = 657 tokens.
+        return count(text) + (14 if "\n\nAdditional tool event:\n" in text else 0)
+
     with pytest.raises(BudgetExceeded):
         restoration_contexts(
-            ordinary, "x " * 128, "y " * 128, count, decisive_id="e2", control_id="e5"
+            ordinary, "x " * 256, "y " * 256, count_with_heading, decisive_id="e2", control_id="e5"
         )
+
+
+def test_restoration_accepts_200_token_raw_additions_and_eight_token_difference() -> None:
+    ordinary = make_context(history(), Arm.D, count, summary="Saved code.")
+    decisive = ToolEvent(
+        event_id="e6",
+        tool_name="list_files",
+        success=True,
+        message=" ".join(["observed"] * 200),
+        source_version=source_version("source"),
+    )
+    control = ToolEvent(
+        event_id="e7",
+        tool_name="list_files",
+        success=True,
+        message=" ".join(["observed"] * 208),
+        source_version=source_version("source"),
+    )
+    decisive_raw, control_raw = decisive.model_dump_json(), control.model_dump_json()
+    assert count(decisive_raw) == 200 and count(control_raw) == 208
+    rescue, matched = restoration_contexts(
+        ordinary,
+        decisive_raw,
+        control_raw,
+        count,
+        decisive_id=decisive.event_id,
+        control_id=control.event_id,
+    )
+    heading = "Saved code.\n\nAdditional tool event:\n"
+    assert rescue.payload == heading + decisive_raw
+    assert matched.payload == heading + control_raw
+    assert rescue.token_count == 205 and matched.token_count == 213
+    assert rescue.event_ids == ("e6",) and matched.event_ids == ("e7",)
+    with pytest.raises(ValueError, match="eight"):
+        restoration_contexts(
+            ordinary,
+            decisive_raw,
+            control_raw.replace("observed", "observed extra", 1),
+            count,
+            decisive_id="e6",
+            control_id="e7",
+        )
+
+
+def test_restoration_accepts_256_token_additions_at_656_total_tokens() -> None:
+    ordinary = make_context(history(), Arm.D, count, summary="word " * 384)
+
+    def count_with_heading(text: str) -> int:
+        # The actual assembled heading contributes 16 tokens in this tokenizer.
+        return count(text) + (13 if "\n\nAdditional tool event:\n" in text else 0)
+
+    rescue, control = restoration_contexts(
+        ordinary, "x " * 256, "y " * 256, count_with_heading, decisive_id="e2", control_id="e5"
+    )
+    assert rescue.token_count == control.token_count == 656
+    assert rescue.payload.endswith("x " * 256) and control.payload.endswith("y " * 256)
+    assert ordinary.token_count == 384
+    with pytest.raises(BudgetExceeded):
+        make_context(history(), Arm.D, count, summary="word " * 385)

@@ -768,3 +768,71 @@ def test_missing_inspect_log_is_explicit_and_never_creates_completion(
     with pytest.raises(RuntimeError, match="no evaluation and no unique log"):
         run_actor(tmp_path, [])
     assert not list(tmp_path.iterdir())
+
+
+def test_artifact_publication_failure_leaves_no_partial_final_file(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from context_fidelity.experiment import EvaluationFailureRecord, _save
+
+    def fail_sync(fd: int) -> None:
+        raise OSError("synthetic persistence failure")
+
+    monkeypatch.setattr("context_fidelity.artifacts.os.fsync", fail_sync)
+    with pytest.raises(OSError, match="persistence failure"):
+        _save(
+            tmp_path / "failure.json",
+            EvaluationFailureRecord(message="failed", log_path="raw.eval"),
+        )
+    assert not list(tmp_path.iterdir())
+
+
+def test_inspect_task_and_sample_metadata_identify_each_reporting_branch(tmp_path: Path) -> None:
+    box = MemorySandbox()
+    history = asyncio.run(
+        execute_actor(
+            task(),
+            Environment.NORMAL,
+            history_id="lineage-normal",
+            run_id="pilot",
+            model=get_model("mockllm/model", custom_outputs=[output("Stopped")]),
+            tokenizer=CountingTokenizer(),
+            sandbox_factory=box.open,
+            log_dir=tmp_path / "actor",
+            seed=1,
+        )
+    )
+    identities: list[str] = []
+    for arm, repetition in [(Arm.C, 0), (Arm.D, 0), (Arm.D, 1)]:
+        context = make_context(
+            history, arm, CountingTokenizer().count, summary="Stopped" if arm == Arm.D else None
+        )
+        record = asyncio.run(
+            report_context(
+                history,
+                context,
+                repetition=repetition,
+                run_id="pilot",
+                model=get_model("mockllm/model", custom_outputs=[output("{}")]),
+                tokenizer=CountingTokenizer(),
+                log_dir=tmp_path / f"{arm}-{repetition}",
+                seed=1,
+            )
+        )
+        log = read_eval_log(record.log_path)
+        assert log.samples
+        expected = {
+            "run_id": "pilot",
+            "history_id": history.history_id,
+            "task_id": "increment",
+            "environment": "normal",
+            "arm": arm.value,
+            "repetition": repetition,
+            "stage": "report",
+        }
+        assert all(log.eval.metadata[key] == value for key, value in expected.items())
+        assert all(log.samples[0].metadata[key] == value for key, value in expected.items())
+        identities.append(str(log.samples[0].id))
+        assert record.run_id == "pilot"
+    assert len(set(identities)) == 3

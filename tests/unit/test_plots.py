@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
+from context_fidelity import plots
 from context_fidelity.analyze import Observation, PairKey, paired_effect
 from context_fidelity.contracts import Arm
 from context_fidelity.plots import (
@@ -154,6 +155,42 @@ def test_paired_plot_uses_complete_clusters_and_keeps_missingness(
     assert result.n_complete_clusters == (0 if missing else 1)
 
 
+@pytest.mark.parametrize("missing_arm", [None, Arm.C, Arm.D])
+def test_missingness_row_and_caption_appear_only_with_missing_cells(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    missing_arm: Arm | None,
+) -> None:
+    key = PairKey(task_id="t", history_id="t", environment="normal", repetition=0)
+    observations = tuple(
+        Observation(key=key, arm=arm, value=value)
+        for arm, value in ((Arm.C, 0), (Arm.D, 1))
+        if arm != missing_arm
+    )
+    result = paired_effect(observations, (key,))
+    original_export = plots._export
+    captured = {}
+
+    def capture(figure, destination):
+        axis = figure.axes[0]
+        captured["labels"] = [tick.get_text() for tick in axis.get_yticklabels()]
+        captured["footer"] = " ".join(text.get_text() for text in figure.texts)
+        captured["bounds"] = [
+            list(line.get_xdata()) for line in axis.lines if line.get_color() == "#E69F00"
+        ]
+        return original_export(figure, destination)
+
+    monkeypatch.setattr(plots, "_export", capture)
+    files = plot_paired_effect(result, tmp_path / "paired", info=info())
+    assert_exports(files.png, files.pdf)
+    has_missing = missing_arm is not None
+    assert ("All-planned missingness bounds" in captured["labels"]) == has_missing
+    assert ("orange bounds" in captured["footer"].lower()) == has_missing
+    assert captured["bounds"] == (
+        [[100 * result.missing_lower, 100 * result.missing_upper]] if has_missing else []
+    )
+
+
 def test_primary_plot_cannot_claim_completed_human_review_from_provisional_input(
     tmp_path: Path,
 ) -> None:
@@ -165,6 +202,18 @@ def test_primary_plot_cannot_claim_completed_human_review_from_provisional_input
         )
     files = plot_paired_effect(
         result, tmp_path / "primary", info=info("human-reviewed"), metric="primary_unreliability"
+    )
+    assert_exports(files.png, files.pdf)
+
+
+def test_resolved_primary_plot_does_not_claim_human_review(tmp_path: Path) -> None:
+    key = PairKey(task_id="t", history_id="t", environment="normal", repetition=0)
+    result = paired_effect((), (key,))
+    resolved = info("resolved")
+    assert "required verdicts resolved" in resolved.caption("Primary results")
+    assert "human review complete" not in resolved.caption("Primary results")
+    files = plot_paired_effect(
+        result, tmp_path / "resolved", info=resolved, metric="primary_unreliability"
     )
     assert_exports(files.png, files.pdf)
 

@@ -3,15 +3,20 @@
 import argparse
 import asyncio
 import os
+import shlex
 import sys
 from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 
-from context_fidelity.adapters.model import OfficialTokenizer, local_model
+from pydantic import TypeAdapter
+
+from context_fidelity.adapters.model import local_model
 from context_fidelity.adapters.sandbox import DockerSandbox, SandboxError
+from context_fidelity.doctor import check_runtime
 from context_fidelity.pipeline import (
     PipelineServices,
+    SummaryAuditManifest,
     collect_study,
     load_config,
     load_study,
@@ -19,6 +24,9 @@ from context_fidelity.pipeline import (
     report_study,
     validate_tasks,
 )
+from context_fidelity.presentation import publish_analysis
+from context_fidelity.results import load_results
+from context_fidelity.score import ProseReview
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -43,9 +51,20 @@ def _parser() -> argparse.ArgumentParser:
         phase.add_argument("--run-dir", type=Path, required=True)
         if command == "report":
             phase.add_argument("--summary-audit", type=Path)
+    commands.add_parser(
+        "doctor", help="check cached tokenizer, local endpoint, and Docker availability"
+    )
     validate = commands.add_parser("validate-tasks", help="validate fixtures using real Docker")
     validate.add_argument("--tasks", type=Path, required=True)
     validate.add_argument("--output", type=Path, required=True)
+    analyze = commands.add_parser(
+        "analyze", help="score frozen artifacts and export Inspect logs offline"
+    )
+    analyze.add_argument("--run-dir", type=Path, required=True)
+    analyze.add_argument("--analysis-id", required=True)
+    analyze.add_argument("--output", type=Path, required=True)
+    analyze.add_argument("--summary-audit", type=Path)
+    analyze.add_argument("--prose-reviews", type=Path)
     return parser
 
 
@@ -67,6 +86,42 @@ def main(argv: Sequence[str] | None = None) -> int:
     runtime = _path(root, args.runtime_dir)
     try:
         _runtime(runtime)
+        if args.command == "analyze":
+            run_dir = _path(root, args.run_dir)
+            output = _path(root, args.output)
+            audit = (
+                SummaryAuditManifest.model_validate_json(
+                    _path(root, args.summary_audit).read_bytes()
+                )
+                if args.summary_audit
+                else None
+            )
+            reviews = (
+                TypeAdapter(tuple[ProseReview, ...]).validate_json(
+                    _path(root, args.prose_reviews).read_bytes()
+                )
+                if args.prose_reviews
+                else ()
+            )
+            results = load_results(
+                root,
+                run_dir,
+                analysis_id=args.analysis_id,
+                created_at=datetime.now(UTC).isoformat(),
+                summary_audit=audit,
+                prose_reviews=reviews,
+            )
+            asyncio.run(publish_analysis(results, run_dir, output))
+            print(
+                f"Analyzed {sum(row.completed for row in results.arm_counts)}/{len(results.cells)} "
+                f"reports; {sum(row.primary_pending for row in results.arm_counts)} "
+                "primary verdicts pending."
+            )
+            print(
+                f"Inspect: uv run inspect view --log-dir {shlex.quote(str(output / 'inspect'))} "
+                "--port 18575"
+            )
+            return 0
         if args.command == "prepare":
             plan = prepare_study(
                 root,
@@ -108,16 +163,41 @@ def main(argv: Sequence[str] | None = None) -> int:
                         file=sys.stderr,
                     )
             return int(bool(invalid))
+        if args.command == "doctor":
+            config = load_config(_path(root, args.config))
+            readiness = check_runtime(
+                args.endpoint,
+                runtime / "hf",
+                model_id=config.model_id,
+                revision=config.model_revision,
+                image=config.sandbox_image,
+                require_docker=True,
+            )
+            for check in readiness.checks:
+                print(
+                    f"{check.name}: {'ready' if check.ready else 'not ready'} — {check.detail}",
+                    file=sys.stdout if check.ready else sys.stderr,
+                )
+            print(
+                "Runtime available; scientific correctness is not checked."
+                if readiness.ready
+                else "Runtime not ready."
+            )
+            return int(not readiness.ready)
         run_dir = _path(root, args.run_dir)
         plan = load_study(root, run_dir)
+        readiness = check_runtime(
+            args.endpoint,
+            runtime / "hf",
+            model_id=plan.config.model_id,
+            revision=plan.config.model_revision,
+            image=plan.config.sandbox_image,
+            require_docker=args.command == "collect",
+        )
+        tokenizer = readiness.require_ready()
         services = PipelineServices(
             model=local_model(args.endpoint, model_id=plan.config.model_id),
-            tokenizer=OfficialTokenizer.load(
-                cache_dir=runtime / "hf",
-                local_files_only=True,
-                model_id=plan.config.model_id,
-                revision=plan.config.model_revision,
-            ),
+            tokenizer=tokenizer,
             sandbox_factory=lambda task, environment: DockerSandbox(
                 task,
                 environment,

@@ -1,7 +1,7 @@
 schema_version: 1
-protocol_status: development
+protocol_status: frozen
 protocol_version: "0.3"
-amendment_note: ""
+amendment_note: "Pre-held-out freeze: zero retries; diagnostic additions 256 tokens, combined cap 656, matched within 8. Main prompts, extractor, 384 cap and 12-task sample unchanged after development."
 model_id: Qwen/Qwen3-4B-Instruct-2507
 model_revision: cdbee75f17c01a7cc42f958dc650907174af0554
 backend: vllm-0.10.2
