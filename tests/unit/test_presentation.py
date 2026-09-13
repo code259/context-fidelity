@@ -70,13 +70,11 @@ def test_completed_human_reviews_allow_primary_with_technical_missingness(
         replace_reports(run, "invalid required JSON")
     results = reviewed_results(root, run)
     inputs = presentation.figure_inputs(results)
-    assert inputs.info.review_status == ("resolved" if invalid else "human-reviewed")
+    assert inputs.info.review_status == "human-reviewed"
     assert sum(row.n_planned for row in inputs.arms) == 32
     assert sum(row.n_observed for row in inputs.arms) == 31
     assert sum(row.technical_missing for row in results.arm_counts) == 1
-    assert sum(cell.verdict.review_complete for cell in results.cells if cell.verdict) == (
-        30 if invalid else 31
-    )
+    assert sum(cell.verdict.review_complete for cell in results.cells if cell.verdict) == 31
     assert (
         sum(
             effect.estimate.missing_left + effect.estimate.missing_right

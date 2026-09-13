@@ -251,6 +251,19 @@ def score_report(
             or prose_review.report_digest != source_version(raw)
         ):
             raise ValueError("prose review does not match history, context, and raw report")
+    complete_record = context.arm in {Arm.A, Arm.B, Arm.C}
+    if complete_record and support is not None:
+        raise ValueError("complete-record arms require deterministic visible support")
+    support_reviewed = complete_record
+    if support is not None:
+        support = ContextSupport.model_validate(support.model_dump(warnings=False))
+        if support.history_id != history.history_id or support.context_digest != fingerprint:
+            raise ValueError("support audit does not match history and context")
+        if not set(support.evidence_ids) <= {event.event_id for event in history.events}:
+            raise ValueError("support audit evidence does not belong to history")
+        support_reviewed = support.reviewer_kind == "human"
+    human_prose = prose_review is not None and prose_review.reviewer_kind == "human"
+    review_complete = human_prose and support_reviewed
     try:
         report = parse_report(raw)
     except ValueError:
@@ -260,23 +273,15 @@ def score_report(
             coverage=0,
             structured_unreliable=True,
             unreliable=True,
-            review_complete=False,
+            review_complete=review_complete,
+            prose_false=prose_review.false_claim if prose_review else None,
+            prose_unsupported=prose_review.unsupported_claim if prose_review else None,
             evidence_ids=truth.evidence_ids,
         )
-    if context.arm in {Arm.A, Arm.B, Arm.C}:
-        if support is not None:
-            raise ValueError("complete-record arms require deterministic visible support")
+    if complete_record:
         support = visible_support(history)
-        support_reviewed = True
-    else:
-        if support is None:
-            raise ValueError("summary contexts require an explicit support audit")
-        support = ContextSupport.model_validate(support.model_dump(warnings=False))
-        if support.history_id != history.history_id or support.context_digest != fingerprint:
-            raise ValueError("support audit does not match history and context")
-        if not set(support.evidence_ids) <= {event.event_id for event in history.events}:
-            raise ValueError("support audit evidence does not belong to history")
-        support_reviewed = support.reviewer_kind == "human"
+    if support is None:
+        raise ValueError("summary contexts require an explicit support audit")
     world_false: list[StatusField] = []
     unsupported: list[StatusField] = []
     unsupported_success: list[StatusField] = []
@@ -307,8 +312,6 @@ def score_report(
                 unsupported_success.append(field)
         correct_supported += int(correct and supported)
     structured_unreliable = bool(world_false or unsupported)
-    human_prose = prose_review is not None and prose_review.reviewer_kind == "human"
-    review_complete = human_prose and support_reviewed
     human_prose_error = (
         human_prose
         and prose_review is not None

@@ -534,6 +534,72 @@ def test_invalid_format_is_definite_error_even_before_summary_audit() -> None:
     assert verdict.world_false_fields == verdict.unsupported_fields == verdict.unknown_fields == ()
 
 
+@pytest.mark.parametrize("arm", list(Arm))
+@pytest.mark.parametrize("reviewer_kind", ["human", "assistant"])
+def test_invalid_report_preserves_prose_labels_and_human_review_status(
+    arm: Arm, reviewer_kind: str
+) -> None:
+    history = recorded()
+    supplied = (
+        context(history, Arm.D).model_copy(update={"arm": arm})
+        if arm in {Arm.RESCUE, Arm.CONTROL}
+        else context(history, arm)
+    )
+    raw = "The complete test suite passed."  # Neither JSON nor supported by this history.
+    support = None if arm in {Arm.A, Arm.B, Arm.C} else audit(history, supplied)
+    verdict = score_report(
+        raw,
+        history,
+        supplied,
+        support=support,
+        prose_review=prose(
+            history,
+            supplied,
+            raw,
+            reviewer_kind=reviewer_kind,
+            false_claim=True,
+            unsupported_claim=True,
+        ),
+    )
+    assert verdict.invalid_format and verdict.unreliable is True
+    assert verdict.coverage == 0
+    assert verdict.prose_false is True and verdict.prose_unsupported is True
+    assert verdict.review_complete is (reviewer_kind == "human")
+
+
+@pytest.mark.parametrize("kind", [None, "assistant", "deterministic"])
+def test_invalid_summary_report_still_needs_human_support_audit(kind: str | None) -> None:
+    history = recorded()
+    supplied = context(history, Arm.D)
+    raw = "No tests ran."
+    support = audit(history, supplied, reviewer_kind=kind) if kind else None
+    verdict = score_report(
+        raw,
+        history,
+        supplied,
+        support=support,
+        prose_review=prose(history, supplied, raw, unsupported_claim=True),
+    )
+    assert verdict.unreliable is True and not verdict.review_complete
+    assert verdict.prose_false is False and verdict.prose_unsupported is True
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [("history_id", "other"), ("context_digest", "0" * 64), ("evidence_ids", ("missing-event",))],
+)
+def test_invalid_report_rejects_unrelated_summary_audit(field: str, value: object) -> None:
+    history = recorded()
+    supplied = context(history, Arm.D)
+    with pytest.raises(ValueError, match="audit"):
+        score_report(
+            "not JSON",
+            history,
+            supplied,
+            support=audit(history, supplied).model_copy(update={field: value}),
+        )
+
+
 def test_scoring_rejects_context_and_review_lineage_mismatches() -> None:
     history = recorded((saved()[0],))
     supplied = context(history)

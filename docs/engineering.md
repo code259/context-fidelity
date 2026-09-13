@@ -4,11 +4,11 @@ These are project requirements, enforced through [AGENTS.md](../AGENTS.md), test
 
 ## Version control and review
 
-The local origin is configured for `code259/context-fidelity`; foundation commit `caf7082` is preserved on `chore/engineering-foundation`, and implementation is on `feat/context-compression-eval`. No public push has completed. Inspect the current base and work on a short-lived feature branch. Use focused commits with behavior and verification in the message; keep unrelated refactors separate. Inspect status before switching branches and preserve user changes.
+The public origin is `code259/context-fidelity`. Foundation commit `caf7082` is the base on `main`; implementation is on `feat/context-compression-eval` in [PR #3](https://github.com/code259/context-fidelity/pull/3). Inspect the current base and work on a short-lived feature branch. Use focused commits with behavior and verification in the message; keep unrelated refactors separate. Inspect status before switching branches and preserve user changes.
 
 Integrate through a PR describing the problem, resulting behavior, relevant ED, tests, coverage, and limitations. Review scientific validity and implementation quality as separate passes. A fresh reviewer is preferable when available; if working alone, record a separate self-review rather than claiming independent approval. Resolve material findings before merging. Use worktrees only for changes that need isolation. Do not force-push shared history.
 
-After the remote exists, configure a ruleset for `main`: require PRs and the **quality** status check, require resolved conversations, block force pushes/deletion, and enable secret scanning/push protection where available. Require an independent approval when an actual collaborator is available. These remote settings cannot be enforced by committing a YAML file and are currently pending.
+The active [main ruleset](https://github.com/code259/context-fidelity/rules/23134668) requires PRs and the **quality** status check from GitHub Actions, testing against the latest base, and resolved conversations. It blocks force pushes and deletion, with no bypass actors. Secret scanning and push protection are enabled. Required approval count is zero for the current solo workflow; require independent approval when an actual collaborator is available. These remote settings were verified through GitHub's API, not inferred from a committed YAML file.
 
 ## Architecture and design patterns
 

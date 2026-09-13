@@ -10,7 +10,7 @@
 
 **Spec:** [Protocol v0.3](../project-spec.md), [ED-001](../experiments/ED-001-context-comparison.md), and [ED-002](../experiments/ED-002-evidence-restoration.md).
 
-**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. The held-out study now has 24 histories and 192 reports, all complete. Analysis and native Inspect exports are ready; human review, hosted CI, and video recording remain open.
+**Time budget:** 10 focused hours plus 2 hours of buffer. Development run `dev-pilot-002` completed eight histories and 32 reports with no technical failures. The held-out study now has 24 histories and 192 reports, all complete. Analysis and native Inspect exports are published, and hosted CI passed. Human review and video recording remain open.
 
 ## Constraints and files
 
@@ -33,7 +33,7 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 ## Hour 0–1: Run one case
 
 - [x] Connect the user-created remote, inspect Git state, and create a feature branch.
-- [ ] After publication and the first hosted run, configure the main-branch ruleset and required `quality` check.
+- [x] After publication and the first hosted run, configure the main-branch ruleset and required `quality` check.
 - [x] Run foundation checks. Add packaging metadata, the first acceptance test, and the real Docker integration test before completing this slice.
 - [x] Check Docker and model access. Smoke-test local tool use, memory, latency, and context limits; switch to an available API during development if necessary.
 - [x] Implement one small repair fixture and the five tools.
@@ -88,7 +88,8 @@ Join records by task ID, environment, history ID, context arm, and repetition. E
 - [x] Open all 192 scored held-out records in Inspect View. Verify the filtered eight-report comparison and source evidence. Demo cases follow the disclosed task/environment/repetition ordering.
 - [x] Verify commands for one-case execution, the configured experiment, and offline analysis. Document the environment and expected outputs.
 - [x] Update both EDs with results and interpretation; complete independent assistant reviews of scientific calculations and engineering findings.
-- [ ] Run hosted CI and review the PR before integration. Local checks passed; publication is pending.
+- [x] Publish the branch and both evaluation bundles; run hosted CI. All application and Docker checks passed.
+- [ ] Review [PR #3](https://github.com/code259/context-fidelity/pull/3) before integration. The PR is open and unmerged.
 - [ ] Record a two-minute video: question → actual trace/context comparison → aggregate results → what the evidence supports.
 
 **Done when:** A reader can trace a claim to its execution evidence and reproduce the analysis from saved logs.

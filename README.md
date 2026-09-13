@@ -10,6 +10,8 @@ The main comparison is a compact record of tool evidence versus an ordinary mode
 
 The complete primary comparison still needs human review: 49 reports have definite errors and 143 verdicts remain unresolved. The restoration diagnostic had no eligible cases and did not run. Read the [results and interpretation](docs/experiments/results.md) for the evidence and limits.
 
+[Download the evidence and Inspect bundles](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) · [Implementation PR](https://github.com/code259/context-fidelity/pull/3) · [Human-review guide](docs/human-review.md)
+
 ![Held-out structured results, with human review pending](results/heldout-002/figures/arms.png)
 
 Inspect View is the main interface for traces and scored comparisons. Matplotlib figures and blinded review records accompany the logs. The project uses Inspect’s evaluation tools rather than maintaining a separate dashboard.
@@ -36,7 +38,7 @@ uv run pre-commit run --all-files
 uv run pytest tests/engineering
 ```
 
-GitHub Actions checks typing, tests, coverage, real Docker execution, and packaging. Local verification passed 526 offline tests and 11 Docker integration tests; hosted CI is pending publication. Statement coverage is 99.66% and branch coverage 98.70%. Gates require 90% of each overall, and 95% of each in evidence, contexts, scoring, and analysis.
+GitHub Actions checks typing, tests, coverage, real Docker execution, and packaging. The [published baseline's hosted CI](https://github.com/code259/context-fidelity/actions/runs/34739191004) passed 526 offline tests and 11 Docker integration tests. The review-tracking fix adds 18 regression cases; all **544 offline tests** passed locally. Current statement coverage is 99.66% and branch coverage 98.71%. Gates require 90% of each overall, and 95% of each in evidence, contexts, scoring, and analysis. [PR checks](https://github.com/code259/context-fidelity/pull/3/checks) validate later revisions.
 
 ## Run an experiment
 
@@ -56,4 +58,4 @@ Preparation hashes the plan and implementation. Collection saves the Inspect log
 
 Before held-out reporting, audit the ordinary summaries without viewing report outcomes. The [review rubric](docs/review-rubric.md) separates three questions: what happened, what the model could establish from its context, and whether its prose makes an error.
 
-Development is on `feat/context-compression-eval`. Publication, hosted CI, and remote branch rules remain pending.
+Development is on `feat/context-compression-eval`, with [PR #3](https://github.com/code259/context-fidelity/pull/3) open against `main`. The [main-branch rules](https://github.com/code259/context-fidelity/rules/23134668) require a PR, successful `quality` CI, and resolved conversations; force pushes and deletion are blocked. Human review and video recording remain open.

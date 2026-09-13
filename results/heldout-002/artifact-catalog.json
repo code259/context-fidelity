@@ -4,16 +4,18 @@
       "name": "context-fidelity-evidence-2026-09-12.zip",
       "bytes": 12957705,
       "files": 1385,
-      "sha256": "f981e1d4db6d2a5a3fe4b0e45b3367295222151204e20b5c0d5d44fd51d0c4dc"
+      "sha256": "f981e1d4db6d2a5a3fe4b0e45b3367295222151204e20b5c0d5d44fd51d0c4dc",
+      "url": "https://github.com/code259/context-fidelity/releases/download/v0.1.0-provisional/context-fidelity-evidence-2026-09-12.zip"
     },
     {
       "name": "context-fidelity-inspect-heldout-2026-09-12.zip",
       "bytes": 6569131,
       "files": 212,
-      "sha256": "bb23c14572a023b81e94d0c48f8d4c3a62fb10a409488495b5dcf4d3d24f6f96"
+      "sha256": "bb23c14572a023b81e94d0c48f8d4c3a62fb10a409488495b5dcf4d3d24f6f96",
+      "url": "https://github.com/code259/context-fidelity/releases/download/v0.1.0-provisional/context-fidelity-inspect-heldout-2026-09-12.zip"
     }
   ],
-  "publication_status": "local; not published",
+  "publication_status": "published prerelease; human review pending",
   "credentials_found": false,
   "scan_scope": "credential patterns in selected JSON/text and expanded Inspect logs",
   "reproduction": {
@@ -29,5 +31,8 @@
       "all effect estimates and intervals"
     ],
     "status": "passed"
-  }
+  },
+  "release_url": "https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional",
+  "release_commit": "128baf472a7805fafd4cc94a0f8537600e2bea00",
+  "github_asset_digests_match": true
 }

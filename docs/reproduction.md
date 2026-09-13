@@ -68,7 +68,7 @@ This plans eight histories and 32 reports. Source or protocol changes after prep
 
 Finish development calibration, freeze both EDs and `config.yaml`, and validate the held-out fixtures before preparing a held-out run. Collection comes first. Audit every available ordinary summary and lock restoration eligibility before inspecting reporting outcomes. Pass the saved `SummaryAuditManifest` using `report --summary-audit PATH`.
 
-For the complete primary outcome, a person must review prose and summary support under [the rubric](review-rubric.md). Assistant labels remain provisional. Unknown review status must remain missing in primary analysis; it must never be treated as a reliable report.
+For the complete primary outcome, a person must review prose and summary support under [the rubric](review-rubric.md). The [human-review guide](human-review.md) describes the 24-summary and 192-report handoff. Assistant labels remain provisional. Unknown review status must remain missing in primary analysis; it must never be treated as a reliable report.
 
 Offline reanalysis must use immutable original run inputs and create a separately identified output directory. Preserve the original generation freeze and fingerprint the analysis implementation. A later scoring correction must not rewrite raw model responses or the original analysis.
 
@@ -95,7 +95,7 @@ Use Inspect's local server for development. A separately hosted bundle requires 
 
 ## Reproduce the saved held-out results
 
-The local release candidates are `dist/context-fidelity-evidence-2026-09-12.zip` and `dist/context-fidelity-inspect-heldout-2026-09-12.zip`. The [artifact catalog](../results/heldout-002/artifact-catalog.json) records their sizes, SHA256 checksums, and reproduction check. They have not been published.
+The [provisional release](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) contains `context-fidelity-evidence-2026-09-12.zip` and `context-fidelity-inspect-heldout-2026-09-12.zip`. The [artifact catalog](../results/heldout-002/artifact-catalog.json) records their download URLs, sizes, SHA256 checksums, and reproduction check. GitHub's uploaded-asset digests match those checksums. Human review remains pending.
 
 The evidence archive contains the completed development and held-out runs, exact frozen held-out inputs, pre-report audits, native scored logs, figures, and analysis records. Extract it at the root of a fresh checkout with the locked environment installed, then run:
 
