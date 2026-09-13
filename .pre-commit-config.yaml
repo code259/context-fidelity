@@ -1,0 +1,25 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: Ruff
+        entry: uv run --locked ruff check
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: Ruff format
+        entry: uv run --locked ruff format --check
+        language: system
+        types: [python]
+      - id: mypy-tools
+        name: Type check engineering tools
+        entry: uv run --locked mypy scripts
+        language: system
+        pass_filenames: false
+        types: [python]
+      - id: project-docs
+        name: Project configuration and local documentation links
+        entry: uv run --locked python scripts/check_project.py
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: quality
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.11.21"
+          python-version-file: .python-version
+          enable-cache: false
+      - name: Install locked development environment
+        run: uv sync --locked
+      - name: Check configuration and documentation
+        run: uv run --locked python scripts/check_project.py
+      - name: Lint, format, and type check engineering tools
+        run: |
+          uv run --locked ruff check .
+          uv run --locked ruff format --check .
+          uv run --locked mypy scripts
+      - name: Test engineering checks
+        run: |
+          uv run --locked pytest tests/engineering --cov=scripts --cov-branch --cov-report=json:foundation-coverage.json
+          uv run --locked python scripts/check_coverage.py foundation-coverage.json
+      - name: Type check application
+        if: hashFiles('src/**/*.py') != ''
+        run: uv run --locked mypy src
+      - name: Test application and enforce coverage
+        if: hashFiles('src/**/*.py') != ''
+        run: |
+          uv run --locked pytest -m "not docker and not live" --cov=src/context_fidelity --cov-branch --cov-report=json:coverage.json --cov-report=xml
+          uv run --locked python scripts/check_coverage.py coverage.json
+      - name: Real Docker integration
+        if: hashFiles('src/**/*.py') != ''
+        run: |
+          docker info
+          uv run --locked pytest tests/integration/test_sandbox.py -m docker
+      - name: Build application distributions
+        if: hashFiles('src/**/*.py') != ''
+        run: uv build --no-sources
+      - name: Explain foundation-only scope
+        if: hashFiles('src/**/*.py') == ''
+        run: |
+          echo "Foundation checks only: no application code or model evaluation has been validated." >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload coverage evidence
+        if: always() && hashFiles('*coverage.json') != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage
+          path: |
+            foundation-coverage.json
+            coverage.json
+            coverage.xml
+          retention-days: 14

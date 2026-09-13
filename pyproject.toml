@@ -1,0 +1,54 @@
+[project]
+name = "context-fidelity"
+version = "0.1.0"
+description = "Evaluating agent completion reports under context compression"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "build>=1.2,<2",
+    "coverage[toml]>=7.8,<8",
+    "hypothesis>=6,<7",
+    "mypy>=1.15,<2",
+    "pre-commit>=4,<5",
+    "pytest>=8,<10",
+    "pytest-cov>=6,<8",
+    "pyyaml>=6,<7",
+    "ruff>=0.11,<1",
+    "types-pyyaml>=6,<7",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --strict-config"
+markers = [
+    "docker: real Docker integration; required in application CI",
+    "live: explicit live model calls; never part of ordinary PR CI",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src/context_fidelity"]
+patch = ["subprocess"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+include_namespace_packages = true
