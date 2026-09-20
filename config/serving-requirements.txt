@@ -133,7 +133,7 @@ torchaudio==2.8.0
 torchvision==0.23.0
 tqdm==4.70.1
 transformers==4.55.2
-triton==3.4.0
+triton==3.8.0
 truststore==0.10.4
 typer==0.27.2
 typing-extensions==4.16.0
