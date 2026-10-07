@@ -8,6 +8,12 @@ This project measures how often that happens and where the errors come from. It 
 
 **It didn't.** The compact record produced the most errors of the four. The more useful finding is about *where* errors enter: the same false claim can come from a model ignoring correct evidence, or from a summary that had already invented it.
 
+## Why this is worth testing
+
+Earlier work covers nearby ground. Models judge actions more favorably when they appear as their own earlier turns, but that study leaves compression untested ([Khullar et al.](https://arxiv.org/html/2603.04582v1)). Work on compressed agent state asks whether the agent can keep working: [Liu](https://arxiv.org/abs/2608.16370) shows task completion can hide recovery costs, and [TRACE](https://arxiv.org/abs/2608.06503) compares continuations from the same compacted state. [The Unreliable Progress Bar](https://arxiv.org/html/2609.08589v1) finds that reports at the end of a task can be near-perfect while mid-task progress reports are much harder. I didn't find a study that asks the narrower question in between: once the work is done and the history has been compressed, does the *form* of the compression change whether the final report is true?
+
+The interesting part is that the obvious fix, keeping the raw tool facts instead of a summary, didn't help: the model often had the right fact and reported the opposite. Saving the summary, the context, and the report as separate stages also shows whether an error started in the summary or in the report. A score on the final answer alone can't tell those apart. This is a small, one-day study with one model, and my literature check was targeted rather than exhaustive.
+
 [Inspect logs and evidence (release)](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) · [Full results](docs/experiments/results.md) · [AI review](docs/experiments/AI-review-001.md) · [Specification](docs/project-spec.md)
 
 ![Report errors by context](docs/images/figures/errors.png)
