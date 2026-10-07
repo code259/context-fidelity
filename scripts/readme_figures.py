@@ -1,10 +1,12 @@
 """Draw the README figures from committed held-out and AI-review results.
 
 Inputs are read-only result files under ``results/``. Outputs go to
-``docs/images/figures``. The frozen analysis figures in ``results/`` stay as published.
+``docs/images/figures`` unless another directory is given as the only argument.
+The frozen analysis figures in ``results/`` stay as published.
 """
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +15,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
+from matplotlib.figure import Figure  # noqa: E402
 from matplotlib.patches import Rectangle  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,13 +49,12 @@ def _style(ax: Axes) -> None:
     ax.set_axisbelow(True)
 
 
-def _save(fig: Any, name: str) -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / name, dpi=200, bbox_inches="tight", facecolor="white")
+def _save(fig: Figure, path: Path) -> None:
+    fig.savefig(path, dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 
-def errors(ai: Any) -> None:
+def errors(ai: Any) -> Figure:
     counts = {row["arm"]: row for row in ai["arm_counts"]}
     fig, ax = plt.subplots(figsize=(7.5, 4.2))
     width = 0.38
@@ -83,10 +85,10 @@ def errors(ai: Any) -> None:
         loc="upper left",
     )
     _style(ax)
-    _save(fig, "errors.png")
+    return fig
 
 
-def history_size(metrics: Any) -> None:
+def history_size(metrics: Any) -> Figure:
     tokens = metrics["payload_tokens"]
     fig, ax = plt.subplots(figsize=(7.5, 2.8))
     for i, arm in enumerate(ARMS):
@@ -101,10 +103,10 @@ def history_size(metrics: Any) -> None:
     _style(ax)
     ax.grid(axis="y", visible=False)
     ax.grid(axis="x", color="#e6e6e6", linewidth=0.8)
-    _save(fig, "history-length.png")
+    return fig
 
 
-def per_task(metrics: Any) -> None:
+def per_task(metrics: Any) -> Figure:
     effect = next(
         e["estimate"]
         for e in metrics["effects"]
@@ -134,10 +136,10 @@ def per_task(metrics: Any) -> None:
     _style(ax)
     ax.grid(axis="y", visible=False)
     ax.grid(axis="x", color="#e6e6e6", linewidth=0.8)
-    _save(fig, "per-task.png")
+    return fig
 
 
-def retention(figure_inputs: Any) -> None:
+def retention(figure_inputs: Any) -> Figure:
     names = {
         "code_saved": "Code saved",
         "note_saved": "Note saved",
@@ -162,16 +164,21 @@ def retention(figure_inputs: Any) -> None:
     ax.set_ylim(0, 112)
     ax.set_title("What the summaries kept", loc="left", fontsize=13, color=INK)
     _style(ax)
-    _save(fig, "summary-retention.png")
+    return fig
 
 
-def main() -> None:
+def main(out: Path = OUT) -> None:
     metrics = _load(METRICS)
-    errors(_load(AI_RESULTS))
-    history_size(metrics)
-    per_task(metrics)
-    retention(_load(FIGURE_INPUTS))
+    figures = {
+        "errors.png": errors(_load(AI_RESULTS)),
+        "history-length.png": history_size(metrics),
+        "per-task.png": per_task(metrics),
+        "summary-retention.png": retention(_load(FIGURE_INPUTS)),
+    }
+    out.mkdir(parents=True, exist_ok=True)
+    for name, fig in figures.items():
+        _save(fig, out / name)
 
 
 if __name__ == "__main__":
-    main()
+    main(Path(sys.argv[1]) if len(sys.argv) > 1 else OUT)
