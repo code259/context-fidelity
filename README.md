@@ -16,7 +16,36 @@ A subsequent [AI review of all 192 reports](docs/experiments/AI-review-001.md) i
 
 Inspect View is the main interface for traces and scored comparisons. Matplotlib figures and blinded review records accompany the logs. The project uses Inspect’s evaluation tools rather than maintaining a separate dashboard.
 
-The [two-minute walkthrough](docs/demo.md) follows actual reports from the run. It includes a useful distinction: the same false full-pass claim can arise when a reporter ignores correct evidence or when its summary already contains the error.
+## In Inspect
+
+Every report is its own Inspect log, tagged by arm, environment, and repetition, with three scorers: primary unreliability, structured unreliability, and factual coverage. These screenshots come from the published Inspect bundle of saved held-out logs; no model calls were needed.
+
+![Inspect View task list: 192 held-out reports with arm tags and scores](docs/images/inspect/task-list.png)
+
+The same false claim appears for two different reasons in task `h02-chunks`. Only two of its four tests ran.
+
+**Arm C (compact evidence) had the right facts and ignored them.** Event 5 in its context says `collected=tail,large` and `full=false`. The report still answers `"verification": "passed"`.
+
+![Arm C report: context shows full=false, answer claims verification passed](docs/images/inspect/h02-C-ignored-evidence.png)
+
+**Arm D (ordinary summary) inherited the error.** Its summary already said all four test cases passed, so the report repeated the claim.
+
+![Arm D report: the supplied summary already claims all four tests passed](docs/images/inspect/h02-D-summary-error.png)
+
+The Scoring tab lists each scorer’s verdict beside the answer it judged.
+
+![Scoring tab for the arm C report](docs/images/inspect/h02-C-scoring.png)
+
+To browse the logs yourself, without a model or GPU, download the static Inspect bundle from the [release](https://github.com/code259/context-fidelity/releases/tag/v0.1.0-provisional) and serve it:
+
+```sh
+unzip context-fidelity-inspect-heldout-2026-09-12.zip -d inspect-heldout
+python3 -m http.server 8000 --directory inspect-heldout
+```
+
+Then open `http://127.0.0.1:8000`. If you have the local `runs/` directory, `uv run inspect view --log-dir runs/analysis/heldout-analysis-002/inspect` opens the same reports.
+
+The [two-minute walkthrough](docs/demo.md) follows more reports from the run.
 
 ## Research
 
