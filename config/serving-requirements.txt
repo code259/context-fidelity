@@ -63,7 +63,7 @@ msgspec==0.21.1
 multidict==6.8.0
 networkx==3.6.1
 ninja==1.13.2
-numba==0.61.2
+numba==0.67.0
 numpy==2.2.6
 nvidia-cublas-cu12==12.8.4.1
 nvidia-cuda-cupti-cu12==12.8.90
